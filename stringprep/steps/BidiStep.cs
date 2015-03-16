@@ -11,6 +11,7 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 
 
@@ -37,8 +38,8 @@ namespace stringprep.steps
     public class BidiStep : ProfileStep
     {
         private static ProhibitStep m_prohibit = new ProhibitStep(RFC3454.C_8, "RFC3454.C_8");
-        private static BidiRALStep  m_ral      = new BidiRALStep();
-        private static ProhibitStep m_lcat     = new ProhibitStep(RFC3454.D_2, "RFC3454.D_2");
+        private static BidiRALStep m_ral = new BidiRALStep();
+        private static ProhibitStep m_lcat = new ProhibitStep(RFC3454.D_2, "RFC3454.D_2");
 
         /// <summary>
         /// Create a new BidiStep.
@@ -80,7 +81,6 @@ namespace stringprep.steps
 
                 m_ral.CheckEnds(result);
             }
-
         }
 
         private class BidiRALStep : ProhibitStep
@@ -101,6 +101,4 @@ namespace stringprep.steps
             }
         }
     }
-
-
 }

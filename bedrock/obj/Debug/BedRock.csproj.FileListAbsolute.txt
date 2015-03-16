@@ -1,0 +1,12 @@
+D:\Dev\Github\jabber-net\bedrock\obj\Debug\BedRock.csprojResolveAssemblyReference.cache
+D:\Dev\Github\jabber-net\bedrock\bin\Debug\BedRock.dll
+D:\Dev\Github\jabber-net\bedrock\bin\Debug\BedRock.pdb
+D:\Dev\Github\jabber-net\bedrock\bin\Debug\jabber-net.dll
+D:\Dev\Github\jabber-net\bedrock\bin\Debug\netlib.Dns.dll
+D:\Dev\Github\jabber-net\bedrock\bin\Debug\Org.Mentalis.Security.dll
+D:\Dev\Github\jabber-net\bedrock\bin\Debug\zlib.net.dll
+D:\Dev\Github\jabber-net\bedrock\bin\Debug\jabber-net.pdb
+D:\Dev\Github\jabber-net\bedrock\bin\Debug\netlib.Dns.pdb
+D:\Dev\Github\jabber-net\bedrock\bin\Debug\netlib.Dns.xml
+D:\Dev\Github\jabber-net\bedrock\obj\Debug\BedRock.dll
+D:\Dev\Github\jabber-net\bedrock\obj\Debug\BedRock.pdb

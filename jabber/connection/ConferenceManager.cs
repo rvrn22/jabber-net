@@ -11,11 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
-
 using bedrock.util;
 using jabber.protocol;
 using jabber.protocol.client;
@@ -26,7 +26,6 @@ using System.ComponentModel.Design;
 
 namespace jabber.connection
 {
-
     /// <summary>
     /// An error occurred with a presence sent to a room.
     /// </summary>
@@ -80,6 +79,7 @@ namespace jabber.connection
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
         private Hashtable m_rooms = new Hashtable();
         private string m_nick = null;
 
@@ -266,8 +266,8 @@ namespace jabber.connection
         [DefaultValue(null)]
         public string DefaultNick
         {
-            get 
-            { 
+            get
+            {
                 if (m_nick != null)
                     return m_nick;
                 if ((m_stream == null) || m_stream.JID == null)
@@ -293,7 +293,7 @@ namespace jabber.connection
             if (roomAndNick.Resource == null)
                 roomAndNick.Resource = DefaultNick;
 
-            Room r = (Room)m_rooms[roomAndNick];
+            Room r = (Room) m_rooms[roomAndNick];
             if (r != null)
                 return r;
 
@@ -393,7 +393,7 @@ namespace jabber.connection
 
         private void GotUnique(object sender, IQ iq, object state)
         {
-            UniqueState us = (UniqueState)state;
+            UniqueState us = (UniqueState) state;
             if ((iq == null) || (iq.Type == IQType.error))
             {
                 us.Callback(null, us.State);
@@ -410,7 +410,7 @@ namespace jabber.connection
   </unique>
 </iq>
  */
-            UniqueRoom unique = (UniqueRoom)iq.Query;
+            UniqueRoom unique = (UniqueRoom) iq.Query;
             Room r = GetRoom(new JID(unique.RoomNode, iq.From.Server, us.Nick));
             us.Callback(r, us.State);
         }
@@ -434,14 +434,17 @@ namespace jabber.connection
         }
 
         private STATE m_state = STATE.start;
+
         /// <summary>
         /// Nick JID.  room@conference/nick.
         /// </summary>
         private JID m_jid;
+
         /// <summary>
         /// Bare room JID.  room@conference
         /// </summary>
         private JID m_room;
+
         //private XmppStream m_stream;
         private bool m_default = false;
         private ConferenceManager m_manager;
@@ -627,7 +630,7 @@ namespace jabber.connection
         /// <param name="pres"></param>
         private void m_stream_OnAfterPresenceOut(object sender, Presence pres)
         {
-            Presence p = (Presence)pres.CloneNode(true);
+            Presence p = (Presence) pres.CloneNode(true);
             p.To = m_room;
             m_manager.Write(p);
         }
@@ -639,99 +642,99 @@ namespace jabber.connection
             if (af == "")
                 return;
             JID from = new JID(af);
-            if (from.Bare != (string)m_room)
-                return;  // not for this room.
+            if (from.Bare != (string) m_room)
+                return; // not for this room.
 
             switch (rp.LocalName)
             {
-            case "presence":
-                Presence p = (Presence)rp;
-                if (p.Error != null)
-                {
-                    m_state = STATE.error;
-                    if (OnPresenceError != null)
-                        OnPresenceError(this, p);
-                    return;
-                }
+                case "presence":
+                    Presence p = (Presence) rp;
+                    if (p.Error != null)
+                    {
+                        m_state = STATE.error;
+                        if (OnPresenceError != null)
+                            OnPresenceError(this, p);
+                        return;
+                    }
 
-                ParticipantCollection.Modification mod = ParticipantCollection.Modification.NONE;
-                RoomParticipant party = m_participants.Modify(p, out mod);
+                    ParticipantCollection.Modification mod = ParticipantCollection.Modification.NONE;
+                    RoomParticipant party = m_participants.Modify(p, out mod);
 
-                // if this is ours
-                if (p.From == m_jid)
-                {
-                    switch (m_state)
+                    // if this is ours
+                    if (p.From == m_jid)
                     {
-                    case STATE.join:
-                        OnJoinPresence(p);
-                        break;
-                    case STATE.leaving:
-                        OnLeavePresence(p);
-                        break;
-                    case STATE.running:
-                        if (p.Type == PresenceType.unavailable)
-                            OnLeavePresence(p);
-                        break;
-                    }
-                }
-                else
-                {
-                    switch (mod)
-                    {
-                    case ParticipantCollection.Modification.NONE:
-                        if (OnParticipantPresenceChange != null)
-                            OnParticipantPresenceChange(this, party);
-                        break;
-                    case ParticipantCollection.Modification.JOIN:
-                        if (OnParticipantJoin != null)
-                            OnParticipantJoin(this, party);
-                        break;
-                    case ParticipantCollection.Modification.LEAVE:
-                        if (OnParticipantLeave != null)
-                            OnParticipantLeave(this, party);
-                        break;
-                    }
-                }
-                break;
-            case "message":
-                Message m = (Message)rp;
-                if (m.Type == MessageType.groupchat)
-                {
-                    if (m.Subject != null)
-                    {
-                        if (OnSubjectChange != null)
-                            OnSubjectChange(this, m);
-                        m_subject = m;
-                    }
-                    else if (m.From == m_jid)
-                    {
-                        if (OnSelfMessage != null)
-                            OnSelfMessage(this, m);
+                        switch (m_state)
+                        {
+                            case STATE.join:
+                                OnJoinPresence(p);
+                                break;
+                            case STATE.leaving:
+                                OnLeavePresence(p);
+                                break;
+                            case STATE.running:
+                                if (p.Type == PresenceType.unavailable)
+                                    OnLeavePresence(p);
+                                break;
+                        }
                     }
                     else
                     {
-                        if (OnRoomMessage != null)
-                            OnRoomMessage(this, m);
+                        switch (mod)
+                        {
+                            case ParticipantCollection.Modification.NONE:
+                                if (OnParticipantPresenceChange != null)
+                                    OnParticipantPresenceChange(this, party);
+                                break;
+                            case ParticipantCollection.Modification.JOIN:
+                                if (OnParticipantJoin != null)
+                                    OnParticipantJoin(this, party);
+                                break;
+                            case ParticipantCollection.Modification.LEAVE:
+                                if (OnParticipantLeave != null)
+                                    OnParticipantLeave(this, party);
+                                break;
+                        }
                     }
-                }
-                else
-                {
-                    if (m.From.Resource == null)
+                    break;
+                case "message":
+                    Message m = (Message) rp;
+                    if (m.Type == MessageType.groupchat)
                     {
-                        // room notification of some kind
-                        if (OnAdminMessage != null)
-                            OnAdminMessage(this, m);
+                        if (m.Subject != null)
+                        {
+                            if (OnSubjectChange != null)
+                                OnSubjectChange(this, m);
+                            m_subject = m;
+                        }
+                        else if (m.From == m_jid)
+                        {
+                            if (OnSelfMessage != null)
+                                OnSelfMessage(this, m);
+                        }
+                        else
+                        {
+                            if (OnRoomMessage != null)
+                                OnRoomMessage(this, m);
+                        }
                     }
                     else
                     {
-                        if (OnPrivateMessage != null)
-                            OnPrivateMessage(this, m);
+                        if (m.From.Resource == null)
+                        {
+                            // room notification of some kind
+                            if (OnAdminMessage != null)
+                                OnAdminMessage(this, m);
+                        }
+                        else
+                        {
+                            if (OnPrivateMessage != null)
+                                OnPrivateMessage(this, m);
+                        }
                     }
-                }
-                break;
-            case "iq":
-                // TODO: IQs the room sends to us.
-                break;
+                    break;
+                case "iq":
+                    // TODO: IQs the room sends to us.
+                    break;
             }
         }
 
@@ -1027,7 +1030,8 @@ namespace jabber.connection
             m_manager.Write(m);
         }
 
-#region Moderator use cases
+        #region Moderator use cases
+
         /// <summary>
         /// Change the role of a user in the room, by nickname.  Must be a moderator.
         /// </summary>
@@ -1138,7 +1142,7 @@ namespace jabber.connection
 
         private void GotList(object sender, IQ iq, object state)
         {
-            RetrieveParticipantsState rps = (RetrieveParticipantsState)state;
+            RetrieveParticipantsState rps = (RetrieveParticipantsState) state;
             if (iq.Type == IQType.error)
             {
                 rps.Callback(this, null, rps.State);
@@ -1158,7 +1162,7 @@ namespace jabber.connection
 </iq>
 */
             ParticipantCollection parties = new ParticipantCollection();
-            AdminQuery query = (AdminQuery)iq.Query;
+            AdminQuery query = (AdminQuery) iq.Query;
             ParticipantCollection.Modification mod;
             foreach (AdminItem item in query.GetItems())
             {
@@ -1230,9 +1234,10 @@ namespace jabber.connection
                 callback(this, null, state);
         }
 
-#endregion
+        #endregion
 
-#region Admin use cases
+        #region Admin use cases
+
         /// <summary>
         /// Change the affiliation (long-term) with the room of a user, based on their real JID.
         /// </summary>
@@ -1386,7 +1391,8 @@ namespace jabber.connection
             else
                 callback(this, null, state);
         }
-#endregion
+
+        #endregion
     }
 
     /// <summary>
@@ -1411,10 +1417,7 @@ namespace jabber.connection
         /// <returns>Participant object</returns>
         public RoomParticipant this[JID nickJid]
         {
-            get
-            {
-                return (RoomParticipant)m_hash[nickJid];
-            }
+            get { return (RoomParticipant) m_hash[nickJid]; }
         }
 
         /// <summary>
@@ -1427,7 +1430,7 @@ namespace jabber.connection
         {
             JID from = pres.From;
             mod = Modification.NONE;
-            RoomParticipant party = (RoomParticipant)m_hash[from];
+            RoomParticipant party = (RoomParticipant) m_hash[from];
             if (party != null)
             {
                 party.Presence = pres;
@@ -1464,7 +1467,7 @@ namespace jabber.connection
                 if (party.Role == role)
                     res.Add(party);
             }
-            return (RoomParticipant[])res.ToArray(typeof(RoomParticipant));
+            return (RoomParticipant[]) res.ToArray(typeof (RoomParticipant));
         }
 
         /// <summary>
@@ -1480,10 +1483,11 @@ namespace jabber.connection
                 if (party.Affiliation == affiliation)
                     res.Add(party);
             }
-            return (RoomParticipant[])res.ToArray(typeof(RoomParticipant));
+            return (RoomParticipant[]) res.ToArray(typeof (RoomParticipant));
         }
 
         #region IEnumerable Members
+
         /// <summary>
         /// Enumerate over all of the participants
         /// </summary>
@@ -1544,7 +1548,7 @@ namespace jabber.connection
         {
             get
             {
-                UserX x = (UserX)m_presence["x", URI.MUC_USER];
+                UserX x = (UserX) m_presence["x", URI.MUC_USER];
                 if (x == null)
                     return null;
                 return x.RoomItem;

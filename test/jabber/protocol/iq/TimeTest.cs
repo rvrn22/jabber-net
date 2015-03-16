@@ -11,11 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Xml;
 using NUnit.Framework;
-
 using bedrock.util;
 using jabber;
 using jabber.protocol;

@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 // http://www.xmpp.org/extensions/xep-0054.html
@@ -30,42 +29,52 @@ namespace jabber.protocol.iq
         /// None specified
         /// </summary>
         unknown = -1,
+
         /// <summary>
         /// voice
         /// </summary>
         voice,
+
         /// <summary>
         /// fax
         /// </summary>
         fax,
+
         /// <summary>
         /// pager
         /// </summary>
         pager,
+
         /// <summary>
         /// voice mail
         /// </summary>
         msg,
+
         /// <summary>
         /// mobile
         /// </summary>
         cell,
+
         /// <summary>
         /// video phone
         /// </summary>
         video,
+
         /// <summary>
         /// Bulletin Board System
         /// </summary>
         bbs,
+
         /// <summary>
         /// Modem
         /// </summary>
         modem,
+
         /// <summary>
         /// ISDN
         /// </summary>
         isdn,
+
         /// <summary>
         /// dunno.
         /// </summary>
@@ -81,10 +90,12 @@ namespace jabber.protocol.iq
         /// Home
         /// </summary>
         home,
+
         /// <summary>
         /// Work
         /// </summary>
         work,
+
         /// <summary>
         /// Unknown
         /// </summary>
@@ -100,10 +111,12 @@ namespace jabber.protocol.iq
         /// Home
         /// </summary>
         home,
+
         /// <summary>
         /// Work
         /// </summary>
         work,
+
         /// <summary>
         /// Unknown
         /// </summary>
@@ -119,18 +132,22 @@ namespace jabber.protocol.iq
         /// None specified
         /// </summary>
         NONE = -1,
+
         /// <summary>
         /// Home
         /// </summary>
         home,
+
         /// <summary>
         /// Work
         /// </summary>
         work,
+
         /// <summary>
         /// Internet
         /// </summary>
         internet,
+
         /// <summary>
         /// x400
         /// </summary>
@@ -172,7 +189,7 @@ namespace jabber.protocol.iq
         /// <param name="doc"></param>
         public VCard(XmlDocument doc) : base("vCard", URI.VCARD, doc)
         {
-        //  SetElem("PRODID", "jabber-net: " + this.GetType().Assembly.FullName);
+            //  SetElem("PRODID", "jabber-net: " + this.GetType().Assembly.FullName);
         }
 
         /// <summary>
@@ -308,7 +325,7 @@ namespace jabber.protocol.iq
         {
             XmlNodeList nl = GetElementsByTagName("TEL", URI.VCARD);
             VTelephone[] numbers = new VTelephone[nl.Count];
-            int i=0;
+            int i = 0;
             foreach (XmlNode n in nl)
             {
                 numbers[i] = (VTelephone) n;
@@ -341,7 +358,7 @@ namespace jabber.protocol.iq
         {
             XmlNodeList nl = GetElementsByTagName("ADR", URI.VCARD);
             VAddress[] addresses = new VAddress[nl.Count];
-            int i=0;
+            int i = 0;
             foreach (XmlNode n in nl)
             {
                 addresses[i] = (VAddress) n;
@@ -373,10 +390,10 @@ namespace jabber.protocol.iq
         {
             XmlNodeList nl = GetElementsByTagName("EMAIL", URI.VCARD);
             VEmail[] emails = new VEmail[nl.Count];
-            int i=0;
+            int i = 0;
             foreach (XmlNode n in nl)
             {
-                emails[i] = (VEmail)n;
+                emails[i] = (VEmail) n;
                 i++;
             }
             return emails;
@@ -891,7 +908,7 @@ namespace jabber.protocol.iq
             /// </summary>
             public System.Drawing.Imaging.ImageFormat ImageType
             {
-                get 
+                get
                 {
                     System.Drawing.Imaging.ImageFormat def = System.Drawing.Imaging.ImageFormat.Png;
 

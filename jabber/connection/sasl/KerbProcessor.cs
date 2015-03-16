@@ -11,18 +11,17 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Xml;
 using jabber.protocol.stream;
 using HANDLE = System.IntPtr;
-
 using bedrock.util;
 
 namespace jabber.connection.sasl
 {
-
     ///<summary>
     /// Uses Kerberos authentication ot log into XMPP server.
     ///</summary>
@@ -35,6 +34,7 @@ namespace jabber.connection.sasl
         public const string USE_WINDOWS_CREDS = "USE_WINDOWS_CREDS";
 
         private readonly SSPIHelper kerbClient;
+
         ///<summary>
         /// Creates a new KerbProcessor
         ///</summary>
@@ -61,7 +61,7 @@ namespace jabber.connection.sasl
             {
                 // First step.
                 returnStep = new Auth(doc);
-                ((Auth)returnStep).Mechanism = MechanismType.GSSAPI;
+                ((Auth) returnStep).Mechanism = MechanismType.GSSAPI;
 
                 SetCredentials();
             }
@@ -108,6 +108,7 @@ namespace jabber.connection.sasl
         SECBUFFER_PADDING = 9,
         SECBUFFER_STREAM = 10
     }
+
     /*
     [StructLayout(LayoutKind.Sequential)]
     internal struct SecHandle //=PCtxtHandle
@@ -116,6 +117,7 @@ namespace jabber.connection.sasl
         uint dwUpper;
     }
     */
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct SecBuffer : IDisposable
     {
@@ -127,21 +129,21 @@ namespace jabber.connection.sasl
         public SecBuffer(int bufferSize)
         {
             cbBuffer = bufferSize;
-            BufferType = (int)SecBufferType.SECBUFFER_TOKEN;
+            BufferType = (int) SecBufferType.SECBUFFER_TOKEN;
             pvBuffer = Marshal.AllocHGlobal(bufferSize);
         }
 
         public SecBuffer(byte[] secBufferBytes)
         {
             cbBuffer = secBufferBytes.Length;
-            BufferType = (int)SecBufferType.SECBUFFER_TOKEN;
+            BufferType = (int) SecBufferType.SECBUFFER_TOKEN;
             pvBuffer = Marshal.AllocHGlobal(cbBuffer);
             Marshal.Copy(secBufferBytes, 0, pvBuffer, cbBuffer);
         }
 
         public SecBuffer(byte[] secBufferBytes, SecBufferType bufferType)
         {
-            BufferType = (int)bufferType;
+            BufferType = (int) bufferType;
 
             if (secBufferBytes != null && secBufferBytes.Length != 0)
             {
@@ -181,14 +183,13 @@ namespace jabber.connection.sasl
     [StructLayout(LayoutKind.Sequential)]
     internal struct SecBufferDesc : IDisposable
     {
-
         public int ulVersion;
         public int cBuffers;
         public IntPtr pBuffers; //Point to SecBuffer
 
         public SecBufferDesc(int bufferSize)
         {
-            ulVersion = (int)SecBufferType.SECBUFFER_VERSION;
+            ulVersion = (int) SecBufferType.SECBUFFER_VERSION;
             cBuffers = 1;
             SecBuffer ThisSecBuffer = new SecBuffer(bufferSize);
             pBuffers = Marshal.AllocHGlobal(Marshal.SizeOf(ThisSecBuffer));
@@ -197,7 +198,7 @@ namespace jabber.connection.sasl
 
         public SecBufferDesc(byte[] secBufferBytes)
         {
-            ulVersion = (int)SecBufferType.SECBUFFER_VERSION;
+            ulVersion = (int) SecBufferType.SECBUFFER_VERSION;
             cBuffers = 1;
             SecBuffer ThisSecBuffer = new SecBuffer(secBufferBytes);
             pBuffers = Marshal.AllocHGlobal(Marshal.SizeOf(ThisSecBuffer));
@@ -211,11 +212,11 @@ namespace jabber.connection.sasl
                 throw new ArgumentException("secBufferBytesArray cannot be null or 0 length");
             }
 
-            ulVersion = (int)SecBufferType.SECBUFFER_VERSION;
+            ulVersion = (int) SecBufferType.SECBUFFER_VERSION;
             cBuffers = secBufferBytesArray.Length;
 
             //Allocate memory for SecBuffer Array....
-            pBuffers = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(SecBuffer)) * cBuffers);
+            pBuffers = Marshal.AllocHGlobal(Marshal.SizeOf(typeof (SecBuffer))*cBuffers);
 
             for (int Index = 0; Index < secBufferBytesArray.Length; Index++)
             {
@@ -230,7 +231,7 @@ namespace jabber.connection.sasl
                 //pvBuffer;
                 //Note: that we won't be releasing the memory allocated by ThisSecBuffer until we
                 //are disposed...
-                int CurrentOffset = Index * Marshal.SizeOf(typeof(SecBuffer));
+                int CurrentOffset = Index*Marshal.SizeOf(typeof (SecBuffer));
                 Marshal.WriteInt32(pBuffers, CurrentOffset, ThisSecBuffer.cbBuffer);
 
                 int length = CurrentOffset + Marshal.SizeOf(ThisSecBuffer.cbBuffer);
@@ -249,7 +250,7 @@ namespace jabber.connection.sasl
                 if (cBuffers == 1)
                 {
                     SecBuffer ThisSecBuffer =
-                        (SecBuffer)Marshal.PtrToStructure(pBuffers, typeof(SecBuffer));
+                        (SecBuffer) Marshal.PtrToStructure(pBuffers, typeof (SecBuffer));
                     ThisSecBuffer.Dispose();
                 }
                 else
@@ -264,10 +265,10 @@ namespace jabber.connection.sasl
                         //pvBuffer;
                         //What we need to do here is to grab a hold of the pvBuffer allocate by the individual
                         //SecBuffer and release it...
-                        int CurrentOffset = Index * Marshal.SizeOf(typeof(SecBuffer));
+                        int CurrentOffset = Index*Marshal.SizeOf(typeof (SecBuffer));
 
-                        int totalLength = CurrentOffset + Marshal.SizeOf(typeof(int)) +
-                                          Marshal.SizeOf(typeof(int));
+                        int totalLength = CurrentOffset + Marshal.SizeOf(typeof (int)) +
+                                          Marshal.SizeOf(typeof (int));
                         IntPtr SecBufferpvBuffer = Marshal.ReadIntPtr(pBuffers, totalLength);
                         Marshal.FreeHGlobal(SecBufferpvBuffer);
                     }
@@ -289,7 +290,7 @@ namespace jabber.connection.sasl
 
             if (cBuffers == 1)
             {
-                SecBuffer ThisSecBuffer = (SecBuffer)Marshal.PtrToStructure(pBuffers, typeof(SecBuffer));
+                SecBuffer ThisSecBuffer = (SecBuffer) Marshal.PtrToStructure(pBuffers, typeof (SecBuffer));
 
                 if (ThisSecBuffer.cbBuffer > 0)
                 {
@@ -308,7 +309,7 @@ namespace jabber.connection.sasl
                     //int BufferType;
                     //pvBuffer;
                     //What we need to do here calculate the total number of bytes we need to copy...
-                    int CurrentOffset = Index * Marshal.SizeOf(typeof(SecBuffer));
+                    int CurrentOffset = Index*Marshal.SizeOf(typeof (SecBuffer));
                     BytesToAllocate += Marshal.ReadInt32(pBuffers, CurrentOffset);
                 }
 
@@ -322,9 +323,9 @@ namespace jabber.connection.sasl
                     //pvBuffer;
                     //Now iterate over the individual buffers and put them together into a
                     //byte array...
-                    int CurrentOffset = Index * Marshal.SizeOf(typeof(SecBuffer));
+                    int CurrentOffset = Index*Marshal.SizeOf(typeof (SecBuffer));
                     int BytesToCopy = Marshal.ReadInt32(pBuffers, CurrentOffset);
-                    int length = CurrentOffset + Marshal.SizeOf(typeof(int)) + Marshal.SizeOf(typeof(int));
+                    int length = CurrentOffset + Marshal.SizeOf(typeof (int)) + Marshal.SizeOf(typeof (int));
                     IntPtr SecBufferpvBuffer = Marshal.ReadIntPtr(pBuffers, length);
                     Marshal.Copy(SecBufferpvBuffer, Buffer, BufferIndex, BytesToCopy);
                     BufferIndex += BytesToCopy;
@@ -341,6 +342,7 @@ namespace jabber.connection.sasl
     {
         public uint LowPart;
         public int HighPart;
+
         public SECURITY_INTEGER(int dummy)
         {
             LowPart = 0;
@@ -353,6 +355,7 @@ namespace jabber.connection.sasl
     {
         public uint LowPart;
         public uint HighPart;
+
         public SECURITY_HANDLE(int dummy)
         {
             LowPart = HighPart = 0;
@@ -392,12 +395,12 @@ namespace jabber.connection.sasl
 
         public const uint SECQOP_WRAP_NO_ENCRYPT = 0x80000001;
 
-        const int SECPKG_CRED_OUTBOUND = 2;
+        private const int SECPKG_CRED_OUTBOUND = 2;
         private const int SECURITY_NETWORK_DREP = 0x0;
-        const int MAX_TOKEN_SIZE = 12288;
+        private const int MAX_TOKEN_SIZE = 12288;
         //For AcquireCredentialsHandle in 3er Parameter "fCredentialUse"
 
-        SECURITY_HANDLE _hOutboundCred = new SECURITY_HANDLE(0);
+        private SECURITY_HANDLE _hOutboundCred = new SECURITY_HANDLE(0);
         public SECURITY_HANDLE _hClientContext = new SECURITY_HANDLE(0);
 
         public const int ISC_REQ_DELEGATE = 0x00000001;
@@ -427,35 +430,35 @@ namespace jabber.connection.sasl
 
         public const int STANDARD_CONTEXT_ATTRIBUTES = ISC_REQ_MUTUAL_AUTH;
 
-        bool _bGotClientCredentials = false;
+        private bool _bGotClientCredentials = false;
 
         [DllImport("secur32", CharSet = CharSet.Auto)]
-        static extern uint AcquireCredentialsHandle(
+        private static extern uint AcquireCredentialsHandle(
             string pszPrincipal, //SEC_CHAR*
             string pszPackage, //SEC_CHAR* //"Kerberos","NTLM","Negotiative"
             int fCredentialUse,
-            IntPtr PAuthenticationID,//_LUID AuthenticationID,//pvLogonID, //PLUID
-            ref SEC_WINNT_AUTH_IDENTITY pAuthData,//PVOID
+            IntPtr PAuthenticationID, //_LUID AuthenticationID,//pvLogonID, //PLUID
+            ref SEC_WINNT_AUTH_IDENTITY pAuthData, //PVOID
             int pGetKeyFn, //SEC_GET_KEY_FN
             IntPtr pvGetKeyArgument, //PVOID
             ref SECURITY_HANDLE phCredential, //SecHandle //PCtxtHandle ref
             ref SECURITY_INTEGER ptsExpiry); //PTimeStamp //TimeStamp ref
 
         [DllImport("secur32", CharSet = CharSet.Auto)]
-        static extern uint AcquireCredentialsHandle(
+        private static extern uint AcquireCredentialsHandle(
             string pszPrincipal, //SEC_CHAR*
             string pszPackage, //SEC_CHAR* //"Kerberos","NTLM","Negotiative"
             int fCredentialUse,
-            IntPtr PAuthenticationID,//_LUID AuthenticationID,//pvLogonID, //PLUID
-            IntPtr pAuthData,//PVOID
+            IntPtr PAuthenticationID, //_LUID AuthenticationID,//pvLogonID, //PLUID
+            IntPtr pAuthData, //PVOID
             int pGetKeyFn, //SEC_GET_KEY_FN
             IntPtr pvGetKeyArgument, //PVOID
             ref SECURITY_HANDLE phCredential, //SecHandle //PCtxtHandle ref
             ref SECURITY_INTEGER ptsExpiry); //PTimeStamp //TimeStamp ref
 
         [DllImport("secur32", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern uint InitializeSecurityContext(
-            ref SECURITY_HANDLE phCredential,//PCredHandle
+        private static extern uint InitializeSecurityContext(
+            ref SECURITY_HANDLE phCredential, //PCredHandle
             IntPtr phContext, //PCtxtHandle
             string pszTargetName,
             int fContextReq,
@@ -469,8 +472,8 @@ namespace jabber.connection.sasl
             out SECURITY_INTEGER ptsExpiry); //PTimeStamp
 
         [DllImport("secur32", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern uint InitializeSecurityContext(
-            ref SECURITY_HANDLE phCredential,//PCredHandle
+        private static extern uint InitializeSecurityContext(
+            ref SECURITY_HANDLE phCredential, //PCredHandle
             ref SECURITY_HANDLE phContext, //PCtxtHandle
             string pszTargetName,
             int fContextReq,
@@ -512,39 +515,38 @@ namespace jabber.connection.sasl
 
         [DllImport("secur32.Dll", CharSet = CharSet.Auto, SetLastError = false)]
         public static extern int QueryContextAttributes(ref SECURITY_HANDLE phContext,
-                                                        uint ulAttribute,
-                                                        out SecPkgContext_Sizes pContextAttributes);
+            uint ulAttribute,
+            out SecPkgContext_Sizes pContextAttributes);
 
         [DllImport("secur32.Dll", CharSet = CharSet.Auto, SetLastError = false)]
         public static extern int EncryptMessage(ref SECURITY_HANDLE phContext,
-                                                uint fQOP,        //managed ulong == 64 bits!!!
-                                                ref SecBufferDesc pMessage,
-                                                uint MessageSeqNo);    //managed ulong == 64 bits!!!
+            uint fQOP, //managed ulong == 64 bits!!!
+            ref SecBufferDesc pMessage,
+            uint MessageSeqNo); //managed ulong == 64 bits!!!
 
         [DllImport("secur32.Dll", CharSet = CharSet.Auto, SetLastError = false)]
         public static extern int DecryptMessage(ref SECURITY_HANDLE phContext,
-                                                 ref SecBufferDesc pMessage,
-                                                 uint MessageSeqNo,
-                                                 out uint pfQOP);
+            ref SecBufferDesc pMessage,
+            uint MessageSeqNo,
+            out uint pfQOP);
 
         [DllImport("secur32.Dll", CharSet = CharSet.Auto, SetLastError = false)]
-        public static extern int MakeSignature(ref SECURITY_HANDLE phContext,          // Context to use
-                                                uint fQOP,         // Quality of Protection
-                                                ref SecBufferDesc pMessage,        // Message to sign
-                                                uint MessageSeqNo);      // Message Sequence Num.
+        public static extern int MakeSignature(ref SECURITY_HANDLE phContext, // Context to use
+            uint fQOP, // Quality of Protection
+            ref SecBufferDesc pMessage, // Message to sign
+            uint MessageSeqNo); // Message Sequence Num.
 
         [DllImport("secur32.Dll", CharSet = CharSet.Auto, SetLastError = false)]
-        public static extern int VerifySignature(ref SECURITY_HANDLE phContext,          // Context to use
-                                                ref SecBufferDesc pMessage,        // Message to sign
-                                                uint MessageSeqNo,            // Message Sequence Num.
-                                                out uint pfQOP);      // Quality of Protection
+        public static extern int VerifySignature(ref SECURITY_HANDLE phContext, // Context to use
+            ref SecBufferDesc pMessage, // Message to sign
+            uint MessageSeqNo, // Message Sequence Num.
+            out uint pfQOP); // Quality of Protection
 
 
-        readonly string _sAccountName = WindowsIdentity.GetCurrent().Name;
+        private readonly string _sAccountName = WindowsIdentity.GetCurrent().Name;
 
         public SSPIHelper()
         {
-
         }
 
         public SSPIHelper(string sRemotePrincipal)
@@ -553,18 +555,23 @@ namespace jabber.connection.sasl
         }
 
         private string sUsername;
+
         public string Username
         {
             set { sUsername = value; }
             get { return sUsername; }
         }
+
         private string sDomain;
+
         public string Domain
         {
             set { sDomain = value; }
             get { return sDomain; }
         }
+
         private string sPassword;
+
         public string Password
         {
             set { sPassword = value; }
@@ -572,6 +579,7 @@ namespace jabber.connection.sasl
         }
 
         private bool bUseWindowsCreds = false;
+
         public bool UseWindowsCreds
         {
             set { bUseWindowsCreds = value; }
@@ -593,7 +601,7 @@ namespace jabber.connection.sasl
 
                 DecryptMessage(0, inToken, out outToken);
 
-                inToken = new byte[] { 0x01, 0x00, 0x00, 0x00 };
+                inToken = new byte[] {0x01, 0x00, 0x00, 0x00};
                 EncryptMessage(inToken, out outToken);
             }
         }
@@ -620,14 +628,14 @@ namespace jabber.connection.sasl
                     ident.Flags = 0x1;
 
                     returnValue = AcquireCredentialsHandle(null, "Kerberos", SECPKG_CRED_OUTBOUND,
-                                                               IntPtr.Zero, ref ident, 0, IntPtr.Zero,
-                                                               ref _hOutboundCred, ref ClientLifeTime);
+                        IntPtr.Zero, ref ident, 0, IntPtr.Zero,
+                        ref _hOutboundCred, ref ClientLifeTime);
                 }
                 else
                 {
                     returnValue = AcquireCredentialsHandle(null, "Kerberos", SECPKG_CRED_OUTBOUND,
-                                                           HANDLE.Zero, HANDLE.Zero, 0, HANDLE.Zero,
-                                                           ref _hOutboundCred, ref ClientLifeTime);
+                        HANDLE.Zero, HANDLE.Zero, 0, HANDLE.Zero,
+                        ref _hOutboundCred, ref ClientLifeTime);
                 }
 
                 if (returnValue != SEC_E_OK)
@@ -650,17 +658,16 @@ namespace jabber.connection.sasl
                 {
                     ss = InitializeSecurityContext(ref _hOutboundCred,
                         IntPtr.Zero,
-                        _sAccountName,// null string pszTargetName,
+                        _sAccountName, // null string pszTargetName,
                         STANDARD_CONTEXT_ATTRIBUTES,
-                        0,//int Reserved1,
+                        0, //int Reserved1,
                         SECURITY_NETWORK_DREP, //int TargetDataRep
-                        IntPtr.Zero,    //Always zero first time around...
+                        IntPtr.Zero, //Always zero first time around...
                         0, //int Reserved2,
                         out _hClientContext, //pHandle CtxtHandle = SecHandle
-                        out ClientToken,//ref SecBufferDesc pOutput, //PSecBufferDesc
-                        out ContextAttributes,//ref int pfContextAttr,
+                        out ClientToken, //ref SecBufferDesc pOutput, //PSecBufferDesc
+                        out ContextAttributes, //ref int pfContextAttr,
                         out ClientLifeTime); //ref IntPtr ptsExpiry ); //PTimeStamp
-
                 }
                 else
                 {
@@ -670,15 +677,15 @@ namespace jabber.connection.sasl
                     {
                         ss = InitializeSecurityContext(ref _hOutboundCred,
                             ref _hClientContext,
-                            _sAccountName,// null string pszTargetName,
+                            _sAccountName, // null string pszTargetName,
                             STANDARD_CONTEXT_ATTRIBUTES,
-                            0,//int Reserved1,
-                            SECURITY_NETWORK_DREP,//int TargetDataRep
-                            ref ServerToken,    //Always zero first time around...
+                            0, //int Reserved1,
+                            SECURITY_NETWORK_DREP, //int TargetDataRep
+                            ref ServerToken, //Always zero first time around...
                             0, //int Reserved2,
                             out _hClientContext, //pHandle CtxtHandle = SecHandle
-                            out ClientToken,//ref SecBufferDesc pOutput, //PSecBufferDesc
-                            out ContextAttributes,//ref int pfContextAttr,
+                            out ClientToken, //ref SecBufferDesc pOutput, //PSecBufferDesc
+                            out ContextAttributes, //ref int pfContextAttr,
                             out ClientLifeTime); //ref IntPtr ptsExpiry ); //PTimeStamp
                     }
                     finally
@@ -707,6 +714,7 @@ namespace jabber.connection.sasl
         }
 
         private bool bInitializeKerberosStage = true;
+
         private bool InitializeKerberosStage
         {
             get { return bInitializeKerberosStage; }
@@ -722,26 +730,26 @@ namespace jabber.connection.sasl
             SecPkgContext_Sizes ContextSizes;
 
             if (QueryContextAttributes(ref EncryptionContext,
-                   SECPKG_ATTR_SIZES, out ContextSizes) != SEC_E_OK)
+                SECPKG_ATTR_SIZES, out ContextSizes) != SEC_E_OK)
             {
                 throw new Exception("QueryContextAttribute() failed!!!");
             }
 
             MultipleSecBufferHelper[] ThisSecHelper = new MultipleSecBufferHelper[]
-                    {
-                        new MultipleSecBufferHelper(new byte[ContextSizes.cbSecurityTrailer],
-                                                    SecBufferType.SECBUFFER_TOKEN),
-                        new MultipleSecBufferHelper(message, SecBufferType.SECBUFFER_DATA),
-                        new MultipleSecBufferHelper(new byte[ContextSizes.cbBlockSize],
-                                                    SecBufferType.SECBUFFER_PADDING)
-                    };
+            {
+                new MultipleSecBufferHelper(new byte[ContextSizes.cbSecurityTrailer],
+                    SecBufferType.SECBUFFER_TOKEN),
+                new MultipleSecBufferHelper(message, SecBufferType.SECBUFFER_DATA),
+                new MultipleSecBufferHelper(new byte[ContextSizes.cbBlockSize],
+                    SecBufferType.SECBUFFER_PADDING)
+            };
 
             SecBufferDesc DescBuffer = new SecBufferDesc(ThisSecHelper);
 
             try
             {
                 if (EncryptMessage(ref EncryptionContext,
-                        SECQOP_WRAP_NO_ENCRYPT, ref DescBuffer, 0) != SEC_E_OK)
+                    SECQOP_WRAP_NO_ENCRYPT, ref DescBuffer, 0) != SEC_E_OK)
                 {
                     throw new Exception("EncryptMessage() failed!!!");
                 }
@@ -769,10 +777,10 @@ namespace jabber.connection.sasl
             Array.Copy(encryptedBuffer, messageLength, SecurityTrailer, 0, SecurityTrailerLength);
 
             MultipleSecBufferHelper[] ThisSecHelper = new MultipleSecBufferHelper[]
-                    {
-                        new MultipleSecBufferHelper(EncryptedMessage, SecBufferType.SECBUFFER_DATA),
-                        new MultipleSecBufferHelper(SecurityTrailer, SecBufferType.SECBUFFER_STREAM)
-                    };
+            {
+                new MultipleSecBufferHelper(EncryptedMessage, SecBufferType.SECBUFFER_DATA),
+                new MultipleSecBufferHelper(SecurityTrailer, SecBufferType.SECBUFFER_STREAM)
+            };
 
             SecBufferDesc DescBuffer = new SecBufferDesc(ThisSecHelper);
             try
@@ -794,5 +802,3 @@ namespace jabber.connection.sasl
         }
     }
 }
-
-

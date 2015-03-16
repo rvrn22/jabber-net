@@ -11,11 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Text;
 using System.IO;
 using System.Threading;
-
 using NUnit.Framework;
 using bedrock.util;
 using jabber.connection;
@@ -33,7 +33,7 @@ namespace test.bedrock.net
 
         private void uploader_OnUpload(object sender)
         {
-            lock(m_lock)
+            lock (m_lock)
             {
                 Monitor.Pulse(m_lock);
             }

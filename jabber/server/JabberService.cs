@@ -11,16 +11,14 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Xml;
-
 using bedrock.net;
 using bedrock.util;
-
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.accept;
@@ -40,6 +38,7 @@ namespace jabber.server
         /// Jabberd will accept the connetion; the component will
         /// initiate the connection.  </summary>
         Accept,
+
         /// <summary>
         /// Jabberd will connect to the component; jabberd will
         /// initiate the connection.  </summary>
@@ -67,7 +66,8 @@ namespace jabber.server
     [SVN(@"$Id$")]
     public class JabberService : jabber.connection.XmppStream
     {
-        private static readonly object[][] DEFAULTS = new object[][] {
+        private static readonly object[][] DEFAULTS = new object[][]
+        {
             new object[] {Options.COMPONENT_DIRECTION, ComponentType.Accept},
             new object[] {Options.PORT, 7400},
             new object[] {Options.OVERRIDE_FROM, null},
@@ -154,7 +154,7 @@ namespace jabber.server
         [Category("Component")]
         public string ComponentID
         {
-            get { return (string)this[Options.TO]; }
+            get { return (string) this[Options.TO]; }
             set
             {
                 this[Options.JID] = value;
@@ -185,7 +185,7 @@ namespace jabber.server
         [PasswordPropertyText]
         public string Secret
         {
-            get { return (string)this[Options.PASSWORD]; }
+            get { return (string) this[Options.PASSWORD]; }
             set { this[Options.PASSWORD] = value; }
         }
 
@@ -198,13 +198,13 @@ namespace jabber.server
         [Category("Component")]
         public ComponentType Type
         {
-            get { return (ComponentType)this[Options.COMPONENT_DIRECTION]; }
+            get { return (ComponentType) this[Options.COMPONENT_DIRECTION]; }
             set
             {
-                if ((ComponentType)this[Options.COMPONENT_DIRECTION] != value)
+                if ((ComponentType) this[Options.COMPONENT_DIRECTION] != value)
                 {
                     this[Options.COMPONENT_DIRECTION] = value;
-                    if ((ComponentType)this[Options.COMPONENT_DIRECTION] == ComponentType.Connect)
+                    if ((ComponentType) this[Options.COMPONENT_DIRECTION] == ComponentType.Connect)
                     {
                         this.AutoReconnect = 0;
                     }
@@ -218,10 +218,7 @@ namespace jabber.server
         [Browsable(false)]
         protected override string NS
         {
-            get
-            {
-                return (this.Type == ComponentType.Accept) ? URI.ACCEPT : URI.CONNECT;
-            }
+            get { return (this.Type == ComponentType.Accept) ? URI.ACCEPT : URI.CONNECT; }
         }
 
         /// <summary>
@@ -254,7 +251,7 @@ namespace jabber.server
         public override void Connect()
         {
             this[Options.SERVER_ID] = this[Options.NETWORK_HOST];
-            this[Options.JID] = new JID((string)this[Options.TO]);
+            this[Options.JID] = new JID((string) this[Options.TO]);
             if (this.Type == ComponentType.Accept)
                 base.Connect();
             else

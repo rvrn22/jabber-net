@@ -11,12 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -141,6 +140,5 @@ namespace jabber.protocol.iq
             get { return DateTimeProfile(GetElem("timestamp")); }
             set { SetElem("timestamp", DateTimeProfile(value)); }
         }
-
     }
 }

@@ -24,13 +24,12 @@ using System.Text;
 using System.Threading;
 using System.Xml;
 using bedrock.util;
-
 using jabber.protocol.stream;
 using jabber.connection;
 using jabber.protocol;
 
 namespace bedrock.net
-{    
+{
     /// <summary>
     /// XEP-0124 Error conditions
     /// </summary>
@@ -203,8 +202,11 @@ namespace bedrock.net
 
         private bool BothPending
         {
-            get { return (m_sockA != null) && (m_sockB != null) && 
-                          m_sockA.IsPending && m_sockB.IsPending; }
+            get
+            {
+                return (m_sockA != null) && (m_sockB != null) &&
+                       m_sockA.IsPending && m_sockB.IsPending;
+            }
         }
 
         private bool NeitherPending
@@ -217,7 +219,7 @@ namespace bedrock.net
             get
             {
                 return (m_sockA != null) && (m_sockB != null) &&
-                        m_sockA.Connected && m_sockB.Connected;
+                       m_sockA.Connected && m_sockB.Connected;
             }
         }
 
@@ -300,7 +302,7 @@ namespace bedrock.net
             body.Type = BodyType.terminate;
 
             Enqueue(body);
-            
+
             if (m_thread != null)
                 m_thread.Join();
 
@@ -421,7 +423,7 @@ namespace bedrock.net
             // HACK: upper levels need this to come in after the
             // return from write. Double-hack: hope this doesn't get
             // gc's before the timer fires.... :)
-            
+
             //Timer t =
             new Timer(new TimerCallback(FakeTimer), null, 0, Timeout.Infinite);
         }
@@ -444,9 +446,9 @@ namespace bedrock.net
             if (m_rid == -1L)
             {
                 Random rnd = new Random();
-                long r = m_rid = (long)rnd.Next();
+                long r = m_rid = (long) rnd.Next();
                 body.Content = CONTENT_TYPE;
-                
+
                 body.To = m_hostid;
                 body.Wait = m_wait;
                 body.Hold = m_hold;
@@ -457,7 +459,7 @@ namespace bedrock.net
             {
                 body.SID = m_sid;
             }
-            
+
             return body;
         }
 
@@ -475,8 +477,7 @@ namespace bedrock.net
         /// </summary>
         public override bool Connected
         {
-            get
-            { return m_running; }
+            get { return m_running; }
         }
 
         /// <summary>
@@ -523,7 +524,7 @@ namespace bedrock.net
 
                     m_listener.OnConnect(this);
                 }
-            }            
+            }
         }
 
         void ISocketEventListener.OnClose(BaseSocket sock)
@@ -564,7 +565,7 @@ namespace bedrock.net
                 return false;
             }
 
-            Debug.WriteLine("OnRead: " + ((HttpSocket)sock).Name);
+            Debug.WriteLine("OnRead: " + ((HttpSocket) sock).Name);
 
             // Parse out the first start tag or empty element, which will be
             // <body/>.
@@ -580,8 +581,8 @@ namespace bedrock.net
             }
 
             string name = ENC.GetString(buf,
-                                        offset + e.MinBytesPerChar,
-                                        ct.NameEnd - offset - e.MinBytesPerChar);
+                offset + e.MinBytesPerChar,
+                ct.NameEnd - offset - e.MinBytesPerChar);
             Debug.Assert(name == "body");
             Body b = new Body(m_doc);
             string val;

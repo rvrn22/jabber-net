@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -47,6 +46,7 @@ namespace jabber.protocol.iq
         public Version(XmlDocument doc) : base("query", URI.VERSION, doc)
         {
         }
+
         /// <summary>
         ///
         /// </summary>

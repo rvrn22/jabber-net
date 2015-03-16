@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.x
@@ -85,6 +84,7 @@ namespace jabber.protocol.x
     Offline Storage
   </delay>
 */
+
         /// <summary>
         ///Create a delay element for sending
         /// </summary>
@@ -129,6 +129,6 @@ namespace jabber.protocol.x
         {
             get { return this.InnerText; }
             set { this.InnerText = value; }
-        } 
+        }
     }
 }

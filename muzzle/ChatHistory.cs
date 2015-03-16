@@ -11,13 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
-
 using bedrock.util;
-
 using jabber;
 using jabber.client;
 
@@ -65,7 +64,7 @@ namespace muzzle
         {
             string body = msg.Body;
             if (body == null)
-                return;  // typing indicator, e.g.
+                return; // typing indicator, e.g.
 
             string nick = (m_nick == null) ? msg.From.Resource : m_nick;
             AppendMaybeScroll(m_recvColor, nick + ":", body);
@@ -93,9 +92,8 @@ namespace muzzle
         /// </summary>
         private void InitializeComponent()
         {
-
         }
-        #endregion
 
+        #endregion
     }
 }

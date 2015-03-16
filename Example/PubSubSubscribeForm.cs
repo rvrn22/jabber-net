@@ -112,8 +112,8 @@ namespace Example
             //
             // cmbJID
             //
-            this.cmbJID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbJID.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbJID.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cmbJID.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbJID.Location = new System.Drawing.Point(124, 6);
@@ -123,8 +123,8 @@ namespace Example
             //
             // txtNode
             //
-            this.txtNode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNode.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNode.Location = new System.Drawing.Point(124, 32);
             this.txtNode.Name = "txtNode";
             this.txtNode.Size = new System.Drawing.Size(141, 20);
@@ -168,7 +168,6 @@ namespace Example
             this.Shown += new System.EventHandler(this.PubSub_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -186,6 +185,5 @@ namespace Example
                 cmbJID.SelectedIndex = 0;
             cmbJID.EndUpdate();
         }
-
     }
 }

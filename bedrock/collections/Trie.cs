@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Collections;
 using bedrock.util;
 
@@ -22,10 +22,12 @@ namespace bedrock.collections
     /// The method signature used by <see cref="Trie.Traverse(TrieKeyWalker,object,TrieNode,ByteStack)"/> when it encounters a key.
     /// </summary>
     public delegate bool TrieKeyWalker(TrieNode e, object data, ByteStack key);
+
     /// <summary>
     /// The method signature used by <see cref="Trie.Traverse(TrieWalker,object,TrieNode)"/> when it encounters a node.
     /// </summary>
     public delegate bool TrieWalker(TrieNode e, object data);
+
     /// <summary>
     /// A trie is a tree structure that implements a radix search.  Each node of the tree has a
     /// sub-node for each possible next byte.
@@ -38,17 +40,19 @@ namespace bedrock.collections
         /// <summary>
         /// The root node of the trie.
         /// </summary>
-        private TrieNode m_root  = new TrieNode(null, 0);
+        private TrieNode m_root = new TrieNode(null, 0);
 
         /// <summary>
         /// The number of nodes are in the trie
         /// </summary>
-        private int      m_count = 0;
+        private int m_count = 0;
 
         /// <summary>
         /// Creates an empty trie.
         /// </summary>
-        public Trie() {}
+        public Trie()
+        {
+        }
 
         /// <summary>
         /// Find a node for a given key, somewhere under the root.
@@ -61,6 +65,7 @@ namespace bedrock.collections
         {
             return FindNode(key, m_root, create);
         }
+
         /// <summary>
         /// Finds a node in the given sub-tree.
         /// </summary>
@@ -73,13 +78,14 @@ namespace bedrock.collections
             TrieNode current = startAt;
             byte b;
 
-            for (int i=0; (i<key.Length) && (current != null); i++)
+            for (int i = 0; (i < key.Length) && (current != null); i++)
             {
                 b = key[i];
                 current = current[b, create];
             }
             return current;
         }
+
         /// <summary>
         /// Compute the byte array corresping to the given object.
         /// This is likely to cause problems for non 7-bit ASCII text.
@@ -94,6 +100,7 @@ namespace bedrock.collections
 
             return ENCODING.GetBytes(key.ToString());
         }
+
         /// <summary>
         /// Extra functionality for trie's whose values are integers.
         /// Increment the value corresponding to the key.  If
@@ -112,6 +119,7 @@ namespace bedrock.collections
                 e.Value = ((int) e.Value) + 1;
             }
         }
+
         /// <summary>
         /// Performs the given function on every element of the trie. This is equivalent to Perl's map() operator.
         /// </summary>
@@ -142,6 +150,7 @@ namespace bedrock.collections
                 key.Pop();
             }
         }
+
         /// <summary>
         /// Perform the given function on every element of the trie.  Perl's map() operator.
         /// Don't keep track of the keys (slightly faster than the other Traverse() method).
@@ -152,6 +161,7 @@ namespace bedrock.collections
         {
             Traverse(w, data, m_root);
         }
+
         /// <summary>
         /// Perform the given function on every element of the trie.  Perl's map() operator.
         /// </summary>
@@ -160,7 +170,7 @@ namespace bedrock.collections
         /// <param name="current">What node are we currently on?</param>
         protected void Traverse(TrieWalker w, object data, TrieNode current)
         {
-            if (! w(current, data))
+            if (!w(current, data))
             {
                 return;
             }
@@ -169,6 +179,7 @@ namespace bedrock.collections
                 Traverse(w, data, e);
             }
         }
+
         #region System.Collections.IDictionary
 
         /// <summary>
@@ -290,7 +301,7 @@ namespace bedrock.collections
         /// </summary>
         public void Clear()
         {
-            m_root  = new TrieNode(null, 0);
+            m_root = new TrieNode(null, 0);
             m_count = 0;
         }
 
@@ -315,6 +326,7 @@ namespace bedrock.collections
         }
 
         #endregion
+
         #region System.Collections.ICollection
 
         /// <summary>
@@ -322,10 +334,7 @@ namespace bedrock.collections
         /// </summary>
         public int Count
         {
-            get
-            {
-                return m_count;
-            }
+            get { return m_count; }
         }
 
         /// <summary>
@@ -334,10 +343,7 @@ namespace bedrock.collections
         /// </summary>
         public object SyncRoot
         {
-            get
-            {
-                return this;
-            }
+            get { return this; }
         }
 
         /// <summary>
@@ -345,10 +351,7 @@ namespace bedrock.collections
         /// </summary>
         public bool IsReadOnly
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         /// <summary>
@@ -357,10 +360,7 @@ namespace bedrock.collections
         /// </summary>
         public bool IsSynchronized
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         /// <summary>
@@ -379,6 +379,7 @@ namespace bedrock.collections
         }
 
         #endregion
+
         #region System.Collections.IEnumerable
 
         /// <summary>
@@ -393,9 +394,10 @@ namespace bedrock.collections
 
         private class TrieEnumerator : IDictionaryEnumerator
         {
-            protected Trie     m_trie;
-            protected Stack    m_pos     = new Stack();
+            protected Trie m_trie;
+            protected Stack m_pos = new Stack();
             protected TrieNode m_current = null;
+
             public TrieEnumerator(Trie t)
             {
                 m_trie = t;
@@ -404,10 +406,7 @@ namespace bedrock.collections
 
             public object Current
             {
-                get
-                {
-                    return Entry;
-                }
+                get { return Entry; }
             }
 
             public void Reset()
@@ -440,26 +439,17 @@ namespace bedrock.collections
 
             public object Key
             {
-                get
-                {
-                    return m_current.Key;
-                }
+                get { return m_current.Key; }
             }
 
             public object Value
             {
-                get
-                {
-                    return m_current.Value;
-                }
+                get { return m_current.Value; }
             }
 
             public DictionaryEntry Entry
             {
-                get
-                {
-                    return new DictionaryEntry(m_current.Key, m_current.Value);
-                }
+                get { return new DictionaryEntry(m_current.Key, m_current.Value); }
             }
         }
     }

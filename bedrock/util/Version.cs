@@ -11,13 +11,14 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+
 namespace bedrock.util
 {
     /// <summary>
@@ -29,38 +30,45 @@ namespace bedrock.util
     /// <see cref="RCSAttribute"/>
     //    [SVN(@"$Id$")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Enum | AttributeTargets.Struct,
-                    AllowMultiple = false,
-                    Inherited     = false)]
+        AllowMultiple = false,
+        Inherited = false)]
     public abstract class SourceVersionAttribute : Attribute
     {
         /// <summary>
         /// The entire header
         /// </summary>
-        protected string   m_header  = null;
+        protected string m_header = null;
+
         /// <summary>
         /// The directory it's stored in
         /// </summary>
-        protected string   m_archive = null;
+        protected string m_archive = null;
+
         /// <summary>
         /// Last check-in author
         /// </summary>
-        protected string   m_author  = null;
+        protected string m_author = null;
+
         /// <summary>
         /// Last check-in version
         /// </summary>
-        protected string   m_version = null;
+        protected string m_version = null;
+
         /// <summary>
         /// Last check-in date
         /// </summary>
-        protected DateTime m_date    = DateTime.MinValue;
+        protected DateTime m_date = DateTime.MinValue;
+
         /// <summary>
         /// Have we parsed the header, yet?
         /// </summary>
-        private   bool     m_parsed  = false;
+        private bool m_parsed = false;
+
         // TODO: replace all of the subclasses with a single, uber-regex.
         private static readonly Regex REGEX =
             new Regex(@"^(\$(?<field>[a-z]+): *(?<value>.+) *\$)|( *(?<value>.+) *)$",
-                      RegexOptions.IgnoreCase | RegexOptions.Compiled);
+                RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
         /// <summary>
         /// Construct the attribute.  Parsing is delayed until needed.
         /// </summary>
@@ -70,13 +78,14 @@ namespace bedrock.util
         {
             m_header = header;
         }
+
         /// <summary>
         /// You could use this one, and pass the keywords in individually.
         /// </summary>
         public SourceVersionAttribute()
         {
-
         }
+
         /// <summary>
         /// Give back the header string.
         /// </summary>
@@ -84,6 +93,7 @@ namespace bedrock.util
         {
             return m_header;
         }
+
         /// <summary>
         /// Have we parsed yet?
         /// </summary>
@@ -93,7 +103,7 @@ namespace bedrock.util
             {
                 return;
             }
-            lock(this)
+            lock (this)
             {
                 if (m_parsed)
                 {
@@ -103,6 +113,7 @@ namespace bedrock.util
                 m_parsed = true;
             }
         }
+
         /// <summary>
         /// We have done a parse, now
         /// </summary>
@@ -110,16 +121,18 @@ namespace bedrock.util
         {
             if (!m_parsed)
             {
-                lock(this)
+                lock (this)
                 {
                     m_parsed = true;
                 }
             }
         }
+
         /// <summary>
         /// Parse data into internal fields
         /// </summary>
         protected abstract void Parse();
+
         /// <summary>
         /// Do a regex match on src
         /// </summary>
@@ -138,6 +151,7 @@ namespace bedrock.util
             }
             return m.Groups["value"].ToString();
         }
+
         /// <summary>
         /// The last checked-in version
         /// </summary>
@@ -154,6 +168,7 @@ namespace bedrock.util
                 m_version = GetField(value);
             }
         }
+
         /// <summary>
         /// The last checked-in version, in perhaps more useful format
         /// </summary>
@@ -173,6 +188,7 @@ namespace bedrock.util
                 return new Version(m_version);
             }
         }
+
         /// <summary>
         /// Retrive the binary date/time of last check-in
         /// </summary>
@@ -189,6 +205,7 @@ namespace bedrock.util
                 m_date = value;
             }
         }
+
         /// <summary>
         /// Retrieve the string representation of the date of last check-in.
         /// </summary>
@@ -205,6 +222,7 @@ namespace bedrock.util
                 m_date = DateTime.Parse(GetField(value));
             }
         }
+
         /// <summary>
         /// Retrive the name of the last person to check in
         /// </summary>
@@ -221,6 +239,7 @@ namespace bedrock.util
                 m_author = GetField(value);
             }
         }
+
         /// <summary>
         /// Retrieve the archive name from the header
         /// </summary>
@@ -237,6 +256,7 @@ namespace bedrock.util
                 m_archive = GetField(value);
             }
         }
+
         /// <summary>
         /// Get the version information for the given type.
         /// </summary>
@@ -244,7 +264,7 @@ namespace bedrock.util
         /// <returns></returns>
         public static SourceVersionAttribute GetVersion(Type t)
         {
-            object[] sta = t.GetCustomAttributes(typeof(SourceVersionAttribute), true);
+            object[] sta = t.GetCustomAttributes(typeof (SourceVersionAttribute), true);
             if (sta.Length == 0)
             {
                 // throw exception?  Null seems nicer.
@@ -252,6 +272,7 @@ namespace bedrock.util
             }
             return (SourceVersionAttribute) sta[0];
         }
+
         /// <summary>
         /// Get the version information for the class of the given object.
         /// </summary>
@@ -266,6 +287,7 @@ namespace bedrock.util
             }
             return GetVersion(o.GetType());
         }
+
         /// <summary>
         /// Get all of the versioned classes currently in the working set.
         /// </summary>
@@ -290,6 +312,7 @@ namespace bedrock.util
             return tv;
         }
     }
+
     /// <summary>
     /// Make StarTeam versoning available at run-time.
     ///
@@ -302,12 +325,13 @@ namespace bedrock.util
     /// </example>
     [SVN(@"$Id$")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Enum | AttributeTargets.Struct,
-                    AllowMultiple=false, Inherited=false)]
+        AllowMultiple = false, Inherited = false)]
     public class StarTeamAttribute : SourceVersionAttribute
     {
         // Dammit gumby.  Don't mess up my regex.
         private static readonly Regex REGEX =
             new Regex(@"^\$" + @"Header(: (?<archive>[^,]+), (?<version>[0-9.]+), (?<date>[^,]+), (?<author>[^$]+))?" + @"\$$");
+
         /// <summary>
         /// Normal usage
         /// </summary>
@@ -315,6 +339,7 @@ namespace bedrock.util
         public StarTeamAttribute(string header) : base(header)
         {
         }
+
         /// <summary>
         /// Not useful
         /// </summary>
@@ -335,8 +360,9 @@ namespace bedrock.util
             }
 
             return String.Format("{0}Header: {1}, {2}, {3:MM/dd/yyyy h:mm:ss tt}, {4}{5}",
-                                 new object[] {"$", m_archive, m_version, m_date, m_author, "$"});
+                new object[] {"$", m_archive, m_version, m_date, m_author, "$"});
         }
+
         /// <summary>
         /// Parse the header
         /// </summary>
@@ -351,23 +377,26 @@ namespace bedrock.util
             {
                 m_archive = m.Groups["archive"].ToString();
                 m_version = m.Groups["version"].ToString();
-                m_date    = DateTime.Parse(m.Groups["date"].ToString());
-                m_author  = m.Groups["author"].ToString();
+                m_date = DateTime.Parse(m.Groups["date"].ToString());
+                m_author = m.Groups["author"].ToString();
             }
         }
     }
+
     /// <summary>
     /// Version control attribute for RCS and CVS.
     /// </summary>
     [SVN(@"$Id$")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Enum | AttributeTargets.Struct,
-                    AllowMultiple=false, Inherited=false)]
+        AllowMultiple = false, Inherited = false)]
     public class RCSAttribute : SourceVersionAttribute
     {
         // Header: /u1/html/cvsroot/www.cyclic.com/RCS-html/info-ref.html,v 1.1 1999/04/14 19:04:02 kingdon Exp
         private static readonly Regex REGEX =
             new Regex(@"^\$" + @"Header(: +(?<archive>[^ ]+) +(?<version>[0-9.]+) +(?<date>[0-9/]+ [0-9:]+) +(?<author>[^ ]+) +(?<state>[^ ]+) *)?" + @"\$$");
+
         private string m_state = null;
+
         /// <summary>
         /// The most common.  Pass in @"$ Header $" (without the spaces).
         /// </summary>
@@ -375,12 +404,14 @@ namespace bedrock.util
         public RCSAttribute(string header) : base(header)
         {
         }
+
         /// <summary>
         /// Null constructor.  This is rarely right.
         /// </summary>
         public RCSAttribute() : base()
         {
         }
+
         /// <summary>
         /// Parse the header string.
         /// </summary>
@@ -395,11 +426,12 @@ namespace bedrock.util
             {
                 m_archive = m.Groups["archive"].ToString();
                 m_version = m.Groups["version"].ToString();
-                m_date    = DateTime.Parse(m.Groups["date"].ToString());
-                m_author  = m.Groups["author"].ToString();
-                m_state   = m.Groups["state"].ToString();
+                m_date = DateTime.Parse(m.Groups["date"].ToString());
+                m_author = m.Groups["author"].ToString();
+                m_state = m.Groups["state"].ToString();
             }
         }
+
         /// <summary>
         /// Hm.  Wish I remembered what this was for.  :)
         /// </summary>
@@ -413,10 +445,11 @@ namespace bedrock.util
             set
             {
                 SetParse();
-                m_state  = GetField(value);
+                m_state = GetField(value);
             }
         }
     }
+
     /// <summary>
     /// Version control attribute for SourceSafe.
     /// I don't use this any more, so someone tell me if it breaks with
@@ -424,12 +457,13 @@ namespace bedrock.util
     /// </summary>
     [SVN(@"$Id$")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Enum | AttributeTargets.Struct,
-                    AllowMultiple=false, Inherited=false)]
+        AllowMultiple = false, Inherited = false)]
     public class SourceSafeAttribute : SourceVersionAttribute
     {
         // Header: /t.cs 1     2/14/01 3:57p Hildebzj
         private static readonly Regex REGEX =
             new Regex(@"^\$" + @"Header(: +(?<archive>[^ ]+) +(?<version>[0-9.]+) +(?<date>[0-9/]+ [0-9:]+)(?<ampm>[ap]) +(?<author>[^ ]+) *)?" + @"\$$");
+
         //private string m_state = null;
         /// <summary>
         /// The normal use.  Pass in @"$ Header $" (without the spaces).
@@ -438,12 +472,14 @@ namespace bedrock.util
         public SourceSafeAttribute(string header) : base(header)
         {
         }
+
         /// <summary>
         /// Not usually useful.
         /// </summary>
         public SourceSafeAttribute() : base()
         {
         }
+
         /// <summary>
         /// Parse the header.
         /// </summary>
@@ -458,15 +494,16 @@ namespace bedrock.util
             {
                 m_archive = m.Groups["archive"].ToString();
                 m_version = m.Groups["version"].ToString();
-                m_date    = DateTime.Parse(m.Groups["date"].ToString());
+                m_date = DateTime.Parse(m.Groups["date"].ToString());
                 if (m.Groups["ampm"].ToString() == "p")
                 {
                     m_date = m_date.AddHours(12);
                 }
-                m_author  = m.Groups["author"].ToString();
+                m_author = m.Groups["author"].ToString();
             }
         }
     }
+
     /// <summary>
     /// A collection of SourceVersionAttributes, so that we can
     /// return a list of all of the versioned classes in the
@@ -484,6 +521,7 @@ namespace bedrock.util
         {
             BaseAdd(type, value);
         }
+
         /// <summary>
         /// Remove all of the attributes from the list
         /// </summary>
@@ -491,6 +529,7 @@ namespace bedrock.util
         {
             BaseClear();
         }
+
         /// <summary>
         /// Get the index'th attribute
         /// </summary>
@@ -500,6 +539,7 @@ namespace bedrock.util
         {
             return (SourceVersionAttribute) BaseGet(index);
         }
+
         /// <summary>
         /// Get the attribute associated with a give type name
         /// </summary>
@@ -509,6 +549,7 @@ namespace bedrock.util
         {
             return (SourceVersionAttribute) BaseGet(type);
         }
+
         /// <summary>
         /// Set the attribute associated with a given type name
         /// </summary>
@@ -518,6 +559,7 @@ namespace bedrock.util
         {
             BaseSet(type, value);
         }
+
         /// <summary>
         /// Set the index'th attribute
         /// </summary>
@@ -527,6 +569,7 @@ namespace bedrock.util
         {
             BaseSet(index, value);
         }
+
         /// <summary>
         /// Remove the index'th attribute
         /// </summary>
@@ -535,6 +578,7 @@ namespace bedrock.util
         {
             BaseRemoveAt(index);
         }
+
         /// <summary>
         /// Remove the attribute associated with the given type name
         /// </summary>
@@ -543,43 +587,31 @@ namespace bedrock.util
         {
             BaseRemove(type);
         }
+
         /// <summary>
         /// Retrieve the index'th attribute
         /// </summary>
         public string this[int index]
         {
-            get
-            {
-                return BaseGetKey(index);
-            }
+            get { return BaseGetKey(index); }
         }
+
         /// <summary>
         /// Retrieve/set the attriubute associated with the given type name.
         /// </summary>
         public SourceVersionAttribute this[string type]
         {
-            get
-            {
-                return Get(type);
-            }
-            set
-            {
-                Set(type, value);
-            }
+            get { return Get(type); }
+            set { Set(type, value); }
         }
+
         /// <summary>
         /// Retrieve/set the attribute associated with the given type.
         /// </summary>
         public SourceVersionAttribute this[Type type]
         {
-            get
-            {
-                return Get(type.FullName);
-            }
-            set
-            {
-                Set(type.FullName, value);
-            }
+            get { return Get(type.FullName); }
+            set { Set(type.FullName, value); }
         }
     }
 
@@ -588,13 +620,14 @@ namespace bedrock.util
     /// </summary>
     [SVN(@"$Id$")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Enum | AttributeTargets.Struct,
-                    AllowMultiple=false, Inherited=false)]
+        AllowMultiple = false, Inherited = false)]
     public class SVNAttribute : SourceVersionAttribute
     {
         // Header: /u1/html/cvsroot/www.cyclic.com/RCS-html/info-ref.html,v 1.1 1999/04/14 19:04:02 kingdon Exp
         // Id: calc.c 148 2002-07-28 21:30:43Z sally
         private static readonly Regex REGEX =
             new Regex(@"^\$" + @"Id(: +(?<archive>[^ ]+) +(?<version>[0-9.]+) +(?<date>[0-9-]+ [0-9:]+)Z +(?<author>[^ ]+) *)?\$$");
+
         /// <summary>
         /// The most common.  Pass in @"$ Id $" (without the spaces).
         /// </summary>
@@ -603,6 +636,7 @@ namespace bedrock.util
             : base(header)
         {
         }
+
         /// <summary>
         /// Null constructor.  This is rarely right.
         /// </summary>
@@ -610,6 +644,7 @@ namespace bedrock.util
             : base()
         {
         }
+
         /// <summary>
         /// Parse the header string.
         /// </summary>
@@ -624,8 +659,8 @@ namespace bedrock.util
             {
                 m_archive = m.Groups["archive"].ToString();
                 m_version = m.Groups["version"].ToString();
-                m_date    = DateTime.Parse(m.Groups["date"].ToString());
-                m_author  = m.Groups["author"].ToString();
+                m_date = DateTime.Parse(m.Groups["date"].ToString());
+                m_author = m.Groups["author"].ToString();
             }
         }
     }

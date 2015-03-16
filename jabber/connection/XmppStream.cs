@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
@@ -22,11 +22,9 @@ using System.Threading;
 using System.Security.Cryptography;
 using System.Xml;
 using bedrock.util;
-
 using jabber.protocol;
 using jabber.protocol.stream;
 using jabber.connection.sasl;
-
 using System.Security.Cryptography.X509Certificates;
 
 namespace jabber.connection
@@ -51,58 +49,70 @@ namespace jabber.connection
         /// Contains the network hostname or IP address of the XMPP server to connect to.
         /// </summary>
         public const string NETWORK_HOST = "network_host";
+
         /// <summary>
         /// Contains the identity of the item that the client is connecting to.
         /// For components, the component ID.
         /// </summary>
         public const string TO = "to";
+
         /// <summary>
         /// Contains the server identity that is expected on the X.509 certificate
         /// from the XMPP server.
         /// </summary>
-        public const string SERVER_ID    = "tls.cn";
+        public const string SERVER_ID = "tls.cn";
+
         /// <summary>
         /// Determines the keep-alive interval in seconds.
         /// </summary>
-        public const string KEEP_ALIVE   = "keep_alive";
+        public const string KEEP_ALIVE = "keep_alive";
+
         /// <summary>
         /// Don't start keep-alives until we're fully authenticated.  This is what the SocketStanzaStream actually checks.
         /// </summary>
         public const string CURRENT_KEEP_ALIVE = "current_keep_alive";
+
         /// <summary>
         /// Contains the port number to connect to or to listen on.
         /// </summary>
-        public const string PORT         = "port";
+        public const string PORT = "port";
+
         /// <summary>
         /// Uses SSL on connection if set to true.
         /// </summary>
-        public const string SSL          = "ssl";
+        public const string SSL = "ssl";
+
         /// <summary>
         /// Uses Start-TLS on connection if set to true and
         /// the server supports it.
         /// </summary>
-        public const string AUTO_TLS     = "tls.auto";
+        public const string AUTO_TLS = "tls.auto";
+
         /// <summary>
         /// Starts the XMPP stream compression (XEP-138) on connection
         /// if set to true.
         /// </summary>
         public const string AUTO_COMPRESS = "compress.auto";
+
         /// <summary>
         /// Allows plaintext authentication for connecting to the XMPP server.
         /// </summary>
-        public const string PLAINTEXT    = "plaintext";
+        public const string PLAINTEXT = "plaintext";
+
         /// <summary>
         /// Attempts a SASL connection if set to true and the feature is available
         /// from the XMPP server. If the server doesn't support SASL, the connection
         /// will move to a fallback mechanism.
         /// </summary>
         public const string SASL = "sasl";
+
         /// <summary>
         /// Requires SASL authentication on this connection if set to true.
         /// There is no fallback mechanism. If the server doesn't support SASL,
         /// the connection attempt will fail.
         /// </summary>
         public const string REQUIRE_SASL = "sasl.require";
+
         /// <summary>
         /// Contains the list of SASL Mechanisms such as Digest-MD5, Plain and so on.
         /// </summary>
@@ -111,44 +121,53 @@ namespace jabber.connection
         /// <summary>
         /// Contains the username to connect as.
         /// </summary>
-        public const string USER     = "user";
+        public const string USER = "user";
+
         /// <summary>
         /// Contains the password for the user, or secret for the component.
         /// </summary>
         public const string PASSWORD = "password";
+
         /// <summary>
         /// Contains the connecting resource which is used to identify a unique connection.
         /// </summary>
         public const string RESOURCE = "resource";
+
         /// <summary>
         /// Contains the presence default priority for this connection.
         /// </summary>
         public const string PRIORITY = "priority";
+
         /// <summary>
         /// Contains the DNS Service/Protocol to prepend to domain.
         /// Example: _xmpp-client._tcp.
         /// </summary>
         public const string SRV_PREFIX = "srv.prefix";
+
         /// <summary>
         /// Allows auto-login to be used for the connection to the XMPP server
         /// if set to true.
         /// </summary>
-        public const string AUTO_LOGIN    = "auto.login";
+        public const string AUTO_LOGIN = "auto.login";
+
         /// <summary>
         /// This pass through the login process, can we login?
         /// This option is set/reset by the framework.
         /// </summary>
         public const string AUTO_LOGIN_THISPASS = "auto.login.thispass";
+
         /// <summary>
         /// Retrieves the roster items from the XMPP server on
         /// connection if set to true.
         /// </summary>
-        public const string AUTO_ROSTER   = "auto.roster";
+        public const string AUTO_ROSTER = "auto.roster";
+
         /// <summary>
         /// Sends back 501/feature-not-implemented to the XMPP server if
         /// there are IQs that have not been handled if set to true.
         /// </summary>
-        public const string AUTO_IQ_ERRORS   = "auto.iq_errors";
+        public const string AUTO_IQ_ERRORS = "auto.iq_errors";
+
         /// <summary>
         /// Sends the presence on connection if set to true.
         /// </summary>
@@ -157,32 +176,39 @@ namespace jabber.connection
         /// <summary>
         /// Contains the certificate for our side of the SSL/TLS negotiation.
         /// </summary>
-        public const string LOCAL_CERTIFICATE   = "certificate.local";
+        public const string LOCAL_CERTIFICATE = "certificate.local";
+
         /// <summary>
         /// Contains the remote certificate that the XMPP server sent to the client.
         /// </summary>
-        public const string REMOTE_CERTIFICATE  = "certificate.remote";
+        public const string REMOTE_CERTIFICATE = "certificate.remote";
+
         /// <summary>
         /// Uses x509 selection dialog box when a certificate is requested
         /// if set to true.
         /// </summary>
         public const string CERTIFICATE_GUI = "certificate.gui";
+
         /// <summary>
         /// Contains the number of seconds to wait before attempting a reconnect.
         /// </summary>
-        public const string RECONNECT_TIMEOUT   = "reconnect_timeout";
+        public const string RECONNECT_TIMEOUT = "reconnect_timeout";
+
         /// <summary>
         /// Determines the connection type (sockets, HTTP polling, or HTTP binding).
         /// </summary>
-        public const string CONNECTION_TYPE     = "connection";
+        public const string CONNECTION_TYPE = "connection";
+
         /// <summary>
         /// Contains the URL to poll on, or bind to.
         /// </summary>
-        public const string POLL_URL            = "poll.url";
+        public const string POLL_URL = "poll.url";
+
         /// <summary>
         /// Connects to the XMPP server or listen for connections.
         /// </summary>
         public const string COMPONENT_DIRECTION = "component.dir";
+
         /// <summary>
         /// Contains the logical JID associated with this connection.
         /// </summary>
@@ -192,22 +218,27 @@ namespace jabber.connection
         /// Contains the proxy type, such as none, SOCKS5 and so on.
         /// </summary>
         public const string PROXY_TYPE = "proxy.type";
+
         /// <summary>
         /// Contains the hostname or IP address of the proxy.
         /// </summary>
         public const string PROXY_HOST = "proxy.host";
+
         /// <summary>
         /// Contains the port number for the proxy.
         /// </summary>
         public const string PROXY_PORT = "proxy.port";
+
         /// <summary>
         /// Contains the username for the proxy server.
         /// </summary>
         public const string PROXY_USER = "proxy.user";
+
         /// <summary>
         /// Contains the password for the proxy server.
         /// </summary>
-        public const string PROXY_PW   = "proxy.password";
+        public const string PROXY_PW = "proxy.password";
+
         /// <summary>
         /// Override the from address, in a component/service connection.
         /// </summary>
@@ -218,11 +249,12 @@ namespace jabber.connection
     /// Manages the XMPP stream of the connection.
     /// </summary>
     [SVN(@"$Id$")]
-    abstract public class XmppStream :
+    public abstract class XmppStream :
         System.ComponentModel.Component,
         IStanzaEventListener
     {
-        private static readonly object[][] DEFAULTS = new object[][] {
+        private static readonly object[][] DEFAULTS = new object[][]
+        {
             new object[] {Options.TO, "jabber.com"},
             new object[] {Options.KEEP_ALIVE, 30000},
             new object[] {Options.CURRENT_KEEP_ALIVE, -1},
@@ -235,7 +267,6 @@ namespace jabber.connection
             new object[] {Options.PLAINTEXT, false},
             new object[] {Options.AUTO_TLS, true},
             new object[] {Options.AUTO_COMPRESS, true},
-
 #if __MonoCS__
             new object[] {Options.CERTIFICATE_GUI, false},
 #else
@@ -254,8 +285,8 @@ namespace jabber.connection
         private StanzaStream m_stanzas = null;
         private IQTracker m_tracker = null;
 
-        private XmlDocument m_doc        = new XmlDocument();
-        private BaseState   m_state      = ClosedState.Instance;
+        private XmlDocument m_doc = new XmlDocument();
+        private BaseState m_state = ClosedState.Instance;
         private IDictionary m_properties = new Hashtable();
 
         private string m_streamID = null;
@@ -282,7 +313,7 @@ namespace jabber.connection
 #pragma warning disable 0414
         private System.ComponentModel.Container components = new System.ComponentModel.Container();
 #pragma warning restore 0414
-        
+
         /// <summary>
         /// Creates a new XMPP stream and associates it with the parent control.
         /// </summary>
@@ -300,7 +331,7 @@ namespace jabber.connection
         {
             foreach (object[] def in defaults)
             {
-                this[(string)def[0]] = def[1];
+                this[(string) def[0]] = def[1];
             }
         }
 
@@ -516,7 +547,7 @@ namespace jabber.connection
         [Category("Jabber")]
         public int Port
         {
-            get { return (int)this[Options.PORT]; }
+            get { return (int) this[Options.PORT]; }
             set { this[Options.PORT] = value; }
         }
 
@@ -529,7 +560,7 @@ namespace jabber.connection
         [Category("Jabber")]
         public bool PlaintextAuth
         {
-            get { return (bool)this[Options.PLAINTEXT]; }
+            get { return (bool) this[Options.PLAINTEXT]; }
             set { this[Options.PLAINTEXT] = value; }
         }
 
@@ -555,9 +586,9 @@ namespace jabber.connection
                 if (j == null)
                     return null;
                 if (j is JID)
-                    return (JID)j;
+                    return (JID) j;
                 if (j is string)
-                    return new JID((string)j);
+                    return new JID((string) j);
                 Debug.Assert(false, "Unknown JID type", j.GetType().ToString());
                 return null;
             }
@@ -582,7 +613,7 @@ namespace jabber.connection
         [Category("Jabber")]
         public bool SSL
         {
-            get { return (bool)this[Options.SSL]; }
+            get { return (bool) this[Options.SSL]; }
             set { this[Options.SSL] = value; }
         }
 
@@ -592,7 +623,7 @@ namespace jabber.connection
         [Browsable(false)]
         public bool AutoStartTLS
         {
-            get { return (bool)this[Options.AUTO_TLS]; }
+            get { return (bool) this[Options.AUTO_TLS]; }
             set { this[Options.AUTO_TLS] = value; }
         }
 
@@ -603,7 +634,7 @@ namespace jabber.connection
         [Browsable(false)]
         public bool AutoStartCompression
         {
-            get { return (bool)this[Options.AUTO_COMPRESS]; }
+            get { return (bool) this[Options.AUTO_COMPRESS]; }
             set { this[Options.AUTO_COMPRESS] = value; }
         }
 
@@ -641,7 +672,7 @@ namespace jabber.connection
         /// <param name="password">The password, if this is a .pfx
         /// file, null if .cer file.</param>
         public void SetCertificateFile(string filename,
-                                       string password)
+            string password)
         {
             this[Options.LOCAL_CERTIFICATE] = new X509Certificate2(filename, password);
         }
@@ -661,13 +692,13 @@ namespace jabber.connection
                 // programmers can't seem to follow directions.
                 if ((this.m_invoker == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
+                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
                     if (host != null)
                     {
                         object root = host.RootComponent;
                         if ((root != null) && (root is ISynchronizeInvoke))
                         {
-                            m_invoker = (ISynchronizeInvoke)root;
+                            m_invoker = (ISynchronizeInvoke) root;
                             // TODO: fire some sort of propertyChanged event,
                             // so that old code gets cleaned up correctly.
                         }
@@ -686,8 +717,8 @@ namespace jabber.connection
         [DefaultValue(20f)]
         public float KeepAlive
         {
-            get { return ((int)this[Options.KEEP_ALIVE]) / 1000f; }
-            set { this[Options.KEEP_ALIVE] = (int)(value * 1000f); }
+            get { return ((int) this[Options.KEEP_ALIVE])/1000f; }
+            set { this[Options.KEEP_ALIVE] = (int) (value*1000f); }
         }
 
         /// <summary>
@@ -700,8 +731,8 @@ namespace jabber.connection
         [Category("Automation")]
         public float AutoReconnect
         {
-            get { return ((int)this[Options.RECONNECT_TIMEOUT]) / 1000f; }
-            set { this[Options.RECONNECT_TIMEOUT] = (int)(value * 1000f); }
+            get { return ((int) this[Options.RECONNECT_TIMEOUT])/1000f; }
+            set { this[Options.RECONNECT_TIMEOUT] = (int) (value*1000f); }
         }
 
         /// <summary>
@@ -712,7 +743,7 @@ namespace jabber.connection
         [Category("Proxy")]
         public ProxyType Proxy
         {
-            get { return (ProxyType)this[Options.PROXY_TYPE]; }
+            get { return (ProxyType) this[Options.PROXY_TYPE]; }
             set { this[Options.PROXY_TYPE] = value; }
         }
 
@@ -724,7 +755,7 @@ namespace jabber.connection
         [Category("Proxy")]
         public ConnectionType Connection
         {
-            get { return (ConnectionType)this[Options.CONNECTION_TYPE]; }
+            get { return (ConnectionType) this[Options.CONNECTION_TYPE]; }
             set { this[Options.CONNECTION_TYPE] = value; }
         }
 
@@ -748,7 +779,7 @@ namespace jabber.connection
         [Category("Proxy")]
         public int ProxyPort
         {
-            get { return (int)this[Options.PROXY_PORT]; }
+            get { return (int) this[Options.PROXY_PORT]; }
             set { this[Options.PROXY_PORT] = value; }
         }
 
@@ -805,8 +836,10 @@ namespace jabber.connection
         protected virtual BaseState State
         {
             get { return m_state; }
-            set { m_state = value;
-            // Debug.WriteLine("New state: " + m_state.ToString());
+            set
+            {
+                m_state = value;
+                // Debug.WriteLine("New state: " + m_state.ToString());
             }
         }
 
@@ -850,7 +883,7 @@ namespace jabber.connection
                 if (value && (OnAuthenticate != null))
                 {
                     if (InvokeRequired)
-                        CheckedInvoke(OnAuthenticate, new object[] { this });
+                        CheckedInvoke(OnAuthenticate, new object[] {this});
                     else
                         OnAuthenticate(this);
                 }
@@ -862,10 +895,7 @@ namespace jabber.connection
         /// Returns the namespace for this connection.
         /// </summary>
         [Browsable(false)]
-        protected abstract string NS
-        {
-            get;
-        }
+        protected abstract string NS { get; }
 
         /// <summary>
         /// Determines whether or not SASL is required for connecting to the XMPP server.
@@ -874,7 +904,7 @@ namespace jabber.connection
         [DefaultValue(false)]
         public bool RequiresSASL
         {
-            get { return (bool)this[Options.REQUIRE_SASL]; }
+            get { return (bool) this[Options.REQUIRE_SASL]; }
             set { this[Options.REQUIRE_SASL] = value; }
         }
 
@@ -926,7 +956,7 @@ namespace jabber.connection
             lock (StateLock)
             {
                 State = ConnectingState.Instance;
-                m_reconnect = ((int)this[Options.RECONNECT_TIMEOUT] >= 0);
+                m_reconnect = ((int) this[Options.RECONNECT_TIMEOUT] >= 0);
             }
             m_stanzas.Connect();
         }
@@ -941,7 +971,7 @@ namespace jabber.connection
             lock (StateLock)
             {
                 this.State = AcceptingState.Instance;
-                m_reconnect = ((int)this[Options.RECONNECT_TIMEOUT] >= 0);
+                m_reconnect = ((int) this[Options.RECONNECT_TIMEOUT] >= 0);
             }
             m_stanzas.Accept();
         }
@@ -958,10 +988,10 @@ namespace jabber.connection
                     m_reconnectTimer.Dispose();
 
                 m_reconnectTimer = new System.Threading.Timer(
-                        new System.Threading.TimerCallback(Reconnect),
-                        null,
-                        (int)this[Options.RECONNECT_TIMEOUT],
-                        System.Threading.Timeout.Infinite);
+                    new System.Threading.TimerCallback(Reconnect),
+                    null,
+                    (int) this[Options.RECONNECT_TIMEOUT],
+                    System.Threading.Timeout.Infinite);
             }
         }
 
@@ -1092,7 +1122,7 @@ namespace jabber.connection
                 if (OnStreamHeader != null)
                 {
                     if (InvokeRequired)
-                        CheckedInvoke(OnStreamHeader, new object[] { this, elem });
+                        CheckedInvoke(OnStreamHeader, new object[] {this, elem});
                     else
                         OnStreamHeader(this, elem);
                 }
@@ -1114,7 +1144,7 @@ namespace jabber.connection
             // don't do starttls if we're already on an SSL socket.
             // bad server setup, but no skin off our teeth, we're already
             // SSL'd.  Also, start-tls won't work when polling.
-            if ((bool)this[Options.AUTO_TLS] &&
+            if ((bool) this[Options.AUTO_TLS] &&
                 (m_features.StartTLS != null) &&
                 (!m_sslOn) &&
                 m_stanzas.SupportsTLS)
@@ -1129,7 +1159,7 @@ namespace jabber.connection
             }
 
             Compression comp = m_features.Compression;
-            if ((bool)this[Options.AUTO_COMPRESS] &&
+            if ((bool) this[Options.AUTO_COMPRESS] &&
                 (comp != null) &&
                 comp.HasMethod("zlib") &&
                 (!m_compressionOn) &&
@@ -1162,20 +1192,20 @@ namespace jabber.connection
                     // of mechanisms we're willing to try.  Mask them off of the offered set.
                     object smt = this[Options.SASL_MECHANISMS];
                     if (smt != null)
-                        types = (MechanismType)smt & ms.Types;
+                        types = (MechanismType) smt & ms.Types;
                     else
                         types = ms.Types;
                 }
 
                 // If we're doing SASL, and there are mechanisms implemented by both
                 // client and server.
-                if ((types != MechanismType.NONE) && ((bool)this[Options.SASL]))
+                if ((types != MechanismType.NONE) && ((bool) this[Options.SASL]))
                 {
                     lock (m_stateLock)
                     {
                         State = SASLState.Instance;
                     }
-                    m_saslProc = SASLProcessor.createProcessor(types, m_sslOn || (bool)this[Options.PLAINTEXT], ms);
+                    m_saslProc = SASLProcessor.createProcessor(types, m_sslOn || (bool) this[Options.PLAINTEXT], ms);
                     if (m_saslProc == null)
                     {
                         FireOnError(new NotImplementedException("No implemented mechanisms in: " + types.ToString()));
@@ -1204,8 +1234,9 @@ namespace jabber.connection
                 }
 
                 if (m_saslProc == null)
-                { // no SASL mechanisms.  Try iq:auth.
-                    if ((bool)this[Options.REQUIRE_SASL])
+                {
+                    // no SASL mechanisms.  Try iq:auth.
+                    if ((bool) this[Options.REQUIRE_SASL])
                     {
                         FireOnError(new SASLException("No SASL mechanisms available"));
                         return;
@@ -1251,7 +1282,7 @@ namespace jabber.connection
                 if (OnStreamError != null)
                 {
                     if (InvokeRequired)
-                        CheckedInvoke(OnStreamError, new object[] { this, tag });
+                        CheckedInvoke(OnStreamError, new object[] {this, tag});
                     else
                         OnStreamError(this, tag);
                 }
@@ -1321,31 +1352,30 @@ namespace jabber.connection
             {
                 switch (tag.Name)
                 {
-                case "proceed":
-                    if (!StartTLS())
+                    case "proceed":
+                        if (!StartTLS())
+                            return;
+                        SendNewStreamHeader();
+                        break;
+                    case "failure":
+                        FireOnError(new AuthenticationFailedException());
                         return;
-                    SendNewStreamHeader();
-                    break;
-                case "failure":
-                    FireOnError(new AuthenticationFailedException());
-                    return;
                 }
             }
             else if (State == CompressionState.Instance)
             {
                 switch (tag.Name)
                 {
-                case "compressed":
-                    if (!StartCompression())
+                    case "compressed":
+                        if (!StartCompression())
+                            return;
+                        SendNewStreamHeader();
+                        break;
+                    case "failure":
+                        CompressionFailure fail = tag as CompressionFailure;
+                        FireOnError(new bedrock.io.CompressionFailedException(fail.Error));
                         return;
-                    SendNewStreamHeader();
-                    break;
-                case "failure":
-                    CompressionFailure fail = tag as CompressionFailure;
-                    FireOnError(new bedrock.io.CompressionFailedException(fail.Error));
-                    return;
                 }
-
             }
             else if (State == SASLAuthedState.Instance)
             {
@@ -1364,7 +1394,7 @@ namespace jabber.connection
                 if (OnProtocol != null)
                 {
                     if (InvokeRequired)
-                        CheckedInvoke(OnProtocol, new object[] { this, tag });
+                        CheckedInvoke(OnProtocol, new object[] {this, tag});
                     else
                         OnProtocol(this, tag);
                 }
@@ -1437,7 +1467,7 @@ namespace jabber.connection
         protected void SendNewStreamHeader()
         {
             jabber.protocol.stream.Stream str = new jabber.protocol.stream.Stream(m_doc, NS);
-            str.To = new JID((string)this[Options.TO]);
+            str.To = new JID((string) this[Options.TO]);
             str.Version = "1.0";
             m_stanzas.WriteStartTag(str);
             InitializeStream();
@@ -1459,7 +1489,7 @@ namespace jabber.connection
             if (OnError != null)
             {
                 if (InvokeRequired)
-                    CheckedInvoke(OnError, new object[] { this, e });
+                    CheckedInvoke(OnError, new object[] {this, e});
                 else
                     OnError(this, e);
             }
@@ -1559,7 +1589,7 @@ namespace jabber.connection
                     if (n != null)
                     {
                         if (sender.InvokeRequired)
-                            sender.CheckedInvoke(m_cb, new object[] { sender, elem });
+                            sender.CheckedInvoke(m_cb, new object[] {sender, elem});
                         else
                             m_cb(sender, elem);
                     }
@@ -1578,14 +1608,14 @@ namespace jabber.connection
             lock (m_stateLock)
             {
                 this.State = ConnectedState.Instance;
-                if ((bool)this[Options.SSL])
+                if ((bool) this[Options.SSL])
                     m_sslOn = true;
             }
 
             if (OnConnect != null)
             {
                 if (InvokeRequired)
-                    CheckedInvoke(OnConnect, new Object[] { this, m_stanzas });
+                    CheckedInvoke(OnConnect, new Object[] {this, m_stanzas});
                 else
                     OnConnect(this, m_stanzas);
             }
@@ -1605,7 +1635,7 @@ namespace jabber.connection
             if (OnConnect != null)
             {
                 if (InvokeRequired)
-                    CheckedInvoke(OnConnect, new object[] { this, m_stanzas });
+                    CheckedInvoke(OnConnect, new object[] {this, m_stanzas});
                 else
                 {
                     // Um.  This cast might not be right, but I don't want to break backward compatibility
@@ -1620,7 +1650,7 @@ namespace jabber.connection
             if (OnReadText != null)
             {
                 if (InvokeRequired)
-                    CheckedInvoke(OnReadText, new object[] { this, ENC.GetString(buf, offset, count) });
+                    CheckedInvoke(OnReadText, new object[] {this, ENC.GetString(buf, offset, count)});
                 else
                     OnReadText(this, ENC.GetString(buf, offset, count));
             }
@@ -1631,7 +1661,7 @@ namespace jabber.connection
             if (OnWriteText != null)
             {
                 if (InvokeRequired)
-                    CheckedInvoke(OnWriteText, new object[] { this, ENC.GetString(buf, offset, count) });
+                    CheckedInvoke(OnWriteText, new object[] {this, ENC.GetString(buf, offset, count)});
                 else
                     OnWriteText(this, ENC.GetString(buf, offset, count));
             }
@@ -1647,7 +1677,7 @@ namespace jabber.connection
                     CheckedInvoke(OnStreamInit, new object[] { this, stream });
                 else
               */
-                    OnStreamInit(this, stream);
+                OnStreamInit(this, stream);
             }
         }
 
@@ -1665,7 +1695,7 @@ namespace jabber.connection
             if (OnError != null)
             {
                 if (InvokeRequired)
-                    CheckedInvoke(OnError, new object[] { this, ex });
+                    CheckedInvoke(OnError, new object[] {this, ex});
                 else
                     OnError(this, ex);
             }
@@ -1689,7 +1719,7 @@ namespace jabber.connection
             if (OnDisconnect != null)
             {
                 if (InvokeRequired)
-                    CheckedInvoke(OnDisconnect, new object[] { this });
+                    CheckedInvoke(OnDisconnect, new object[] {this});
                 else
                     OnDisconnect(this);
             }
@@ -1723,7 +1753,7 @@ namespace jabber.connection
         {
             // The OnElement logic stays outside the listener, so that it can be
             // more easily overriden by subclasses.
-                OnElement(m_stanzas, elem);
+            OnElement(m_stanzas, elem);
         }
 
         private bool ShowCertificatePrompt(object sender,
@@ -1732,7 +1762,7 @@ namespace jabber.connection
             System.Net.Security.SslPolicyErrors sslPolicyErrors)
         {
 #if !__MonoCS__
-            CertificatePrompt cp = new CertificatePrompt((X509Certificate2)certificate, chain, sslPolicyErrors);
+            CertificatePrompt cp = new CertificatePrompt((X509Certificate2) certificate, chain, sslPolicyErrors);
             return (cp.ShowDialog() == System.Windows.Forms.DialogResult.OK);
 #else
             return false;
@@ -1751,7 +1781,7 @@ namespace jabber.connection
                 try
                 {
                     // Note: can't use CheckedInvoke here, since we need the return value.  We'll wait for the response.
-                    return (bool)m_invoker.Invoke(OnInvalidCertificate, new object[] { sock, certificate, chain, sslPolicyErrors });
+                    return (bool) m_invoker.Invoke(OnInvalidCertificate, new object[] {sock, certificate, chain, sslPolicyErrors});
                 }
                 catch (Exception e)
                 {
@@ -1762,7 +1792,7 @@ namespace jabber.connection
             if ((m_invoker == null) || (!m_invoker.InvokeRequired))
                 return ShowCertificatePrompt(sock, certificate, chain, sslPolicyErrors);
 
-            return (bool)m_invoker.Invoke(new System.Net.Security.RemoteCertificateValidationCallback(ShowCertificatePrompt), new object[]{ sock, certificate, chain, sslPolicyErrors });
+            return (bool) m_invoker.Invoke(new System.Net.Security.RemoteCertificateValidationCallback(ShowCertificatePrompt), new object[] {sock, certificate, chain, sslPolicyErrors});
         }
 
         #endregion

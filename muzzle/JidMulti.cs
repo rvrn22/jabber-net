@@ -11,13 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-
 using bedrock.util;
 
 namespace muzzle
@@ -49,16 +48,16 @@ namespace muzzle
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
+            if (disposing)
             {
-                if(components != null)
+                if (components != null)
                 {
                     components.Dispose();
                 }
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
         /// <summary>
@@ -77,7 +76,7 @@ namespace muzzle
         public string[] GetValues()
         {
             string[] vals = new string[lstJID.Items.Count];
-            for (int i=0; i < vals.Length; i++)
+            for (int i = 0; i < vals.Length; i++)
             {
                 vals[i] = lstJID.Items[i].ToString();
             }
@@ -85,6 +84,7 @@ namespace muzzle
         }
 
         #region Component Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -130,7 +130,7 @@ namespace muzzle
             //
             // btnRemove
             //
-            this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemove.Location = new System.Drawing.Point(232, 5);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(24, 23);
@@ -141,7 +141,7 @@ namespace muzzle
             //
             // btnAdd
             //
-            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAdd.Location = new System.Drawing.Point(208, 5);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(24, 23);
@@ -152,15 +152,15 @@ namespace muzzle
             //
             // txtEntry
             //
-            this.txtEntry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEntry.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                          | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEntry.Location = new System.Drawing.Point(0, 6);
             this.txtEntry.Name = "txtEntry";
             this.txtEntry.Size = new System.Drawing.Size(184, 20);
             this.txtEntry.TabIndex = 4;
             this.txtEntry.Text = "";
             this.tip.SetToolTip(this.txtEntry, "Enter a Jabber ID here, and press the + or - button to add or remove it from the " +
-                "list.");
+                                               "list.");
             //
             // JidMulti
             //
@@ -170,8 +170,8 @@ namespace muzzle
             this.Size = new System.Drawing.Size(256, 120);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
+
         #endregion
 
         private void btnAdd_Click(object sender, System.EventArgs e)

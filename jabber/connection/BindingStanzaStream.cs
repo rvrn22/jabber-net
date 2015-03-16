@@ -3,20 +3,20 @@ using jabber.protocol.stream;
 
 namespace jabber.connection
 {
-	class BindingStanzaStream : HttpStanzaStream
-	{
-	    public BindingStanzaStream(IStanzaEventListener listener) : base(listener)
-	    {
-	    }
+    internal class BindingStanzaStream : HttpStanzaStream
+    {
+        public BindingStanzaStream(IStanzaEventListener listener) : base(listener)
+        {
+        }
 
-	    protected override BaseSocket CreateSocket()
-	    {
-	        XEP124Socket sock = new XEP124Socket(this);
-            ProxyType pt = (ProxyType)m_listener[Options.PROXY_TYPE];
+        protected override BaseSocket CreateSocket()
+        {
+            XEP124Socket sock = new XEP124Socket(this);
+            ProxyType pt = (ProxyType) m_listener[Options.PROXY_TYPE];
             if (pt == ProxyType.HTTP)
             {
                 string host = m_listener[Options.PROXY_HOST] as string;
-                int port = (int)m_listener[Options.PROXY_PORT];
+                int port = (int) m_listener[Options.PROXY_PORT];
                 if (port == -1)
                     port = 80;
                 string proxy_uri = string.Format("http://{0}:{1}/", host, port);
@@ -29,7 +29,7 @@ namespace jabber.connection
                 }
             }
             return sock;
-	    }
+        }
 
         public override void WriteStartTag(Stream stream)
         {
@@ -44,5 +44,5 @@ namespace jabber.connection
             // We don't send the </stream:stream> tag in XEP 124.
             base.Close(false);
         }
-	}
+    }
 }

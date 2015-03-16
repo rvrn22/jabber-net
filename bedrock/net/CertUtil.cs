@@ -11,8 +11,8 @@
  * Jabber-Net can be used under either JOSL or the GPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 #if !NO_SSL && !NET20  && !__MonoCS__
 using Org.Mentalis.Security.Certificates;
 using bedrock.util;
@@ -29,6 +29,7 @@ namespace bedrock.net
         /// Can this cert be used for server authentication?
         /// </summary>
         private const string OID_PKIX_KP_SERVER_AUTH = "1.3.6.1.5.5.7.3.1";
+
         /// <summary>
         /// Can this cert be used for client authentication?
         /// </summary>
@@ -57,4 +58,5 @@ namespace bedrock.net
         }
     }
 }
+
 #endif

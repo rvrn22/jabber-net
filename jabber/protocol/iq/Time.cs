@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -30,6 +29,7 @@ namespace jabber.protocol.iq
      *   </query>
      * </iq>
      */
+
     /// <summary>
     /// IQ packet with an time query element inside.
     /// </summary>
@@ -77,8 +77,9 @@ namespace jabber.protocol.iq
         {
             DateTime dt = DateTime.Now;
             UTC = dt.ToUniversalTime();
-            TZ = TimeZone.CurrentTimeZone.IsDaylightSavingTime(dt) ?
-                TimeZone.CurrentTimeZone.DaylightName : TimeZone.CurrentTimeZone.StandardName;
+            TZ = TimeZone.CurrentTimeZone.IsDaylightSavingTime(dt)
+                ? TimeZone.CurrentTimeZone.DaylightName
+                : TimeZone.CurrentTimeZone.StandardName;
             Display = dt.ToLongDateString() + " " + dt.ToLongTimeString();
         }
 

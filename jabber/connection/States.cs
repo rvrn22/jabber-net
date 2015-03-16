@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using bedrock.util;
 
 namespace jabber.connection
@@ -123,6 +123,7 @@ namespace jabber.connection
         /// </summary>
         public static readonly BaseState Instance = new AcceptingState();
     }
+
     /// <summary>
     /// Specifies the state is in Old-style auth, iq:auth or handshake.
     /// </summary>
@@ -134,6 +135,7 @@ namespace jabber.connection
         /// </summary>
         public static readonly BaseState Instance = new NonSASLAuthState();
     }
+
     /// <summary>
     /// Specifies the state is in waiting for the server to send the features element.
     /// </summary>
@@ -145,6 +147,7 @@ namespace jabber.connection
         /// </summary>
         public static readonly BaseState Instance = new ServerFeaturesState();
     }
+
     /// <summary>
     /// Specifies the state is in Start-TLS.
     /// </summary>
@@ -156,6 +159,7 @@ namespace jabber.connection
         /// </summary>
         public static readonly BaseState Instance = new StartTLSState();
     }
+
     /// <summary>
     /// Specifies the state is in the compression state.
     /// </summary>
@@ -167,6 +171,7 @@ namespace jabber.connection
         /// </summary>
         public static readonly BaseState Instance = new CompressionState();
     }
+
     /// <summary>
     /// Specifies the state is in SASL Authentication.
     /// </summary>
@@ -178,6 +183,7 @@ namespace jabber.connection
         /// </summary>
         public static readonly BaseState Instance = new SASLState();
     }
+
     /// <summary>
     /// Specifies the state is in the SASL Authentication has finished state.
     /// Restarting the stream for the last time.
@@ -190,6 +196,7 @@ namespace jabber.connection
         /// </summary>
         public static readonly BaseState Instance = new SASLAuthedState();
     }
+
     /// <summary>
     /// SASL Authentication failed.  On some servers you can re-try, or register.
     /// </summary>
@@ -201,6 +208,7 @@ namespace jabber.connection
         /// </summary>
         public static readonly BaseState Instance = new SASLFailedState();
     }
+
     /// <summary>
     /// Specifies the state is in the "Binding session" state.
     /// </summary>
@@ -212,5 +220,4 @@ namespace jabber.connection
         /// </summary>
         public static readonly BaseState Instance = new BindState();
     }
-
 }

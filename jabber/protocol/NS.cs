@@ -11,6 +11,7 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System.Collections;
 using bedrock.util;
 
@@ -57,7 +58,7 @@ namespace jabber.protocol
         /// <param name="uri"></param>
         public void AddNamespace(string prefix, string uri)
         {
-            Hashtable h = (Hashtable)m_stack.Peek();
+            Hashtable h = (Hashtable) m_stack.Peek();
             h[prefix] = uri;
         }
 
@@ -71,7 +72,7 @@ namespace jabber.protocol
             foreach (Hashtable ht in m_stack)
             {
                 if ((ht.Count > 0) && (ht.ContainsKey(prefix)))
-                    return (string)ht[prefix];
+                    return (string) ht[prefix];
             }
             return "";
         }

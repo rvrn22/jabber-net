@@ -59,7 +59,9 @@ Public Class SendMessage
     Friend WithEvents label2 As System.Windows.Forms.Label
     Friend WithEvents label1 As System.Windows.Forms.Label
     Friend WithEvents txtBody As System.Windows.Forms.TextBox
-    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.btnSend = New System.Windows.Forms.Button()
@@ -73,7 +75,8 @@ Public Class SendMessage
         '
         'Panel1
         '
-        Me.Panel1.Controls.AddRange(New System.Windows.Forms.Control() {Me.btnCancel, Me.btnSend, Me.txtSubject, Me.txtTo, Me.label2, Me.label1})
+        Me.Panel1.Controls.AddRange(New System.Windows.Forms.Control() _
+                                       {Me.btnCancel, Me.btnSend, Me.txtSubject, Me.txtTo, Me.label2, Me.label1})
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(312, 72)
@@ -101,7 +104,7 @@ Public Class SendMessage
         'txtSubject
         '
         Me.txtSubject.Anchor = ((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right)
+                                Or System.Windows.Forms.AnchorStyles.Right)
         Me.txtSubject.Location = New System.Drawing.Point(64, 42)
         Me.txtSubject.Name = "txtSubject"
         Me.txtSubject.Size = New System.Drawing.Size(184, 20)
@@ -111,7 +114,7 @@ Public Class SendMessage
         'txtTo
         '
         Me.txtTo.Anchor = ((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right)
+                           Or System.Windows.Forms.AnchorStyles.Right)
         Me.txtTo.Location = New System.Drawing.Point(64, 10)
         Me.txtTo.Name = "txtTo"
         Me.txtTo.Size = New System.Drawing.Size(184, 20)
@@ -154,7 +157,6 @@ Public Class SendMessage
         Me.Text = "SendMessage"
         Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
-
     End Sub
 
 #End Region

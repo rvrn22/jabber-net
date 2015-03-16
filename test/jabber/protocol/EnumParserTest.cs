@@ -11,11 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Xml;
 using NUnit.Framework;
-
 using bedrock.util;
 using jabber.protocol;
 
@@ -28,24 +27,22 @@ namespace test.jabber.protocol
     [TestFixture]
     public class EnumParserTest
     {
-        enum foo
+        private enum foo
         {
             NONE = -1,
             bar,
             baz
         }
 
-        enum bar
+        private enum bar
         {
             NONE = -1,
-            [XML("moo")]
-            bloo,
-            [XML("")]
-            goo
+            [XML("moo")] bloo,
+            [XML("")] goo
         }
 
         [Dash]
-        enum doo
+        private enum doo
         {
             moo_vie,
         }

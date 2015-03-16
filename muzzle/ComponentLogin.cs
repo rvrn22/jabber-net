@@ -11,15 +11,14 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
 using System.Xml;
-
 using bedrock.util;
-
 using jabber.connection;
 using jabber.server;
 
@@ -39,7 +38,6 @@ namespace muzzle
     [SVN(@"$Id$")]
     public class ComponentLogin : OptionForm
     {
-
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -61,7 +59,7 @@ namespace muzzle
             //
             InitializeComponent();
 
-            for (ComponentType ct=ComponentType.Accept; ct <= ComponentType.Connect; ct++)
+            for (ComponentType ct = ComponentType.Accept; ct <= ComponentType.Connect; ct++)
             {
                 cmbType.Items.Add(ct);
             }
@@ -94,7 +92,8 @@ namespace muzzle
             this.Xmpp = service;
         }
 
-#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -111,8 +110,8 @@ namespace muzzle
             this.label4 = new System.Windows.Forms.Label();
             this.cmbType = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.error)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.error)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numPort)).BeginInit();
             this.SuspendLayout();
             //
             // label1
@@ -144,8 +143,8 @@ namespace muzzle
             //
             // txtUser
             //
-            this.txtUser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtUser.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUser.Location = new System.Drawing.Point(56, 64);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(220, 20);
@@ -156,8 +155,8 @@ namespace muzzle
             //
             // txtServer
             //
-            this.txtServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtServer.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                           | System.Windows.Forms.AnchorStyles.Right)));
             this.txtServer.Location = new System.Drawing.Point(56, 8);
             this.txtServer.Name = "txtServer";
             this.txtServer.Size = new System.Drawing.Size(220, 20);
@@ -168,33 +167,39 @@ namespace muzzle
             //
             // numPort
             //
-            this.numPort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.numPort.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                         | System.Windows.Forms.AnchorStyles.Right)));
             this.numPort.Location = new System.Drawing.Point(56, 36);
-            this.numPort.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.numPort.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.numPort.Maximum = new decimal(new int[]
+            {
+                65535,
+                0,
+                0,
+                0
+            });
+            this.numPort.Minimum = new decimal(new int[]
+            {
+                1,
+                0,
+                0,
+                0
+            });
             this.numPort.Name = "numPort";
             this.numPort.Size = new System.Drawing.Size(220, 20);
             this.numPort.TabIndex = 3;
             this.tip.SetToolTip(this.numPort, "TCP port to connect to, or port to listen on if in Listen mode.");
-            this.numPort.Value = new decimal(new int[] {
-            7400,
-            0,
-            0,
-            0});
+            this.numPort.Value = new decimal(new int[]
+            {
+                7400,
+                0,
+                0,
+                0
+            });
             //
             // txtPass
             //
-            this.txtPass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPass.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPass.Location = new System.Drawing.Point(56, 92);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
@@ -215,8 +220,8 @@ namespace muzzle
             //
             // cmbType
             //
-            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                         | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbType.Location = new System.Drawing.Point(56, 118);
             this.cmbType.Name = "cmbType";
             this.cmbType.Size = new System.Drawing.Size(221, 21);
@@ -256,13 +261,13 @@ namespace muzzle
             this.Controls.SetChildIndex(this.cmbType, 0);
             this.Controls.SetChildIndex(this.txtPass, 0);
             this.Controls.SetChildIndex(this.label5, 0);
-            ((System.ComponentModel.ISupportInitialize)(this.error)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.error)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numPort)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
-#endregion
+
+        #endregion
 
         private void Required_Validating(object sender, CancelEventArgs e)
         {

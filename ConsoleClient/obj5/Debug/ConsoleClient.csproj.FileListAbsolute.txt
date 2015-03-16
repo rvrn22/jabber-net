@@ -1,0 +1,12 @@
+D:\Dev\Github\jabber-net\ConsoleClient\bin5\Debug\ConsoleClient.exe.config
+D:\Dev\Github\jabber-net\ConsoleClient\bin5\Debug\ConsoleClient.exe
+D:\Dev\Github\jabber-net\ConsoleClient\bin5\Debug\ConsoleClient.pdb
+D:\Dev\Github\jabber-net\ConsoleClient\bin5\Debug\jabber-net.dll
+D:\Dev\Github\jabber-net\ConsoleClient\bin5\Debug\zlib.net.dll
+D:\Dev\Github\jabber-net\ConsoleClient\bin5\Debug\netlib.Dns.dll
+D:\Dev\Github\jabber-net\ConsoleClient\bin5\Debug\jabber-net.pdb
+D:\Dev\Github\jabber-net\ConsoleClient\bin5\Debug\netlib.Dns.pdb
+D:\Dev\Github\jabber-net\ConsoleClient\bin5\Debug\netlib.Dns.xml
+D:\Dev\Github\jabber-net\ConsoleClient\obj5\Debug\ConsoleClient.csprojResolveAssemblyReference.cache
+D:\Dev\Github\jabber-net\ConsoleClient\obj5\Debug\ConsoleClient.exe
+D:\Dev\Github\jabber-net\ConsoleClient\obj5\Debug\ConsoleClient.pdb

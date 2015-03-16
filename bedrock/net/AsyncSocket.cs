@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -20,7 +20,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using bedrock.util;
-
 using System.Security.Authentication;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -43,36 +42,43 @@ namespace bedrock.net
         /// Socket states.
         /// </summary>
         [SVN(@"$Id$")]
-            private enum SocketState
+        private enum SocketState
         {
             /// <summary>
             /// Socket has been created.
             /// </summary>
             Created,
+
             /// <summary>
             /// Socket is listening for new connections
             /// </summary>
             Listening,
+
             /// <summary>
             /// Doing DNS lookup
             /// </summary>
             Resolving,
+
             /// <summary>
             /// Attempting to connect
             /// </summary>
             Connecting,
+
             /// <summary>
             /// Connected to a peer.  The running state.
             /// </summary>
             Connected,
+
             /// <summary>
             /// Shutting down the socket.
             /// </summary>
             Closing,
+
             /// <summary>
             /// Closed down.
             /// </summary>
             Closed,
+
             /// <summary>
             /// An error ocurred.
             /// </summary>
@@ -83,9 +89,8 @@ namespace bedrock.net
 
         /// <summary> The set of allowable errors in SSL certificates
         /// if UntrustedRootOK is set to true.  </summary>
-        [Obsolete("Catch OnInvalidCertificate, instead")]
-        public const SslPolicyErrors DefaultUntrustedPolicy =
-                 SslPolicyErrors.RemoteCertificateChainErrors;
+        [Obsolete("Catch OnInvalidCertificate, instead")] public const SslPolicyErrors DefaultUntrustedPolicy =
+            SslPolicyErrors.RemoteCertificateChainErrors;
 
         /// <summary> The allowable SSL certificate errors.  If you
         /// modify UntrustedRootOK to true, the side effect will be to
@@ -105,10 +110,7 @@ namespace bedrock.net
         [Obsolete("Catch OnInvalidCertificate, instead")]
         public static bool UntrustedRootOK
         {
-            get
-            {
-                return (AllowedSSLErrors != SslPolicyErrors.None);
-            }
+            get { return (AllowedSSLErrors != SslPolicyErrors.None); }
             set
             {
                 if (value)
@@ -128,24 +130,25 @@ namespace bedrock.net
         /// hard-coded to start with.  Note: when doing start-tls,
         /// this is overridden to just be TLS.
         /// </summary>
-        public static SslProtocols   SSLProtocols        = SslProtocols.Ssl3 | SslProtocols.Tls;
-        private SslProtocols         m_secureProtocol    = SslProtocols.None;
-        private Socket               m_sock              = null;
-        private X509Certificate2     m_cert              = null;
-        private Stream               m_stream            = null;
-        private SslStream            m_sslStream         = null;  // hold on to the SSL stream as it goes by, since compression might happen later.
-        private MemoryStream         m_pending           = new MemoryStream();
-        private bool                 m_writing           = false;
-        private bool                 m_requireClientCert = false;
-        private bool                 m_cert_gui          = true;
-        private bool                 m_server            = false;
-        private byte[]               m_buf               = new byte[BUFSIZE];
-        private SocketState          m_state             = SocketState.Created;
-        private SocketWatcher        m_watcher           = null;
-        private Guid                 m_id                = Guid.NewGuid();
-        private bool                 m_reading           = false;
-        private bool                 m_synch             = false;
-        private Address              m_addr;
+        public static SslProtocols SSLProtocols = SslProtocols.Ssl3 | SslProtocols.Tls;
+
+        private SslProtocols m_secureProtocol = SslProtocols.None;
+        private Socket m_sock = null;
+        private X509Certificate2 m_cert = null;
+        private Stream m_stream = null;
+        private SslStream m_sslStream = null; // hold on to the SSL stream as it goes by, since compression might happen later.
+        private MemoryStream m_pending = new MemoryStream();
+        private bool m_writing = false;
+        private bool m_requireClientCert = false;
+        private bool m_cert_gui = true;
+        private bool m_server = false;
+        private byte[] m_buf = new byte[BUFSIZE];
+        private SocketState m_state = SocketState.Created;
+        private SocketWatcher m_watcher = null;
+        private Guid m_id = Guid.NewGuid();
+        private bool m_reading = false;
+        private bool m_synch = false;
+        private Address m_addr;
 
 
         /// <summary>
@@ -168,10 +171,10 @@ namespace bedrock.net
         /// later)</param>
         /// <param name="synch">Synchronous operation</param>
         public AsyncSocket(SocketWatcher w,
-                           ISocketEventListener listener,
-                           bool SSL,
-                           bool synch) :
-            base(listener)
+            ISocketEventListener listener,
+            bool SSL,
+            bool synch) :
+                base(listener)
         {
             m_watcher = w;
             m_synch = synch;
@@ -197,6 +200,7 @@ namespace bedrock.net
             }
         }
         */
+
         private SocketState State
         {
             get { return m_state; }
@@ -213,10 +217,7 @@ namespace bedrock.net
         /// </summary>
         public Address Address
         {
-            get
-            {
-                return m_addr;
-            }
+            get { return m_addr; }
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace bedrock.net
         /// If there is exactly one, uses it.
         /// Otherwise, prompts.
         /// TODO: figure out something for server certs, too.
-            /// </summary>
+        /// </summary>
         /// <param name="acceptableIssuers">A list of DNs of CAs that are trusted by the other party</param>
         public void ChooseClientCertificate(string[] acceptableIssuers)
         {
@@ -283,7 +284,7 @@ namespace bedrock.net
                     m_cert = coll[0];
                     return;
                 default:
-                    #if __MonoCS__
+#if __MonoCS__
                         m_cert = null;
                     #else
                     X509Certificate2Collection certs = X509Certificate2UI.SelectFromCollection(
@@ -293,7 +294,7 @@ namespace bedrock.net
                         X509SelectionFlag.SingleSelection);
                     if (certs.Count > 0)
                         m_cert = certs[0];
-                    #endif
+#endif
                     break;
             }
         }
@@ -420,8 +421,8 @@ namespace bedrock.net
                 m_addr = addr;
 
                 m_sock = new Socket(AddressFamily.InterNetwork,
-                                    SocketType.Stream,
-                                    ProtocolType.Tcp);
+                    SocketType.Stream,
+                    ProtocolType.Tcp);
 
                 // Always reuse address.
                 m_sock.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
@@ -602,7 +603,7 @@ namespace bedrock.net
                 // well, of course this isn't right.
                 m_sock.SetSocketOption(SocketOptionLevel.Socket,
                     SocketOptionName.ReceiveBuffer,
-                    4 * m_buf.Length);
+                    4*m_buf.Length);
             }
 
             if (m_synch)
@@ -663,9 +664,9 @@ namespace bedrock.net
         /// <param name="sslPolicyErrors"></param>
         /// <returns></returns>
         protected bool ValidateServerCertificate(object sender,
-                                                 X509Certificate certificate,
-                                                 X509Chain chain,
-                                                 SslPolicyErrors sslPolicyErrors)
+            X509Certificate certificate,
+            X509Chain chain,
+            SslPolicyErrors sslPolicyErrors)
         {
             // Note: Don't write servers with Jabber-Net, please.  :)
             if (m_server)
@@ -938,7 +939,7 @@ namespace bedrock.net
                 }
                 return;
             }
-            catch(ObjectDisposedException)
+            catch (ObjectDisposedException)
             {
                 //object already disposed, just exit
                 return;
@@ -993,7 +994,6 @@ namespace bedrock.net
                     }
                     else
                     {
-
                         if (m_writing)
                         {
                             // already writing.  save this for later.
@@ -1007,8 +1007,8 @@ namespace bedrock.net
                             Buffer.BlockCopy(buf, offset, ret, 0, len);
 
                             m_stream.BeginWrite(ret, 0, ret.Length,
-                                                new AsyncCallback(WroteData),
-                                                ret);
+                                new AsyncCallback(WroteData),
+                                ret);
                         }
                     }
                 }
@@ -1063,7 +1063,7 @@ namespace bedrock.net
             {
                 m_writing = false;
             }
-            byte[] buf = (byte[])ar.AsyncState;
+            byte[] buf = (byte[]) ar.AsyncState;
             m_listener.OnWrite(this, buf, 0, buf.Length);
 
             if (m_pending.Length > 0)
@@ -1109,7 +1109,9 @@ namespace bedrock.net
                     {
                         m_sock.Close();
                     }
-                    catch { }
+                    catch
+                    {
+                    }
                 }
 
                 if (oldState <= SocketState.Connected)
@@ -1133,7 +1135,7 @@ namespace bedrock.net
             {
                 Close();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 FireError(e);
             }
@@ -1166,7 +1168,7 @@ namespace bedrock.net
         public override string ToString()
         {
             return "AsyncSocket " + m_sock.LocalEndPoint + "->" +
-                m_sock.RemoteEndPoint;
+                   m_sock.RemoteEndPoint;
         }
 
         /// <summary>
@@ -1179,13 +1181,14 @@ namespace bedrock.net
         }
 
         #region IComparable
+
         int IComparable.CompareTo(object val)
         {
             if (val == null)
                 return 1;
 
             AsyncSocket sock = val as AsyncSocket;
-            if ((object)sock == null)
+            if ((object) sock == null)
                 throw new ArgumentException("value compared to is not an AsyncSocket", "val");
 
             return this.m_id.CompareTo(sock.m_id);
@@ -1211,11 +1214,11 @@ namespace bedrock.net
         /// <param name="one">First socket to compare</param>
         /// <param name="two">Second socket to compare</param>
         /// <returns></returns>
-        public static bool operator==(AsyncSocket one, AsyncSocket two)
+        public static bool operator ==(AsyncSocket one, AsyncSocket two)
         {
-            if ((object)one == null)
-                return ((object)two == null);
-            if ((object)two == null)
+            if ((object) one == null)
+                return ((object) two == null);
+            if ((object) two == null)
                 return false;
 
             return (one.m_id == two.m_id);
@@ -1228,11 +1231,11 @@ namespace bedrock.net
         /// <param name="one">First socket to compare</param>
         /// <param name="two">Second socket to compare</param>
         /// <returns></returns>
-        public static bool operator!=(AsyncSocket one, AsyncSocket two)
+        public static bool operator !=(AsyncSocket one, AsyncSocket two)
         {
-            if ((object)one == null)
-                return ((object)two != null);
-            if ((object)two == null)
+            if ((object) one == null)
+                return ((object) two != null);
+            if ((object) two == null)
                 return true;
 
             return (one.m_id != two.m_id);
@@ -1244,14 +1247,15 @@ namespace bedrock.net
         /// <param name="one">First socket to compare</param>
         /// <param name="two">Second socket to compare</param>
         /// <returns></returns>
-        public static bool operator<(AsyncSocket one, AsyncSocket two)
+        public static bool operator <(AsyncSocket one, AsyncSocket two)
         {
-            if ((object)one == null)
+            if ((object) one == null)
             {
-                return ((object)two != null);
+                return ((object) two != null);
             }
-            return (((IComparable)one).CompareTo(two) < 0);
+            return (((IComparable) one).CompareTo(two) < 0);
         }
+
         /// <summary>
         /// IComparable's need to implement comparison operators.
         /// Checks compares guids.
@@ -1259,13 +1263,14 @@ namespace bedrock.net
         /// <param name="one">First socket to compare</param>
         /// <param name="two">Second socket to compare</param>
         /// <returns></returns>
-        public static bool operator<=(AsyncSocket one, AsyncSocket two)
+        public static bool operator <=(AsyncSocket one, AsyncSocket two)
         {
-            if ((object)one == null)
+            if ((object) one == null)
                 return true;
 
-            return (((IComparable)one).CompareTo(two) <= 0);
+            return (((IComparable) one).CompareTo(two) <= 0);
         }
+
         /// <summary>
         /// IComparable's need to implement comparison operators.
         /// Checks compares guids.
@@ -1273,25 +1278,26 @@ namespace bedrock.net
         /// <param name="one">First socket to compare</param>
         /// <param name="two">Second socket to compare</param>
         /// <returns></returns>
-        public static bool operator>(AsyncSocket one, AsyncSocket two)
+        public static bool operator >(AsyncSocket one, AsyncSocket two)
         {
-            if ((object)one == null)
+            if ((object) one == null)
                 return false;
-            return (((IComparable)one).CompareTo(two) > 0);
+            return (((IComparable) one).CompareTo(two) > 0);
         }
+
         /// <summary>
         /// IComparable's need to implement comparison operators.  Checks compares guids.
         /// </summary>
         /// <param name="one">First socket to compare</param>
         /// <param name="two">Second socket to compare</param>
         /// <returns></returns>
-        public static bool operator>=(AsyncSocket one, AsyncSocket two)
+        public static bool operator >=(AsyncSocket one, AsyncSocket two)
         {
-            if ((object)one == null)
+            if ((object) one == null)
             {
                 return (two == null);
             }
-            return (((IComparable)one).CompareTo(two) >= 0);
+            return (((IComparable) one).CompareTo(two) >= 0);
         }
 
         #endregion
@@ -1301,10 +1307,7 @@ namespace bedrock.net
         /// </summary>
         public SocketWatcher SocketWatcher
         {
-            get
-            {
-                return m_watcher;
-            }
+            get { return m_watcher; }
         }
     }
 }

@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using bedrock.util;
 using jabber.protocol;
 
@@ -26,16 +26,20 @@ namespace jabber.protocol.client
     {
         private static QnameType[] s_qnt = new QnameType[]
         {
-            new QnameType("presence", URI.CLIENT, typeof(jabber.protocol.client.Presence)),
-            new QnameType("message",  URI.CLIENT, typeof(jabber.protocol.client.Message)),
-            new QnameType("iq",       URI.CLIENT, typeof(jabber.protocol.client.IQ)),
-            new QnameType("error",    URI.CLIENT, typeof(jabber.protocol.client.Error)),
+            new QnameType("presence", URI.CLIENT, typeof (jabber.protocol.client.Presence)),
+            new QnameType("message", URI.CLIENT, typeof (jabber.protocol.client.Message)),
+            new QnameType("iq", URI.CLIENT, typeof (jabber.protocol.client.IQ)),
+            new QnameType("error", URI.CLIENT, typeof (jabber.protocol.client.Error)),
             // meh.  jabber protocol really isn't right WRT to namespaces.
-            new QnameType("presence", URI.ACCEPT, typeof(jabber.protocol.client.Presence)),
-            new QnameType("message",  URI.ACCEPT, typeof(jabber.protocol.client.Message)),
-            new QnameType("iq",       URI.ACCEPT, typeof(jabber.protocol.client.IQ)),
-            new QnameType("error",    URI.ACCEPT, typeof(jabber.protocol.client.Error))
+            new QnameType("presence", URI.ACCEPT, typeof (jabber.protocol.client.Presence)),
+            new QnameType("message", URI.ACCEPT, typeof (jabber.protocol.client.Message)),
+            new QnameType("iq", URI.ACCEPT, typeof (jabber.protocol.client.IQ)),
+            new QnameType("error", URI.ACCEPT, typeof (jabber.protocol.client.Error))
         };
-        QnameType[] IPacketTypes.Types { get { return s_qnt; } }
+
+        QnameType[] IPacketTypes.Types
+        {
+            get { return s_qnt; }
+        }
     }
 }

@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.x
@@ -29,14 +28,17 @@ namespace jabber.protocol.x
         /// This packet contains a form to fill out. Display it to the user (if your program can).
         /// </summary>
         form,
+
         /// <summary>
         /// The form is filled out, and this is the data that is being returned from the form.
         /// </summary>
         submit,
+
         /// <summary>
         /// Data results being returned from a search, or some other query.
         /// </summary>
         result,
+
         /// <summary>
         /// A form was cancelled.
         /// </summary>
@@ -115,8 +117,8 @@ namespace jabber.protocol.x
         /// </summary>
         public XDataType Type
         {
-            get { return (XDataType)GetEnumAttr("type", typeof(XDataType)); }
-            set { SetAttribute("type", value.ToString());}
+            get { return (XDataType) GetEnumAttr("type", typeof (XDataType)); }
+            set { SetAttribute("type", value.ToString()); }
         }
 
         /// <summary>
@@ -127,7 +129,7 @@ namespace jabber.protocol.x
         {
             XmlNodeList nl = GetElementsByTagName("field", URI.XDATA);
             Field[] fields = new Field[nl.Count];
-            int i=0;
+            int i = 0;
             foreach (XmlNode n in nl)
             {
                 fields[i] = (Field) n;
@@ -214,9 +216,9 @@ namespace jabber.protocol.x
             XmlNodeList nl = GetElementsByTagName("field", URI.XDATA);
             foreach (XmlNode n in nl)
             {
-                Field f = (Field)n;
+                Field f = (Field) n;
                 if (f.Var == var)
-                    return (Field)this.RemoveChild(f);
+                    return (Field) this.RemoveChild(f);
             }
             return null;
         }
@@ -226,7 +228,7 @@ namespace jabber.protocol.x
         /// </summary>
         public string FormType
         {
-            get 
+            get
             {
                 Field f = GetField(FORM_TYPE);
                 if (f == null)
@@ -260,38 +262,47 @@ namespace jabber.protocol.x
         /// Single-line text, and default.
         /// </summary>
         text_single,
+
         /// <summary>
         /// Password-style single line text.  Text obscured by *'s.
         /// </summary>
         text_private,
+
         /// <summary>
         /// Multi-line text
         /// </summary>
         text_multi,
+
         /// <summary>
         /// Multi-select list
         /// </summary>
         list_multi,
+
         /// <summary>
         /// Single-select list
         /// </summary>
         list_single,
+
         /// <summary>
         /// Checkbox
         /// </summary>
         boolean,
+
         /// <summary>
         /// Fixed text.
         /// </summary>
         Fixed,
+
         /// <summary>
         /// Hidden field.  Value is returned to sender as sent.
         /// </summary>
         hidden,
+
         /// <summary>
         /// Jabber ID.
         /// </summary>
         jid_single,
+
         /// <summary>
         /// A list of jabber ID's.
         /// </summary>
@@ -454,10 +465,7 @@ namespace jabber.protocol.x
                 string sval = Val;
                 return !((sval == null) || (sval == "0"));
             }
-            set
-            {
-                Val = value ? "1" : "0";
-            }
+            set { Val = value ? "1" : "0"; }
         }
 
         /// <summary>
@@ -469,7 +477,7 @@ namespace jabber.protocol.x
             {
                 XmlNodeList nl = GetElementsByTagName("value", URI.XDATA);
                 string[] results = new string[nl.Count];
-                int i=0;
+                int i = 0;
                 foreach (XmlElement el in nl)
                 {
                     results[i++] = el.InnerText;
@@ -532,7 +540,7 @@ namespace jabber.protocol.x
         {
             XmlNodeList nl = GetElementsByTagName("option", URI.XDATA);
             Option[] options = new Option[nl.Count];
-            int i=0;
+            int i = 0;
             foreach (XmlNode n in nl)
             {
                 options[i] = (Option) n;
@@ -635,6 +643,5 @@ namespace jabber.protocol.x
                 return l;
             return Val;
         }
-
     }
 }

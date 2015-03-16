@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Threading;
 using NUnit.Framework;
 using bedrock.net;
@@ -36,17 +36,18 @@ namespace test.bedrock.net
         private readonly object start = new object();
         private string success = null;
         private AsyncSocket m_listen;
-        readonly Address a = new Address("localhost", 7003);
+        private readonly Address a = new Address("localhost", 7003);
 
         private bool succeeded = true;
         private string errorMessage;
 
-        [Test] public void Test_Write()
+        [Test]
+        public void Test_Write()
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             a.Resolve();
 
-            lock(start)
+            lock (start)
             {
                 new Thread(Server).Start();
                 Monitor.Wait(start);
@@ -72,7 +73,6 @@ namespace test.bedrock.net
 
         private void Client()
         {
-
             SocketWatcher c_w = new SocketWatcher(20);
             c_w.Synchronous = true;
 
@@ -119,11 +119,11 @@ namespace test.bedrock.net
             }
             Assert.IsTrue(c2.HasPrivateKey);
             Assert.IsNotNull(c2.PrivateKey);
-            Assert.AreEqual(typeof(X509Certificate2), c2.GetType());
+            Assert.AreEqual(typeof (X509Certificate2), c2.GetType());
 
             cert = store.Certificates.Find(X509FindType.FindByThumbprint, c2.GetCertHashString(), false);
             c2 = cert[0];
-            Assert.AreEqual(typeof(X509Certificate2), c2.GetType());
+            Assert.AreEqual(typeof (X509Certificate2), c2.GetType());
             Assert.IsTrue(c2.HasPrivateKey);
             Assert.IsNotNull(c2.PrivateKey);
             store.Close();
@@ -131,7 +131,7 @@ namespace test.bedrock.net
             s_w.Synchronous = true;
 
             m_listen = s_w.CreateListenSocket(this, a, true);
-            lock(start)
+            lock (start)
             {
                 Monitor.Pulse(start);
             }
@@ -152,9 +152,10 @@ namespace test.bedrock.net
         }
 
         #region Implementation of ISocketEventListener
+
         public bool OnAccept(BaseSocket newsocket)
         {
-            Assert.IsTrue(((AsyncSocket)newsocket).IsMutuallyAuthenticated);
+            Assert.IsTrue(((AsyncSocket) newsocket).IsMutuallyAuthenticated);
             newsocket.RequestRead();
             return false;
         }
@@ -162,7 +163,7 @@ namespace test.bedrock.net
         public bool OnRead(BaseSocket sock, byte[] buf, int offset, int length)
         {
             success = ENC.GetString(buf, offset, length);
-            lock(done)
+            lock (done)
             {
                 Monitor.Pulse(done);
             }
@@ -177,7 +178,6 @@ namespace test.bedrock.net
 
         public void OnError(BaseSocket sock, Exception ex)
         {
-
         }
 
         public void OnConnect(BaseSocket sock)
@@ -187,12 +187,10 @@ namespace test.bedrock.net
 
         public void OnClose(BaseSocket sock)
         {
-
         }
 
         public void OnInit(BaseSocket new_sock)
         {
-
         }
 
         public ISocketEventListener GetListener(BaseSocket new_sock)

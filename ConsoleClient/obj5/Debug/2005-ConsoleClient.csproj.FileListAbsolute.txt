@@ -1,0 +1,1 @@
+D:\Dev\Github\jabber-net\ConsoleClient\obj5\Debug\2005-ConsoleClient.csprojResolveAssemblyReference.cache

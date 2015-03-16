@@ -11,11 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Xml;
 using NUnit.Framework;
-
 using bedrock.util;
 using jabber.protocol.accept;
 
@@ -28,8 +27,10 @@ namespace test.jabber.protocol.accept
     [TestFixture]
     public class RouteTest
     {
-        XmlDocument doc = new XmlDocument();
-        [Test] public void Test_Create()
+        private XmlDocument doc = new XmlDocument();
+
+        [Test]
+        public void Test_Create()
         {
             Route r = new Route(doc);
             r.Contents = doc.CreateElement("foo");

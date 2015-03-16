@@ -11,6 +11,7 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 #if !NO_STRINGPREP
 
 using System;
@@ -35,66 +36,87 @@ namespace test.stringprep
             Assert.AreEqual(expected, output);
         }
 
-        [Test] public void Test_Good()
+        [Test]
+        public void Test_Good()
         {
             TryOne("HILDJJ", "hildjj");
             TryOne("hildjj", "hildjj");
             TryOne("\x226f", "\x226f"); // not greater than
         }
 
-        [ExpectedException(typeof(ProhibitedCharacterException))]
-        [Test] public void Test_Dquote()
+        [ExpectedException(typeof (ProhibitedCharacterException))]
+        [Test]
+        public void Test_Dquote()
         {
             TryOne("\"", null);
         }
-        [ExpectedException(typeof(ProhibitedCharacterException))]
-        [Test] public void Test_Amp()
+
+        [ExpectedException(typeof (ProhibitedCharacterException))]
+        [Test]
+        public void Test_Amp()
         {
             TryOne("&", null);
         }
-        [ExpectedException(typeof(ProhibitedCharacterException))]
-        [Test] public void Test_Squote()
+
+        [ExpectedException(typeof (ProhibitedCharacterException))]
+        [Test]
+        public void Test_Squote()
         {
             TryOne("'", null);
         }
-        [ExpectedException(typeof(ProhibitedCharacterException))]
-        [Test] public void Test_Slash()
+
+        [ExpectedException(typeof (ProhibitedCharacterException))]
+        [Test]
+        public void Test_Slash()
         {
             TryOne("/", null);
         }
-        [ExpectedException(typeof(ProhibitedCharacterException))]
-        [Test] public void Test_Colon()
+
+        [ExpectedException(typeof (ProhibitedCharacterException))]
+        [Test]
+        public void Test_Colon()
         {
             TryOne(":", null);
         }
-        [ExpectedException(typeof(ProhibitedCharacterException))]
-        [Test] public void Test_Less()
+
+        [ExpectedException(typeof (ProhibitedCharacterException))]
+        [Test]
+        public void Test_Less()
         {
             TryOne("<", null);
         }
-        [ExpectedException(typeof(ProhibitedCharacterException))]
-        [Test] public void Test_Greater()
+
+        [ExpectedException(typeof (ProhibitedCharacterException))]
+        [Test]
+        public void Test_Greater()
         {
             TryOne(">", null);
         }
+
 #if !NO_STRINGPREP
-        [ExpectedException(typeof(ProhibitedCharacterException))]
-        [Test] public void Test_SmallGreater()
+        [ExpectedException(typeof (ProhibitedCharacterException))]
+        [Test]
+        public void Test_SmallGreater()
         {
             TryOne("\xfe65", null); // small greater than
         }
 #endif
-        [ExpectedException(typeof(ProhibitedCharacterException))]
-        [Test] public void Test_At()
+
+        [ExpectedException(typeof (ProhibitedCharacterException))]
+        [Test]
+        public void Test_At()
         {
             TryOne("@", null);
         }
-        [ExpectedException(typeof(ProhibitedCharacterException))]
-        [Test] public void Test_Prep_Less()
+
+        [ExpectedException(typeof (ProhibitedCharacterException))]
+        [Test]
+        public void Test_Prep_Less()
         {
             // U+FE68: small commercial at
             TryOne("\xFE6b", null);
         }
     }
 }
+
 #endif

@@ -11,12 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Xml;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
-
 using bedrock.util;
 using jabber.protocol;
 using jabber.protocol.stream;
@@ -31,34 +30,40 @@ namespace test.jabber.protocol.stream
     [TestFixture]
     public class StreamTest
     {
-        XmlDocument doc = new XmlDocument();
-        [Test] public void Test_Create()
+        private XmlDocument doc = new XmlDocument();
+
+        [Test]
+        public void Test_Create()
         {
             Stream s = new Stream(doc, "jabber:client");
             Assert.IsTrue(
                 Regex.IsMatch(s.ToString(),
-                "<stream:stream id=\"[a-z0-9]+\" xmlns=\"jabber:client\" xmlns:stream=\"http://etherx\\.jabber\\.org/streams\" />",
-                RegexOptions.IgnoreCase), s.ToString());
+                    "<stream:stream id=\"[a-z0-9]+\" xmlns=\"jabber:client\" xmlns:stream=\"http://etherx\\.jabber\\.org/streams\" />",
+                    RegexOptions.IgnoreCase), s.ToString());
         }
-        [Test] public void Test_Error()
+
+        [Test]
+        public void Test_Error()
         {
             Error err = new Error(doc);
             err.Message = "foo";
             Assert.AreEqual("<stream:error " +
-                "xmlns:stream=\"http://etherx.jabber.org/streams\">foo</stream:error>", err.ToString());
+                            "xmlns:stream=\"http://etherx.jabber.org/streams\">foo</stream:error>", err.ToString());
             ElementFactory sf = new ElementFactory();
             sf.AddType(new fact());
             XmlQualifiedName qname = new XmlQualifiedName(err.LocalName, err.NamespaceURI);
             Element p = (Element) sf.GetElement(err.Prefix, qname, doc);
-            Assert.AreEqual(typeof(Error), p.GetType());
+            Assert.AreEqual(typeof (Error), p.GetType());
         }
-        [Test] public void Test_StartTag()
+
+        [Test]
+        public void Test_StartTag()
         {
             Stream s = new Stream(doc, "jabber:client");
             Assert.IsTrue(
                 Regex.IsMatch(s.StartTag(),
-                "<stream:stream xmlns:stream=\"http://etherx\\.jabber\\.org/streams\" id=\"[a-z0-9]+\" xmlns=\"jabber:client\">",
-                RegexOptions.IgnoreCase), s.StartTag());
+                    "<stream:stream xmlns:stream=\"http://etherx\\.jabber\\.org/streams\" id=\"[a-z0-9]+\" xmlns=\"jabber:client\">",
+                    RegexOptions.IgnoreCase), s.StartTag());
         }
     }
 }

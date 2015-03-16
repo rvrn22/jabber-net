@@ -1,0 +1,4 @@
+D:\Dev\Github\jabber-net\VB.Example\obj5\Debug\2005-VB.Example.vbprojResolveAssemblyReference.cache
+D:\Dev\Github\jabber-net\VB.Example\obj5\Debug\VB.Example.MainForm.resources
+D:\Dev\Github\jabber-net\VB.Example\obj5\Debug\VB.Example.SendMessage.resources
+D:\Dev\Github\jabber-net\VB.Example\obj5\Debug\2005-VB.Example.vbproj.GenerateResource.Cache

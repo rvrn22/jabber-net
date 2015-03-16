@@ -48,25 +48,25 @@ namespace bedrock.net
     public class XEP25Socket : BaseSocket, IHttpSocket
     {
         private const string CONTENT_TYPE = "application/x-www-form-urlencoded";
-        private const string METHOD       = "POST";
+        private const string METHOD = "POST";
 
         private readonly RandomNumberGenerator s_rng = RNGCryptoServiceProvider.Create();
 
-        private readonly Queue      m_writeQ  = new Queue();
-        private readonly Object     m_lock    = new Object();
-        private Thread              m_thread  = null;
-        private int                 m_maxPoll = 30;
-        private int                 m_minPoll = 1;
-        private double              m_curPoll = 1.0;
-        private string              m_url     = null;
-        private string[]            m_keys    = null;
-        private int                 m_numKeys = 512;
-        private int                 m_curKey  = 511;
-        private bool                m_running = false;
-        private string              m_id      = null;
-        private WebProxy            m_proxy   = null;
-        private X509Certificate     m_cert = null;
-        private X509Certificate     m_remote_cert = null;
+        private readonly Queue m_writeQ = new Queue();
+        private readonly Object m_lock = new Object();
+        private Thread m_thread = null;
+        private int m_maxPoll = 30;
+        private int m_minPoll = 1;
+        private double m_curPoll = 1.0;
+        private string m_url = null;
+        private string[] m_keys = null;
+        private int m_numKeys = 512;
+        private int m_curKey = 511;
+        private bool m_running = false;
+        private string m_id = null;
+        private WebProxy m_proxy = null;
+        private X509Certificate m_cert = null;
+        private X509Certificate m_remote_cert = null;
 
         /// <summary>
         /// Do trust all server sertificates?
@@ -173,7 +173,6 @@ namespace bedrock.net
         }
 
 
-
         /// <summary>
         /// Start polling
         /// </summary>
@@ -268,7 +267,7 @@ namespace bedrock.net
             s_rng.GetBytes(seed);
             prev = Convert.ToBase64String(seed);
             m_keys = new string[m_numKeys];
-            for (int i=0; i<m_numKeys; i++)
+            for (int i = 0; i < m_numKeys; i++)
             {
                 m_keys[i] = Convert.ToBase64String(sha.ComputeHash(ENC.GetBytes(prev)));
                 prev = m_keys[i];
@@ -277,9 +276,9 @@ namespace bedrock.net
         }
 
         private static bool ValidateRemoteCertificate(Object sender,
-                                               X509Certificate certificate,
-                                               X509Chain chain,
-                                               System.Net.Security.SslPolicyErrors sslPolicyErrors)
+            X509Certificate certificate,
+            X509Chain chain,
+            System.Net.Security.SslPolicyErrors sslPolicyErrors)
         {
             return UntrustedRootOK;
         }
@@ -309,7 +308,7 @@ namespace bedrock.net
                 {
                     if (m_writeQ.Count == 0)
                     {
-                        Monitor.Wait(m_lock, (int)(m_curPoll * 1000.0));
+                        Monitor.Wait(m_lock, (int) (m_curPoll*1000.0));
                     }
                 }
                 // did we get closed?
@@ -346,16 +345,16 @@ namespace bedrock.net
                     ms.Write(b.buf, b.offset, b.len);
                 }
 
-            POLL:
-                req = (HttpWebRequest)WebRequest.Create(m_url);
+                POLL:
+                req = (HttpWebRequest) WebRequest.Create(m_url);
                 req.CookieContainer = cookies;
-                req.ContentType     = CONTENT_TYPE;
-                req.Method          = METHOD;
+                req.ContentType = CONTENT_TYPE;
+                req.Method = METHOD;
 
                 if (m_cert != null)
                     req.ClientCertificates.Add(m_cert);
 
-                req.KeepAlive       = false;
+                req.KeepAlive = false;
 
                 req.CachePolicy = new System.Net.Cache.HttpRequestCachePolicy(System.Net.Cache.HttpRequestCacheLevel.NoCacheNoStore);
                 req.CachePolicy = new System.Net.Cache.HttpRequestCachePolicy(System.Net.Cache.HttpRequestCacheLevel.NoCacheNoStore);
@@ -390,7 +389,6 @@ namespace bedrock.net
                     }
                     goto POLL;
                 }
-
 
 
                 if (resp.StatusCode != HttpStatusCode.OK)
@@ -464,8 +462,10 @@ namespace bedrock.net
                             Close();
                             return;
                         }
-                    } catch (NullReferenceException)
-                    {}
+                    }
+                    catch (NullReferenceException)
+                    {
+                    }
                     m_curPoll = m_minPoll;
                 }
                 else
@@ -482,8 +482,7 @@ namespace bedrock.net
         /// </summary>
         public override bool Connected
         {
-            get
-            { return m_running; }
+            get { return m_running; }
         }
 
         /// <summary>
@@ -515,4 +514,5 @@ namespace bedrock.net
                 len = buf.Length;
             }
         }
-    }}
+    }
+}

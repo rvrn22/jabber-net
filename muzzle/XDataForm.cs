@@ -11,17 +11,15 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Xml;
-
 using bedrock.util;
-
 using jabber.protocol;
 using jabber.protocol.x;
 using jabber.protocol.client;
@@ -38,10 +36,10 @@ namespace muzzle
     {
         private static Regex WS = new Regex("\\s+", RegexOptions.Compiled);
 
-        private Packet      m_stanza = null;
-        private Element     m_parent = null;
+        private Packet m_stanza = null;
+        private Element m_parent = null;
         private FormField[] m_fields = null;
-        private XDataType   m_type;
+        private XDataType m_type;
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnCancel;
@@ -74,7 +72,7 @@ namespace muzzle
             m_stanza = (Packet) parent.CloneNode(true);
             Data d = FindData(m_stanza);
             Debug.Assert(d != null);
-            m_parent = (Element)d.ParentNode;
+            m_parent = (Element) d.ParentNode;
             m_parent.RemoveChild(d);
         }
 
@@ -86,14 +84,14 @@ namespace muzzle
         {
             m_stanza = (Packet) parent.CloneNode(true);
             Data d = FindData(m_stanza);
-            m_parent = (Element)d.ParentNode;
+            m_parent = (Element) d.ParentNode;
             m_parent.RemoveChild(d);
         }
 
         private static jabber.protocol.x.Data FindData(Element el)
         {
             if (el is Data)
-                return (Data)el;
+                return (Data) el;
             foreach (Element c in el.GetElements<Element>())
             {
                 Data d = FindData(c);
@@ -119,7 +117,7 @@ namespace muzzle
                 this.Text = x.Title;
             if (m_type == XDataType.cancel)
             {
-                lblInstructions.Text = "Form canceled.";  // TODO: Localize!
+                lblInstructions.Text = "Form canceled."; // TODO: Localize!
                 lblInstructions.Resize += new EventHandler(lblInstructions_Resize);
                 lblInstructions_Resize(lblInstructions, null);
             }
@@ -135,7 +133,7 @@ namespace muzzle
             pnlFields.SuspendLayout();
             Field[] fields = x.GetFields();
             m_fields = new FormField[fields.Length];
-            for (int i=fields.Length-1; i>=0; i--)
+            for (int i = fields.Length - 1; i >= 0; i--)
             {
                 m_fields[i] = new FormField(fields[i], this, i);
             }
@@ -151,7 +149,7 @@ namespace muzzle
             pnlFields.ResumeLayout(true);
             this.ResumeLayout(true);
 
-            for (int i=0; i<fields.Length; i++)
+            for (int i = 0; i < fields.Length; i++)
             {
                 if ((fields[i].Type != FieldType.hidden) &&
                     (fields[i].Type != FieldType.Fixed))
@@ -167,19 +165,20 @@ namespace muzzle
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
+            if (disposing)
             {
-                if(components != null)
+                if (components != null)
                 {
                     components.Dispose();
                 }
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -222,7 +221,7 @@ namespace muzzle
             //
             // btnCancel
             //
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.CausesValidation = false;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(212, 7);
@@ -232,7 +231,7 @@ namespace muzzle
             //
             // btnOK
             //
-            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Location = new System.Drawing.Point(132, 7);
             this.btnOK.Name = "btnOK";
             this.btnOK.TabIndex = 0;
@@ -291,13 +290,13 @@ namespace muzzle
             this.Text = "XData Form";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
+
         #endregion
 
         private void btnOK_Click(object sender, System.EventArgs e)
         {
-            for (int i=0; i<m_fields.Length; i++)
+            for (int i = 0; i < m_fields.Length; i++)
             {
                 if (!m_fields[i].Validate())
                 {
@@ -407,7 +406,7 @@ namespace muzzle
                         mtxt.Multiline = true;
                         mtxt.ScrollBars = ScrollBars.Vertical;
                         mtxt.Lines = m_val;
-                        mtxt.Height = m_form.btnOK.Height * 3;
+                        mtxt.Height = m_form.btnOK.Height*3;
                         m_control = mtxt;
                         break;
                     case FieldType.text_private:
@@ -563,14 +562,14 @@ namespace muzzle
                     if (m_control == null)
                         return m_val;
                     if (m_control is TextBox)
-                        return ((TextBox)m_control).Lines;
+                        return ((TextBox) m_control).Lines;
                     if (m_control is CheckBox)
-                        return new string[] { ((CheckBox)m_control).Checked ? "1" : "0" };
+                        return new string[] {((CheckBox) m_control).Checked ? "1" : "0"};
                     if (m_control is ComboBox)
                     {
-                        Option o = (Option)((ComboBox) m_control).SelectedItem;
+                        Option o = (Option) ((ComboBox) m_control).SelectedItem;
                         if (o == null) return new string[] {};
-                        return new string[] { o.Val };
+                        return new string[] {o.Val};
                     }
 
                     return null;
@@ -656,7 +655,6 @@ namespace muzzle
                         lb.SetItemChecked(i, true);
                 }
                 lb.EndUpdate();
-
             }
 
             private void jid_Validating(object sender, CancelEventArgs e)

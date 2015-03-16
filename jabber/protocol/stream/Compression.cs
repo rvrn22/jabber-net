@@ -11,9 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.stream
@@ -53,7 +53,7 @@ namespace jabber.protocol.stream
             {
                 XmlNodeList nl = GetElementsByTagName("method", URI.COMPRESS_FEATURE);
                 string[] meths = new string[nl.Count];
-                int i=0;
+                int i = 0;
                 foreach (XmlElement m in nl)
                 {
                     meths[i] = m.InnerText;

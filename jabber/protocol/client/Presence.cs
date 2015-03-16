@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 using jabber.protocol.x;
 
@@ -30,34 +29,42 @@ namespace jabber.protocol.client
         /// None specified
         /// </summary>
         available = -1,
+
         /// <summary>
         /// May I subscribe to you?
         /// </summary>
         subscribe,
+
         /// <summary>
         /// Yes, you may subscribe.
         /// </summary>
         subscribed,
+
         /// <summary>
         /// Unsubscribe from this entity.
         /// </summary>
         unsubscribe,
+
         /// <summary>
         /// No, you may not subscribe.
         /// </summary>
         unsubscribed,
+
         /// <summary>
         /// Offline
         /// </summary>
         unavailable,
+
         /// <summary>
         /// server-side only.
         /// </summary>
         probe,
+
         /// <summary>
         /// A presence error.
         /// </summary>
         error,
+
         /// <summary>
         /// Invisible presence: we're unavailable to them, but still see
         /// theirs.
@@ -87,7 +94,7 @@ namespace jabber.protocol.client
         /// <param name="qname"></param>
         /// <param name="doc"></param>
         public Presence(string prefix, XmlQualifiedName qname, XmlDocument doc) :
-            base(qname.Name, doc)  // Note:  *NOT* base(prefix, qname, doc), so that xpath matches are easier
+            base(qname.Name, doc) // Note:  *NOT* base(prefix, qname, doc), so that xpath matches are easier
         {
         }
 
@@ -96,7 +103,7 @@ namespace jabber.protocol.client
         /// </summary>
         public PresenceType Type
         {
-            get { return (PresenceType) GetEnumAttr("type", typeof(PresenceType)); }
+            get { return (PresenceType) GetEnumAttr("type", typeof (PresenceType)); }
             set
             {
                 if (value == PresenceType.available)
@@ -157,10 +164,7 @@ namespace jabber.protocol.client
                     return 0;
                 }
             }
-            set
-            {
-                SetElem("priority", value.ToString());
-            }
+            set { SetElem("priority", value.ToString()); }
         }
 
         /// <summary>
@@ -180,19 +184,19 @@ namespace jabber.protocol.client
         {
             switch (show)
             {
-            case "dnd":
-                return 0;
-            case "xa":
-                return 1;
-            case "away":
-                return 2;
-            case "chat":
-                return 4;
-            default:
-                return 3;
+                case "dnd":
+                    return 0;
+                case "xa":
+                    return 1;
+                case "away":
+                    return 2;
+                case "chat":
+                    return 4;
+                default:
+                    return 3;
             }
         }
-        
+
         /// <summary>
         /// Date/Time stamp that the presence was originially received by the sending
         /// server, if this presence is in response to a probe.
@@ -261,9 +265,9 @@ namespace jabber.protocol.client
         /// <param name="first"></param>
         /// <param name="second"></param>
         /// <returns></returns>
-        public static bool operator<(Presence first, Presence second)
+        public static bool operator <(Presence first, Presence second)
         {
-            return (((IComparable<Presence>)first).CompareTo(second) == -1);
+            return (((IComparable<Presence>) first).CompareTo(second) == -1);
         }
 
         /// <summary>
@@ -274,9 +278,9 @@ namespace jabber.protocol.client
         /// <param name="first"></param>
         /// <param name="second"></param>
         /// <returns></returns>
-        public static bool operator>(Presence first, Presence second)
+        public static bool operator >(Presence first, Presence second)
         {
-            return (((IComparable<Presence>)first).CompareTo(second) == 1);
+            return (((IComparable<Presence>) first).CompareTo(second) == 1);
         }
 
         #region IComparable<Presence> Members
@@ -307,7 +311,7 @@ namespace jabber.protocol.client
              This object is greater than other. 
 
              */
-            if ((object)this == (object)other)
+            if ((object) this == (object) other)
                 return 0;
 
             if (other == null)
@@ -353,7 +357,7 @@ namespace jabber.protocol.client
         public int CompareTo(object other)
         {
             if (other is Presence)
-                return CompareTo((Presence)other);
+                return CompareTo((Presence) other);
             return 1;
         }
 

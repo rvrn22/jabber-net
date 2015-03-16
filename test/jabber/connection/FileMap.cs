@@ -11,13 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using NUnit.Framework;
 using bedrock.io;
 using bedrock.util;
 using System.Xml;
-
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.iq;
@@ -28,9 +27,9 @@ namespace test.jabber.connection
     [TestFixture]
     public class FileMapTest
     {
-        XmlDocument doc = new XmlDocument();
+        private XmlDocument doc = new XmlDocument();
 
-        DiscoInfo Element
+        private DiscoInfo Element
         {
             get
             {
@@ -43,7 +42,7 @@ namespace test.jabber.connection
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof (ArgumentException))]
         public void TestNull()
         {
             FileMap<Element> fm = new FileMap<Element>("test.xml", null);
@@ -65,13 +64,13 @@ namespace test.jabber.connection
             fm[g] = Element;
             Assert.IsTrue(fm.Contains(g));
             Assert.IsFalse(fm.Contains("foo"));
-            Assert.IsInstanceOfType(typeof(DiscoInfo), fm[g]);
+            Assert.IsInstanceOfType(typeof (DiscoInfo), fm[g]);
             Assert.AreEqual(1, fm.Count);
 
             // re-read, to reparse
             fm = new FileMap<DiscoInfo>("test.xml", ef);
             Assert.IsTrue(fm.Contains(g));
-            Assert.IsInstanceOfType(typeof(DiscoInfo), fm[g]);
+            Assert.IsInstanceOfType(typeof (DiscoInfo), fm[g]);
 
             fm[g] = null;
             Assert.AreEqual(1, fm.Count);
