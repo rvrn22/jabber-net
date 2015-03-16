@@ -11,13 +11,15 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
+
 using bedrock.util;
 using bedrock.collections;
+
 using System.Security.Cryptography.X509Certificates;
 
 namespace bedrock.net
@@ -37,11 +39,11 @@ namespace bedrock.net
             Stopped
         };
 
-        private ISet m_pending = new Set(SetImplementation.SkipList);
-        private ISet m_socks = new Set(SetImplementation.SkipList);
-        private object m_lock = new object();
-        private int m_maxSocks;
-        private bool m_synch = false;
+        private ISet        m_pending = new Set(SetImplementation.SkipList);
+        private ISet        m_socks   = new Set(SetImplementation.SkipList);
+        private object      m_lock = new object();
+        private int         m_maxSocks;
+        private bool        m_synch = false;
 
         private X509Certificate2 m_cert = null;
         private bool m_requireClientCert = false;
@@ -83,7 +85,7 @@ namespace bedrock.net
             get { return m_maxSocks; }
             set
             {
-                lock (m_lock)
+                lock(m_lock)
                 {
                     if ((value >= 0) && (m_socks.Count >= value))
                         throw new InvalidOperationException("Too many sockets: " + m_socks.Count);
@@ -129,7 +131,7 @@ namespace bedrock.net
         /// <param name="filename">A .pfx or .cer file</param>
         /// <param name="password">The password, if this is a .pfx file, null if .cer file.</param>
         public void SetCertificateFile(string filename,
-            string password)
+                                       string password)
         {
             m_cert = new X509Certificate2(filename, password);
             // TODO: check cert for validity
@@ -153,9 +155,9 @@ namespace bedrock.net
         /// <param name="SSL">Do SSL3/TLS1 on connect</param>
         /// <returns>A socket that is ready for calling RequestAccept()</returns>
         public AsyncSocket CreateListenSocket(ISocketEventListener listener,
-            Address addr,
-            int backlog,
-            bool SSL)
+                                              Address              addr,
+                                              int                  backlog,
+                                              bool                 SSL)
         {
             //Debug.Assert(m_maxSocks > 1);
             AsyncSocket result = new AsyncSocket(this, listener, SSL, m_synch);
@@ -176,8 +178,8 @@ namespace bedrock.net
         /// <param name="SSL">Do SSL3/TLS1 on connect</param>
         /// <returns>A socket that is ready for calling RequestAccept()</returns>
         public AsyncSocket CreateListenSocket(ISocketEventListener listener,
-            Address addr,
-            bool SSL)
+                                              Address              addr,
+                                              bool                 SSL)
         {
             return CreateListenSocket(listener, addr, 5, SSL);
         }
@@ -189,7 +191,7 @@ namespace bedrock.net
         /// <param name="addr">Address to connect to</param>
         /// <returns>A socket that is ready for calling RequestAccept()</returns>
         public AsyncSocket CreateListenSocket(ISocketEventListener listener,
-            Address addr)
+            Address              addr)
         {
             return CreateListenSocket(listener, addr, 5, false);
         }
@@ -202,8 +204,8 @@ namespace bedrock.net
         /// <param name="backlog">The maximum length of the queue of pending connections</param>
         /// <returns>A socket that is ready for calling RequestAccept()</returns>
         public AsyncSocket CreateListenSocket(ISocketEventListener listener,
-            Address addr,
-            int backlog)
+                                              Address              addr,
+                                              int                  backlog)
         {
             return CreateListenSocket(listener, addr, backlog, false);
         }
@@ -215,7 +217,7 @@ namespace bedrock.net
         /// <param name="addr">Address to connect to</param>
         /// <returns>Socket that is in the process of connecting</returns>
         public AsyncSocket CreateConnectSocket(ISocketEventListener listener,
-            Address addr)
+                                               Address              addr)
         {
             return CreateConnectSocket(listener, addr, false, null);
         }
@@ -229,9 +231,9 @@ namespace bedrock.net
         /// <param name="hostId">The logical name of the host to connect to, for SSL/TLS purposes.</param>
         /// <returns>Socket that is in the process of connecting</returns>
         public AsyncSocket CreateConnectSocket(ISocketEventListener listener,
-            Address addr,
-            bool SSL,
-            string hostId)
+                                               Address              addr,
+                                               bool                 SSL,
+                                               string               hostId)
         {
             AsyncSocket result;
 

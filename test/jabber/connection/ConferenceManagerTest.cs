@@ -11,15 +11,16 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Xml;
 using bedrock.util;
+
 using jabber;
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Interfaces;
@@ -126,24 +127,23 @@ namespace test.jabber.connection
 
                 Expect.Call(stream.Document).Return(doc);
                 SetupTrackerBeginIq(delegate(IQ iq, IqCB cb, object cbArg)
-                {
-                    string id = iq.GetAttribute("id");
-                    string config = defaultConfig
-                        ? GetDefaultConfigPacket(id)
-                        : GetRetrieveConfigPacket(id);
-                    return iq.OuterXml.Replace(" ", "") == config.Replace(" ", "");
-                });
+                    {
+                        string id = iq.GetAttribute("id");
+                        string config = defaultConfig ? GetDefaultConfigPacket(id) :
+                            GetRetrieveConfigPacket(id);
+                        return iq.OuterXml.Replace(" ", "") == config.Replace(" ", "");
+                    });
             }
 
             using (mocks.Playback())
             {
                 CreateRoomPlayback(
                     true, delegate(Room arg0)
-                    {
-                        arg0.DefaultConfig = defaultConfig;
-                        arg0.OnRoomConfig += delegate { return null; };
-                        return arg0;
-                    });
+                              {
+                                  arg0.DefaultConfig = defaultConfig;
+                                  arg0.OnRoomConfig += delegate { return null; };
+                                  return arg0;
+                              });
             }
         }
 
@@ -152,7 +152,7 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<iq id=\"{0}\" type=\"get\" to=\"{1}\">" +
-                    "<query xmlns=\"{2}\"/>" +
+                        "<query xmlns=\"{2}\"/>" +
                     "</iq>",
                     id, jid.Bare, URI.MUC_OWNER);
         }
@@ -162,9 +162,9 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<iq id=\"{0}\" type=\"set\" to=\"{1}\">" +
-                    "<query xmlns=\"{2}\">" +
-                    "<x type=\"submit\" xmlns=\"{3}\"/>" +
-                    "</query>" +
+                        "<query xmlns=\"{2}\">" +
+                            "<x type=\"submit\" xmlns=\"{3}\"/>" +
+                        "</query>" +
                     "</iq>",
                     id, jid.Bare, URI.MUC_OWNER, URI.XDATA);
         }
@@ -180,14 +180,14 @@ namespace test.jabber.connection
 
         private XmlElement CreateJoinNeedConfigResponsePacket(XmlElement elem)
         {
-            RoomStatus[] statuses = new RoomStatus[] {RoomStatus.CREATED, RoomStatus.SELF};
+            RoomStatus[] statuses = new RoomStatus[] { RoomStatus.CREATED, RoomStatus.SELF };
 
             return CreateJoinPresence(elem, statuses);
         }
 
         private XmlElement CreateJoinResponsePacket(XmlElement elem)
         {
-            return CreateJoinPresence(elem, new RoomStatus[] {RoomStatus.SELF});
+            return CreateJoinPresence(elem, new RoomStatus[] { RoomStatus.SELF });
         }
 
         private XmlElement CreateJoinPresence(XmlElement elem, RoomStatus[] statuses)
@@ -216,7 +216,7 @@ namespace test.jabber.connection
         }
 
         [Test]
-        [ExpectedException(typeof (InvalidOperationException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void RoomMessageNoJoinTest()
         {
             SendMessage(false);
@@ -229,14 +229,14 @@ namespace test.jabber.connection
                 CreateJoinExpected(CreateJoinResponsePacket);
 
                 Expect.Call(stream.Document).Return(doc);
-                stream.Write((XmlElement) null);
+                stream.Write((XmlElement)null);
                 LastCall.Callback((Func<XmlElement, bool>)
-                    delegate(XmlElement elem)
-                    {
-                        string id = elem.GetAttribute("id");
-                        string original = elem.OuterXml;
-                        return original.Replace(" ", "") == GetRoomMessage(id).Replace(" ", "");
-                    });
+                                  delegate(XmlElement elem)
+                                  {
+                                      string id = elem.GetAttribute("id");
+                                      string original = elem.OuterXml;
+                                      return original.Replace(" ", "") == GetRoomMessage(id).Replace(" ", "");
+                                  });
             }
 
             using (mocks.Playback())
@@ -268,16 +268,16 @@ namespace test.jabber.connection
             stream.OnProtocol += null;
             IEventRaiser onProtocol = LastCall.IgnoreArguments().GetEventRaiser();
 
-            stream.Write((XmlElement) null);
+            stream.Write((XmlElement)null);
             LastCall.Callback((Func<XmlElement, bool>)
-                delegate(XmlElement elem)
-                {
-                    onProtocol.Raise(new object[] {null, sendPresence(elem)});
+                              delegate(XmlElement elem)
+                              {
+                                  onProtocol.Raise(new object[] { null, sendPresence(elem) });
 
-                    string original = elem.OuterXml;
-                    return original.Replace(" ", "") ==
-                           GetJoinPresence().Replace(" ", "");
-                });
+                                  string original = elem.OuterXml;
+                                  return original.Replace(" ", "") ==
+                                         GetJoinPresence().Replace(" ", "");
+                              });
         }
 
         private const string TO_NICK = "TestNick";
@@ -290,7 +290,7 @@ namespace test.jabber.connection
         }
 
         [Test]
-        [ExpectedException(typeof (InvalidOperationException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void RoomPrivateMessageNoJoinTest()
         {
             SendPrivateMessage(false);
@@ -303,15 +303,15 @@ namespace test.jabber.connection
                 CreateJoinExpected(CreateJoinResponsePacket);
 
                 Expect.Call(stream.Document).Return(doc);
-                stream.Write((XmlElement) null);
+                stream.Write((XmlElement)null);
                 LastCall.Callback((Func<XmlElement, bool>)
-                    delegate(XmlElement elem)
-                    {
-                        string id = elem.GetAttribute("id");
-                        string original = elem.OuterXml;
-                        return original.Replace(" ", "") ==
-                               GetRoomPrivateMessage(id).Replace(" ", "");
-                    });
+                                  delegate(XmlElement elem)
+                                  {
+                                      string id = elem.GetAttribute("id");
+                                      string original = elem.OuterXml;
+                                      return original.Replace(" ", "") ==
+                                             GetRoomPrivateMessage(id).Replace(" ", "");
+                                  });
             }
 
             using (mocks.Playback())
@@ -330,13 +330,13 @@ namespace test.jabber.connection
             using (mocks.Record())
             {
                 Expect.Call(stream.Document).Return(doc);
-                stream.Write((XmlElement) null);
+                stream.Write((XmlElement)null);
                 LastCall.Callback((Func<XmlElement, bool>)
                     delegate(XmlElement elem)
                     {
                         string original = elem.OuterXml;
                         return original.Replace(" ", "") ==
-                               GetLeavePresence().Replace(" ", "");
+                            GetLeavePresence().Replace(" ", "");
                     });
                 stream.OnProtocol += null;
                 LastCall.IgnoreArguments();
@@ -360,11 +360,11 @@ namespace test.jabber.connection
                 stream.OnProtocol += null;
                 IEventRaiser onProtocol = LastCall.IgnoreArguments().GetEventRaiser();
 
-                stream.Write((XmlElement) null);
+                stream.Write((XmlElement)null);
                 LastCall.Callback((Func<XmlElement, bool>)
                     delegate(XmlElement elem)
                     {
-                        onProtocol.Raise(new object[] {null, CreateUnavailPacket(elem)});
+                        onProtocol.Raise(new object[] { null, CreateUnavailPacket(elem) });
                         return true;
                     });
             }
@@ -390,7 +390,7 @@ namespace test.jabber.connection
             UserX xElem = new UserX(myDoc);
             presence.AppendChild(xElem);
 
-            xElem.Status = new RoomStatus[] {RoomStatus.SELF};
+            xElem.Status = new RoomStatus[] { RoomStatus.SELF };
 
             return presence;
         }
@@ -400,7 +400,7 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<presence to=\"{0}\" type=\"unavailable\">" +
-                    "<status>{1}</status>" +
+                        "<status>{1}</status>" +
                     "</presence>",
                     jid, REASON);
         }
@@ -410,7 +410,7 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<presence to=\"{0}\">" +
-                    "<x xmlns=\"{1}\"/>" +
+                        "<x xmlns=\"{1}\"/>" +
                     "</presence>",
                     jid, URI.MUC);
         }
@@ -420,7 +420,7 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<message id=\"{0}\" to=\"{1}\" type=\"groupchat\">" +
-                    "<body>{2}</body>" +
+                        "<body>{2}</body>" +
                     "</message>",
                     id, jid.Bare, MESSAGE);
         }
@@ -430,7 +430,7 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<message id=\"{0}\" to=\"{1}/{2}\" type=\"chat\">" +
-                    "<body>{3}</body>" +
+                        "<body>{3}</body>" +
                     "</message>",
                     id, jid.Bare, TO_NICK, MESSAGE);
         }

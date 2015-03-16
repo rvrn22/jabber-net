@@ -11,12 +11,13 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using System.Diagnostics;
 using System.Text;
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol
@@ -53,7 +54,7 @@ namespace jabber.protocol
         /// </summary>
         public JID To
         {
-            get { return (JID) this.GetAttr("to"); }
+            get { return (JID)this.GetAttr("to"); }
             set { SetAttr("to", value); }
         }
 
@@ -62,7 +63,7 @@ namespace jabber.protocol
         /// </summary>
         public JID From
         {
-            get { return (JID) this.GetAttr("from"); }
+            get { return (JID)this.GetAttr("from"); }
             set { SetAttr("from", value); }
         }
 

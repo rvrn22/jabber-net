@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
-using bedrock.util;
 
+using bedrock.util;
 namespace bedrock.net
 {
     /// <summary>
@@ -49,26 +48,22 @@ namespace bedrock.net
         /// <param name="newsocket">Socket for new connection.</param>
         /// <returns>true if RequestAccept() should be called automatically again</returns>
         bool OnAccept(BaseSocket newsocket);
-
         /// <summary>
         /// Outbound connection was connected.
         /// </summary>
         /// <param name="sock">Connected socket.</param>
         void OnConnect(BaseSocket sock);
-
         /// <summary>
         /// Connection was closed.
         /// </summary>
         /// <param name="sock">Closed socket.  Already closed!</param>
         void OnClose(BaseSocket sock);
-
         /// <summary>
         /// An error happened in processing.  The socket is no longer open.
         /// </summary>
         /// <param name="sock">Socket in error</param>
         /// <param name="ex">Exception that caused the error</param>
         void OnError(BaseSocket sock, Exception ex);
-
         /// <summary>
         /// Bytes were read from the socket.
         /// </summary>
@@ -77,8 +72,7 @@ namespace bedrock.net
         /// <param name="offset">Offset into the buffer to start at</param>
         /// <param name="length">Number of bytes to use out of the buffer</param>
         /// <returns>true if RequestRead() should be called automatically again</returns>
-        bool OnRead(BaseSocket sock, byte[] buf, int offset, int length);
-
+        bool OnRead (BaseSocket sock, byte[] buf, int offset, int length);
         /// <summary>
         /// Bytes were written to the socket.
         /// </summary>
@@ -101,7 +95,6 @@ namespace bedrock.net
             System.Security.Cryptography.X509Certificates.X509Chain chain,
             System.Net.Security.SslPolicyErrors sslPolicyErrors);
     }
-
     /// <summary>
     /// Default, empty implementation of ISocketEventListener
     /// </summary>
@@ -109,7 +102,6 @@ namespace bedrock.net
     public class SocketEventListener : ISocketEventListener
     {
         #region Implementation of ISocketEventListener
-
         /// <summary>
         /// An accept socket is about to be bound, or a connect socket is about to connect,
         /// or an incoming socket just came in.  Use this as an opportunity to
@@ -206,7 +198,6 @@ namespace bedrock.net
         {
             return false;
         }
-
         #endregion
     }
 }

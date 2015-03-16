@@ -11,13 +11,14 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using System.Net;
 using System.IO;
 using System.Collections;
+
 using bedrock.util;
 
 namespace jabber.connection
@@ -35,7 +36,7 @@ namespace jabber.connection
 
         private void ResponseCallback(IAsyncResult result)
         {
-            HttpWebRequest request = (HttpWebRequest) result.AsyncState;
+            HttpWebRequest request  = (HttpWebRequest)result.AsyncState;
             //request.GetResponse().GetResponseStream();
             if (OnUpload != null)
                 OnUpload(this);
@@ -54,11 +55,11 @@ namespace jabber.connection
             //{
             StreamReader reader = new StreamReader(filename);
             HttpWebRequest request =
-                (HttpWebRequest) HttpWebRequest.Create(uri);
+                (HttpWebRequest)HttpWebRequest.Create(uri);
 
             request.Method = "POST";
             request.Headers.Add(HttpRequestHeader.Authorization,
-                "x-xmpp-auth jid=\"" + jid + "\"");
+                                "x-xmpp-auth jid=\"" + jid + "\"");
 
             StreamWriter writer = new StreamWriter(request.GetRequestStream());
             writer.Write(reader.ReadToEnd());
@@ -66,7 +67,7 @@ namespace jabber.connection
             reader.Close();
 
             request.BeginGetResponse(new AsyncCallback(ResponseCallback),
-                request);
+                                     request);
             writer.Close();
             // }
             // catch (WebException)

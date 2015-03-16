@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Text;
 using System.Collections;
 
@@ -32,7 +32,7 @@ namespace stringprep.steps
         /// </summary>
         /// <param name="table"></param>
         /// <param name="name"></param>
-        public MapStep(string[] table, string name) : base(name)
+        public MapStep(string[] table, string name): base(name)
         {
             m_table = table;
         }
@@ -51,7 +51,7 @@ namespace stringprep.steps
             int pos;
             string map;
             int len;
-            for (int i = 0; i < result.Length; i++)
+            for (int i=0; i<result.Length; i++)
             {
                 pos = Array.BinarySearch(m_table, result[i], m_comp);
                 if (pos < 0)
@@ -69,7 +69,7 @@ namespace stringprep.steps
                     result[i] = map[1];
                     if (len > 2)
                     {
-                        result.Insert(i + 1, map.ToCharArray(2, len - 2));
+                        result.Insert(i+1, map.ToCharArray(2, len - 2));
                         i += len - 2;
                     }
                 }
@@ -80,7 +80,7 @@ namespace stringprep.steps
         {
             public int Compare(object x, object y)
             {
-                return ((string) x)[0].CompareTo(y);
+                return ((string)x)[0].CompareTo(y);
             }
         }
     }

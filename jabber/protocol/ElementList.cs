@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using System.Xml;
 using bedrock.util;
@@ -212,7 +212,7 @@ namespace jabber.protocol
             {
                 n = n.NextSibling;
             }
-            return (T) n;
+            return (T)n;
         }
 
         /// <summary>
@@ -323,6 +323,7 @@ namespace jabber.protocol
 
             public void Dispose()
             {
+                
             }
 
             #endregion

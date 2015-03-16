@@ -11,14 +11,13 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
 using System.IO;
 using System.Diagnostics;
 using System.Collections;
 using bedrock.util;
-
 namespace bedrock.util
 {
     /// <summary>
@@ -119,7 +118,6 @@ namespace bedrock.util
             return m_doc.SelectSingleNode(xpath);
             //ConfigFile f;
         }
-
         /// <summary>
         /// Get the configuration file XML nodes associated with a give XPath query
         /// </summary>
@@ -129,16 +127,17 @@ namespace bedrock.util
         {
             return m_doc.SelectNodes(xpath);
         }
-
         /// <summary>
         /// Get the configuration file string associated
         /// with a given XPath query, or null if not found.
         /// </summary>
         public string this[string xpath]
         {
-            get { return this[xpath, null]; }
+            get
+            {
+                return this[xpath, null];
+            }
         }
-
         /// <summary>
         /// Get the configuration file string associated
         /// with a given XPath query, or defaultValue if not found.

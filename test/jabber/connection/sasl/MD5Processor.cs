@@ -11,12 +11,14 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using bedrock.util;
+
 using jabber.connection;
 using jabber.connection.sasl;
 using jabber.protocol.stream;
+
 using NUnit.Framework;
 using System.Xml;
 
@@ -29,6 +31,7 @@ namespace test.jabber.connection.sasl
         [Test]
         public void TestChallenge()
         {
+
             XmlDocument doc = new XmlDocument();
             Challenge c = new Challenge(doc);
             c.InnerText = "cmVhbG09IndlYjIwMDMiLCBub25jZT0iWWE0anVNYzU0SG9UWDBPa1VPRDFvQT09IiwgcW9wPSJhdXRoLCBhdXRoLWludCIsIGNoYXJzZXQ9dXRmLTgsIGFsZ29yaXRobT1tZDUtc2Vzcw==";

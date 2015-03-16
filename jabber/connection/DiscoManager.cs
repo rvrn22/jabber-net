@@ -11,16 +11,18 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Collections;
 using System.Diagnostics;
 using System.Xml;
 using System.Threading;
+
 using bedrock.util;
 using bedrock.collections;
+
 using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
@@ -75,7 +77,10 @@ namespace jabber.connection
         [Category("Capabilities")]
         public string Key
         {
-            get { return string.Format("{0}/{1}/{2}/{3}", m_category, m_type, m_lang, m_name); }
+            get
+            {
+                return string.Format("{0}/{1}/{2}/{3}", m_category, m_type, m_lang, m_name);
+            }
         }
 
         /// <summary>
@@ -131,7 +136,6 @@ namespace jabber.connection
         }
 
         #region IComparable Members
-
         /// <summary>
         /// Compare to another identity, by comparing the string-ified versions
         /// of each.
@@ -140,14 +144,13 @@ namespace jabber.connection
         /// <returns></returns>
         public int CompareTo(object obj)
         {
-            if ((object) this == obj)
+            if ((object)this == obj)
                 return 0;
             Ident other = obj as Ident;
             if (other == null)
                 return 1;
             return Key.CompareTo(other.Key);
         }
-
         #endregion
 
         /// <summary>
@@ -193,8 +196,7 @@ namespace jabber.connection
                 sb.Append(m_name);
             }
 
-            return sb.ToString();
-            ;
+            return sb.ToString(); ;
         }
     }
 
@@ -320,17 +322,14 @@ namespace jabber.connection
         /// Contains the children of this node.
         /// </summary>
         public Set Children = null;
-
         /// <summary>
         /// Contains the Features of this node.
         /// </summary>
         public StringSet Features = null;
-
         /// <summary>
         /// Contains the identities of this node.
         /// </summary>
         public Set Identity = null;
-
         private string m_name = null;
         private bool m_pendingItems = false;
         private bool m_pendingInfo = false;
@@ -574,8 +573,14 @@ namespace jabber.connection
         /// </summary>
         public jabber.protocol.x.Data[] Extensions
         {
-            get { return m_extensions; }
-            set { m_extensions = value; }
+            get
+            {
+                return m_extensions;
+            }
+            set
+            {
+                m_extensions = value;
+            }
         }
 
         /// <summary>
@@ -618,7 +623,7 @@ namespace jabber.connection
             if (info == null)
             {
                 AddIdentities(null);
-                AddFeatures((StringSet) null);
+                AddFeatures((StringSet)null);
                 return;
             }
             Extensions = info.GetExtensions();
@@ -636,7 +641,7 @@ namespace jabber.connection
         {
             if (Features == null)
                 Features = new StringSet();
-
+            
             Features.Add(feature);
         }
 
@@ -808,7 +813,6 @@ namespace jabber.connection
         }
 
         #region IEnumerable Members
-
         /// <summary>
         /// Gets an enumerator across all items.
         /// </summary>
@@ -817,7 +821,6 @@ namespace jabber.connection
         {
             return Children.GetEnumerator();
         }
-
         #endregion
     }
 
@@ -862,7 +865,7 @@ namespace jabber.connection
         public DiscoManager()
         {
             InitializeComponent();
-            this.OnStreamChanged += new bedrock.ObjectHandler(DiscoManager_OnStreamChanged);
+            this.OnStreamChanged +=new bedrock.ObjectHandler(DiscoManager_OnStreamChanged);
         }
 
 
@@ -874,7 +877,7 @@ namespace jabber.connection
         /// </summary>
         public DiscoNode Root
         {
-            get
+            get 
             {
                 if (m_root != null)
                     return m_root;
@@ -882,7 +885,7 @@ namespace jabber.connection
                     return null;
                 // GetNode locks.
                 m_root = GetNode(m_stream.Server);
-                return m_root;
+                return m_root; 
             }
         }
 
@@ -900,7 +903,7 @@ namespace jabber.connection
             lock (m_items)
             {
                 string key = DiscoNode.GetKey(jid, node);
-                DiscoNode n = (DiscoNode) m_items[key];
+                DiscoNode n = (DiscoNode)m_items[key];
                 if (n == null)
                 {
                     n = new DiscoNode(jid, node);
@@ -1107,25 +1110,25 @@ namespace jabber.connection
                 id.Name = agent.Description;
                 switch (agent.Service)
                 {
-                    case "groupchat":
-                        id.Category = "conference";
-                        id.Type = "text";
-                        child.Identity.Add(id);
-                        break;
-                    case "jud":
-                        id.Category = "directory";
-                        id.Type = "user";
-                        child.Identity.Add(id);
-                        break;
-                    case null:
-                    case "":
-                        break;
-                    default:
-                        // guess this is a transport
-                        id.Category = "gateway";
-                        id.Type = agent.Service;
-                        child.Identity.Add(id);
-                        break;
+                case "groupchat":
+                    id.Category = "conference";
+                    id.Type = "text";
+                    child.Identity.Add(id);
+                    break;
+                case "jud":
+                    id.Category = "directory";
+                    id.Type = "user";
+                    child.Identity.Add(id);
+                    break;
+                case null:
+                case "":
+                    break;
+                default:
+                    // guess this is a transport
+                    id.Category = "gateway";
+                    id.Type = agent.Service;
+                    child.Identity.Add(id);
+                    break;
                 }
 
                 if (agent.Register)
@@ -1151,11 +1154,11 @@ namespace jabber.connection
                 }
                 child.AddItems(this, null);
                 child.AddIdentities(null);
-                child.AddFeatures((StringSet) null);
+                child.AddFeatures((StringSet)null);
             }
             dn.AddItems(this, null);
             dn.AddIdentities(null);
-            dn.AddFeatures((StringSet) null);
+            dn.AddFeatures((StringSet)null);
         }
 
         /// <summary>
@@ -1272,6 +1275,7 @@ namespace jabber.connection
 
             public void GotFeatures(DiscoManager manager, DiscoNode node, object state)
             {
+
                 // yes, yes, this may call the handler more than once in multi-threaded world.  Punt for now.
                 if (m_handler != null)
                 {
@@ -1308,14 +1312,13 @@ namespace jabber.connection
         public void BeginFindServiceWithFeature(string featureURI, DiscoNodeHandler handler, object state)
         {
             if (handler == null)
-                return; // prove I *didn't* call it. :)
+                return;  // prove I *didn't* call it. :)
 
             FindServiceRequest req = new FindServiceRequest(featureURI, handler);
-            BeginGetItems(Root, new DiscoNodeHandler(req.GotRootItems), state); // hopefully enough to prevent GC.
+            BeginGetItems(Root, new DiscoNodeHandler(req.GotRootItems), state);  // hopefully enough to prevent GC.
         }
 
         #region Component Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -1324,7 +1327,6 @@ namespace jabber.connection
         {
             components = new System.ComponentModel.Container();
         }
-
         #endregion
     }
 }

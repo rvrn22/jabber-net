@@ -11,7 +11,6 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System.Xml;
 using bedrock.util;
 using jabber.protocol.iq;
@@ -45,13 +44,14 @@ namespace test.jabber.protocol.iq
         public void PubSubCreateTest()
         {
             PubSubIQ iq = new PubSubIQ(doc, PubSubCommandType.create, NODE);
-            Assert.IsFalse(((Create) iq.Command).HasConfigure);
+            Assert.IsFalse(((Create)iq.Command).HasConfigure);
 
-            Create create = (Create) iq.Command;
+            Create create = (Create)iq.Command;
 
             create.HasConfigure = true;
             Assert.IsTrue(create.HasConfigure);
             Assert.IsNotNull(create.GetConfiguration());
         }
+
     }
 }

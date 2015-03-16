@@ -11,11 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using bedrock.util;
-
 namespace bedrock.collections
 {
     /// <summary>
@@ -24,12 +23,11 @@ namespace bedrock.collections
     [SVN(@"$Id$")]
     public class GraphNode : IEnumerable
     {
-        private object m_key = null;
-        private object m_data = null;
-        private GraphNode m_parent = null;
+        private object      m_key      = null;
+        private object      m_data     = null;
+        private GraphNode   m_parent   = null;
         private IDictionary m_children = null;
-        private bool m_sorted = true;
-
+        private bool        m_sorted   = true;
         /// <summary>
         /// Creates a new node, with key and data.
         /// </summary>
@@ -38,7 +36,6 @@ namespace bedrock.collections
         public GraphNode(object key, object data) : this(key, data, true)
         {
         }
-
         /// <summary>
         /// Creates a new node, with key and data, possibly having
         /// sorted children. 
@@ -48,8 +45,8 @@ namespace bedrock.collections
         /// <param name="sorted">Should the children be sorted?</param>
         public GraphNode(object key, object data, bool sorted)
         {
-            m_key = key;
-            m_data = data;
+            m_key    = key;
+            m_data   = data;
             m_sorted = sorted;
             if (m_sorted)
             {
@@ -77,7 +74,7 @@ namespace bedrock.collections
             get { return m_data; }
             set { m_data = value; }
         }
-
+        
         /// <summary>
         /// Adds a new child node
         /// </summary>
@@ -91,23 +88,26 @@ namespace bedrock.collections
             m_children.Add(key, n);
             return n;
         }
-
         /// <summary>
         /// Retrieves a child node, based on the key.
         /// </summary>
         public object this[object key]
         {
-            get { return ((GraphNode) m_children[key]).m_data; }
+            get
+            {
+                return ((GraphNode)m_children[key]).m_data;
+            }
         }
-
         /// <summary>
         /// Determines whether this is a root node.
         /// </summary>
         public bool IsRoot
         {
-            get { return m_parent == null; }
+            get
+            {
+                return m_parent == null;
+            }
         }
-
         #region IEnumerable
 
         /// <summary>
@@ -122,7 +122,6 @@ namespace bedrock.collections
         private class GraphNodeEnumerator : IEnumerator
         {
             private IEnumerator m_arrayEnumerator;
-
             public GraphNodeEnumerator(GraphNode n)
             {
                 m_arrayEnumerator = n.m_children.GetEnumerator();
@@ -130,7 +129,10 @@ namespace bedrock.collections
 
             public object Current
             {
-                get { return ((GraphNode) m_arrayEnumerator.Current).m_data; }
+                get
+                {
+                    return ((GraphNode)m_arrayEnumerator.Current).m_data;
+                }
             }
 
             public bool MoveNext()
@@ -143,7 +145,6 @@ namespace bedrock.collections
                 m_arrayEnumerator.Reset();
             }
         }
-
         #endregion
     }
 }

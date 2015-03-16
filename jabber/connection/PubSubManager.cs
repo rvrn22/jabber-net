@@ -51,7 +51,6 @@ namespace jabber.connection
                 if (OnAdd != null)
                     OnAdd(node, item);
             }
-
             public void FireRemove(PubSubNode node, PubSubItem item)
             {
                 if (OnRemove != null)
@@ -63,8 +62,7 @@ namespace jabber.connection
         /// Required designer variable.
         /// </summary>
         private IContainer components = null;
-
-        private Dictionary<JIDNode, PubSubNode> m_nodes = new Dictionary<JIDNode, PubSubNode>();
+        private Dictionary<JIDNode, PubSubNode> m_nodes = new Dictionary<JIDNode,PubSubNode>();
         private Dictionary<string, CBHolder> m_callbacks = new Dictionary<string, CBHolder>();
 
         /// <summary>
@@ -335,7 +333,7 @@ namespace jabber.connection
         /// <param name="index">Index of PubSubItem to remove.</param>
         public override void RemoveAt(int index)
         {
-            PubSubItem item = (PubSubItem) this[index];
+            PubSubItem item = (PubSubItem)this[index];
             string id = item.GetAttribute("id");
             if (id != "")
             {
@@ -345,9 +343,9 @@ namespace jabber.connection
             m_node.ItemRemoved(item);
 
             // renumber
-            for (int i = index; i < Count; i++)
+            for (int i=index; i<Count; i++)
             {
-                item = (PubSubItem) this[i];
+                item = (PubSubItem)this[i];
                 id = item.ID;
                 if (id != "")
                     m_index[id] = i;
@@ -397,7 +395,7 @@ namespace jabber.connection
         {
             object index = m_index[id];
             if (index != null)
-                RemoveAt((int) index);
+                RemoveAt((int)index);
         }
 
         /// <summary>
@@ -412,7 +410,7 @@ namespace jabber.connection
                 object index = m_index[id];
                 if (index == null)
                     return null;
-                PubSubItem item = this[(int) index] as PubSubItem;
+                PubSubItem item = this[(int)index] as PubSubItem;
                 if (item == null)
                     return null;
                 return item.Contents;
@@ -438,42 +436,34 @@ namespace jabber.connection
         /// Creates a node
         /// </summary>
         CREATE,
-
         /// <summary>
         /// Subscribes to a node
         /// </summary>
         SUBSCRIBE,
-
         /// <summary>
         /// Gets the current items in the node
         /// </summary>
         ITEMS,
-
         /// <summary>
         /// Deletes a node
         /// </summary>
         DELETE,
-
         /// <summary>
         /// Deletes an item from the node
         /// </summary>
         DELETE_ITEM,
-
         /// <summary>
         /// Publishes an item to a node
         /// </summary>
         PUBLISH_ITEM,
-
         /// <summary>
         /// Configure a node
         /// </summary>
         CONFIGURE,
-
         /// <summary>
         /// Purge all items from a node.
         /// </summary>
         PURGE,
-
         /// <summary>
         /// Configuration defaults
         /// </summary>
@@ -490,7 +480,6 @@ namespace jabber.connection
         /// Contains the stanza that caused the error.
         /// </summary>
         public XmlElement Protocol = null;
-
         /// <summary>
         /// Contains the operation that failed.
         /// </summary>
@@ -513,7 +502,8 @@ namespace jabber.connection
         /// </summary>
         public override string Message
         {
-            get { return string.Format("PubSub error on {0}: {1}\r\nAssociated protocol: {2}", Operation, base.Message, Protocol); }
+            get
+            { return string.Format("PubSub error on {0}: {1}\r\nAssociated protocol: {2}", Operation, base.Message, Protocol); }
         }
     }
 
@@ -539,11 +529,11 @@ namespace jabber.connection
         }
 
         // indexed by op.
-        private STATE[] m_state = new STATE[] {STATE.Start, STATE.Start, STATE.Start, STATE.Start};
+        private STATE[] m_state = new STATE[] { STATE.Start, STATE.Start, STATE.Start, STATE.Start};
 
-        private JID m_jid = null;
-        private string m_node = null;
-        private ItemList m_items = null;
+        private JID         m_jid = null;
+        private string      m_node = null;
+        private ItemList    m_items = null;
 
         ///<summary>
         /// Retrieves the component that handles publish-subscribe requests.
@@ -639,8 +629,8 @@ namespace jabber.connection
 
         private STATE this[Op op]
         {
-            get { return m_state[(int) op]; }
-            set { m_state[(int) op] = value; }
+            get { return m_state[(int)op]; }
+            set { m_state[(int)op] = value; }
         }
 
         private void FireError(Op op, string message, XmlElement protocol)
@@ -796,15 +786,15 @@ namespace jabber.connection
         {
             switch (state)
             {
-                case STATE.Start:
-                case STATE.Pending:
-                    return true;
-                case STATE.Asking:
-                case STATE.Running:
-                    return false;
-                case STATE.Error:
-                    Debug.WriteLine("Retrying create after error.  Hope you've changed perms or something in the mean time.");
-                    return true;
+            case STATE.Start:
+            case STATE.Pending:
+                return true;
+            case STATE.Asking:
+            case STATE.Running:
+                return false;
+            case STATE.Error:
+                Debug.WriteLine("Retrying create after error.  Hope you've changed perms or something in the mean time.");
+                return true;
             }
             return true;
         }
@@ -881,20 +871,20 @@ namespace jabber.connection
                 if (s == "")
                     subType = PubSubSubscriptionType.NONE_SPECIFIED;
                 else
-                    subType = (PubSubSubscriptionType) Enum.Parse(typeof (PubSubSubscriptionType), s);
+                    subType = (PubSubSubscriptionType)Enum.Parse(typeof(PubSubSubscriptionType), s);
             }
 
             switch (subType)
             {
-                case PubSubSubscriptionType.NONE_SPECIFIED:
-                case PubSubSubscriptionType.subscribed:
-                    break;
-                case PubSubSubscriptionType.pending:
-                    FireError(Op.SUBSCRIBE, "Subscription pending authorization", iq);
-                    return;
-                case PubSubSubscriptionType.unconfigured:
-                    FireError(Op.SUBSCRIBE, "Subscription configuration required.  Not implemented yet.", iq);
-                    return;
+            case PubSubSubscriptionType.NONE_SPECIFIED:
+            case PubSubSubscriptionType.subscribed:
+                break;
+            case PubSubSubscriptionType.pending:
+                FireError(Op.SUBSCRIBE, "Subscription pending authorization", iq);
+                return;
+            case PubSubSubscriptionType.unconfigured:
+                FireError(Op.SUBSCRIBE, "Subscription configuration required.  Not implemented yet.", iq);
+                return;
             }
 
             this[Op.SUBSCRIBE] = STATE.Running;
@@ -1035,7 +1025,7 @@ namespace jabber.connection
         public void DeleteItem(string id)
         {
             PubSubIQ iq = createCommand(PubSubCommandType.retract);
-            Retract retract = (Retract) iq.Command;
+            Retract retract = (Retract)iq.Command;
             retract.AddItem(id);
             BeginIQ(iq, OnDeleteNode, null);
         }
@@ -1063,6 +1053,7 @@ namespace jabber.connection
             iq.Type = IQType.set;
             iq.Command.Node = m_node;
             BeginIQ(iq, GotPurge, null);
+
         }
 
         private void GotPurge(object sender, IQ iq, object data)
@@ -1082,7 +1073,7 @@ namespace jabber.connection
         public void PublishItem(string id, XmlElement contents)
         {
             PubSubIQ iq = createCommand(PubSubCommandType.publish);
-            Publish pub = (Publish) iq.Command;
+            Publish pub = (Publish)iq.Command;
             PubSubItem item = new PubSubItem(m_stream.Document);
             if (id != null)
                 item.ID = id;
@@ -1105,7 +1096,7 @@ namespace jabber.connection
 
             // TODO: if an item is returned, it will have a new item id.
             if (OnItemPublished != null)
-                OnItemPublished(this, (PubSubItem) data);
+                OnItemPublished(this, (PubSubItem)data);
         }
 
         /// <summary>

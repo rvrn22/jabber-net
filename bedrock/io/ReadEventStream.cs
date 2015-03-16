@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.IO;
 using bedrock.util;
 
@@ -92,7 +92,7 @@ namespace bedrock.io
         /// <returns></returns>
         public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
         {
-            return m_stream.BeginRead(buffer, offset, count, callback, state);
+            return m_stream.BeginRead (buffer, offset, count, callback, state);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace bedrock.io
         /// <returns></returns>
         public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
         {
-            return m_stream.BeginWrite(buffer, offset, count, callback, state);
+            return m_stream.BeginWrite (buffer, offset, count, callback, state);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace bedrock.io
         /// </summary>
         public override void Close()
         {
-            m_stream.Close();
+            m_stream.Close ();
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace bedrock.io
         /// <param name="asyncResult"></param>
         public override void EndWrite(IAsyncResult asyncResult)
         {
-            m_stream.EndWrite(asyncResult);
+            m_stream.EndWrite (asyncResult);
         }
 
         /// <summary>

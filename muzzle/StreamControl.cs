@@ -11,12 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Xml;
+
 using bedrock.util;
 using jabber;
 using jabber.connection;
@@ -53,14 +53,14 @@ namespace muzzle
                 // from the environment.
                 if ((this.m_stream == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
+                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
                     this.Stream = StreamComponent.GetStreamFromHost(host);
                 }
                 return m_stream;
             }
             set
             {
-                if ((object) m_stream != (object) value)
+                if ((object)m_stream != (object)value)
                 {
                     m_stream = value;
                     if (OnStreamChanged != null)

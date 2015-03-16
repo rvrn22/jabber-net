@@ -11,9 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Xml;
+
 using bedrock.util;
 using jabber.protocol.x;
 
@@ -28,42 +28,34 @@ namespace jabber.protocol.iq
         /// Retrieve the affiliations.  See: http://www.xmpp.org/extensions/xep-0060.html#entity-affiliations
         /// </summary>
         affiliations,
-
         /// <summary>
         /// Create a node. See: http://www.xmpp.org/extensions/xep-0060.html#owner-create
         /// </summary>
         create,
-
         /// <summary>
         /// Retrieve the items for a node. See http://www.xmpp.org/extensions/xep-0060.html#subscriber-retrieve
         /// </summary>
         items,
-
         /// <summary>
         /// Publish to a node.  See http://www.xmpp.org/extensions/xep-0060.html#publisher-publish
         /// </summary>
         publish,
-
         /// <summary>
         /// Delete an item from a node.  See: http://www.xmpp.org/extensions/xep-0060.html#publisher-delete
         /// </summary>
         retract,
-
         /// <summary>
         /// Subscribe to a node. See: http://www.xmpp.org/extensions/xep-0060.html#subscriber-subscribe
         /// </summary>
         subscribe,
-
         /// <summary>
         /// Retrieve subscriptions.  See: http://www.xmpp.org/extensions/xep-0060.html#entity-subscriptions
         /// </summary>
         subscriptions,
-
         /// <summary>
         /// Unsubscribe from a node.  See: http://www.xmpp.org/extensions/xep-0060.html#subscriber-unsubscribe
         /// </summary>
         unsubscribe,
-
         /// <summary>
         /// Delete a node. See: http://www.xmpp.org/extensions/xep-0060.html#owner-delete
         /// </summary>
@@ -73,17 +65,14 @@ namespace jabber.protocol.iq
         /// Collection modification
         /// </summary>
         collection,
-
         /// <summary>
         /// Node configuration change
         /// </summary>
         configuration,
-
         /// <summary>
         /// All items purged
         /// </summary>
         purge,
-
         /// <summary>
         /// A new subscription
         /// </summary>
@@ -93,7 +82,6 @@ namespace jabber.protocol.iq
         /// Owner configuring the node
         /// </summary>
         configure,
-
         /// <summary>
         /// Owner-level defaults, in a "default" element.  "default" is a C# keyword, though.
         /// </summary>
@@ -126,32 +114,32 @@ namespace jabber.protocol.iq
             PubSubCommand cmd = null;
             switch (command)
             {
-                case PubSubCommandType.affiliations:
-                    cmd = new Affiliations(doc);
-                    break;
-                case PubSubCommandType.create:
-                    cmd = new Create(doc);
-                    break;
-                case PubSubCommandType.items:
-                    cmd = new Items(doc);
-                    break;
-                case PubSubCommandType.publish:
-                    cmd = new Publish(doc);
-                    break;
-                case PubSubCommandType.retract:
-                    cmd = new Retract(doc);
-                    break;
-                case PubSubCommandType.subscribe:
-                    cmd = new Subscribe(doc);
-                    break;
-                case PubSubCommandType.subscriptions:
-                    cmd = new Subscriptions(doc);
-                    break;
-                case PubSubCommandType.unsubscribe:
-                    cmd = new Unsubscribe(doc);
-                    break;
-                default:
-                    throw new ArgumentException("Command not understood: " + command.ToString(), "command");
+            case PubSubCommandType.affiliations:
+                cmd = new Affiliations(doc);
+                break;
+            case PubSubCommandType.create:
+                cmd = new Create(doc);
+                break;
+            case PubSubCommandType.items:
+                cmd = new Items(doc);
+                break;
+            case PubSubCommandType.publish:
+                cmd = new Publish(doc);
+                break;
+            case PubSubCommandType.retract:
+                cmd = new Retract(doc);
+                break;
+            case PubSubCommandType.subscribe:
+                cmd = new Subscribe(doc);
+                break;
+            case PubSubCommandType.subscriptions:
+                cmd = new Subscriptions(doc);
+                break;
+            case PubSubCommandType.unsubscribe:
+                cmd = new Unsubscribe(doc);
+                break;
+            default:
+                throw new ArgumentException("Command not understood: " + command.ToString(), "command");
             }
 
             if (node != null)
@@ -334,7 +322,10 @@ namespace jabber.protocol.iq
         /// <summary>
         /// What type of command?
         /// </summary>
-        public abstract PubSubCommandType CommandType { get; }
+        public abstract PubSubCommandType CommandType
+        {
+            get;
+        }
     }
 
 
@@ -405,28 +396,23 @@ namespace jabber.protocol.iq
         /// <summary>
         /// No affiliation specified
         /// </summary>
-        NONE_SPECIFIED = -1,
-
+        NONE_SPECIFIED=-1,
         /// <summary>
         /// Can receive
         /// </summary>
-        member = 0,
-
+        member=0,
         /// <summary>
         /// No affiliation
         /// </summary>
         none,
-
         /// <summary>
         /// Can't join
         /// </summary>
         outcast,
-
         /// <summary>
         /// All permisions
         /// </summary>
         owner,
-
         /// <summary>
         /// Can publish
         /// </summary>
@@ -487,6 +473,7 @@ namespace jabber.protocol.iq
             get { return GetEnumAttr<AffiliationType>("affiliation"); }
             set { SetEnumAttr("affiliation", value); }
         }
+
     }
 
     /// <summary>
@@ -818,11 +805,7 @@ namespace jabber.protocol.iq
         public XmlElement Contents
         {
             get { return GetFirstChildElement(); }
-            set
-            {
-                this.InnerXml = "";
-                this.AddChild(value);
-            }
+            set { this.InnerXml = ""; this.AddChild(value); }
         }
     }
 
@@ -918,7 +901,7 @@ namespace jabber.protocol.iq
                     return true;
                 return false;
             }
-            set { SetAttribute("notify", value ? "true" : "false"); }
+            set { SetAttribute("notify", value ? "true": "false"); }
         }
     }
 
@@ -1080,6 +1063,7 @@ namespace jabber.protocol.iq
         {
             return GetChildElement<Data>();
         }
+
     }
 
     /// <summary>
@@ -1153,7 +1137,7 @@ namespace jabber.protocol.iq
     [SVN(@"$Id$")]
     public class PubSubSubscription : Element
     {
-        /// <summary>
+      /// <summary>
         ///
         /// </summary>
         /// <param name="doc"></param>
@@ -1219,22 +1203,18 @@ namespace jabber.protocol.iq
         /// No type given
         /// </summary>
         NONE_SPECIFIED = -1,
-
         /// <summary>
         /// No subscription
         /// </summary>
         none = 0,
-
         /// <summary>
         /// Sub is pending
         /// </summary>
         pending,
-
         /// <summary>
         /// Subscribed
         /// </summary>
         subscribed,
-
         /// <summary>
         /// Subscription needs to be configured
         /// </summary>
@@ -1293,4 +1273,6 @@ namespace jabber.protocol.iq
             set { SetAttr("subid", value); }
         }
     }
+
+
 }

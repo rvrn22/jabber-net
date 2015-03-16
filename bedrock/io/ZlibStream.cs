@@ -11,10 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.IO;
 using System.Diagnostics;
+
 using bedrock.util;
 using ComponentAce.Compression.Libs.zlib;
 
@@ -30,16 +30,12 @@ namespace bedrock.io
         ///
         /// </summary>
         /// <param name="message"></param>
-        public CompressionFailedException(string message) : base(message)
-        {
-        }
+        public CompressionFailedException(string message) : base(message) { }
 
         /// <summary>
         ///
         /// </summary>
-        public CompressionFailedException() : base()
-        {
-        }
+        public CompressionFailedException() : base() { }
     }
 
 
@@ -58,7 +54,10 @@ namespace bedrock.io
         /// </summary>
         public static bool Supported
         {
-            get { return zlibConst.version() != ""; }
+            get
+            {
+                return zlibConst.version() != "";
+            }
         }
 
         private Stream m_stream = null;
@@ -304,7 +303,7 @@ namespace bedrock.io
 
         private void IntermediateWrite(IAsyncResult asyncResult)
         {
-            ZlibState state = (ZlibState) asyncResult.AsyncState;
+            ZlibState state = (ZlibState)asyncResult.AsyncState;
             try
             {
                 m_stream.EndWrite(asyncResult);
@@ -342,7 +341,7 @@ namespace bedrock.io
         {
             if (asyncResult is ZlibStreamAsyncResult)
             {
-                ZlibStreamAsyncResult ar = (ZlibStreamAsyncResult) asyncResult;
+                ZlibStreamAsyncResult ar = (ZlibStreamAsyncResult)asyncResult;
                 if (ar.Exception != null)
                     throw ar.Exception;
             }
@@ -409,7 +408,10 @@ namespace bedrock.io
 
             public System.Threading.WaitHandle AsyncWaitHandle
             {
-                get { throw new Exception("The method or operation is not implemented."); }
+                get
+                {
+                    throw new Exception("The method or operation is not implemented.");
+                }
             }
 
             public bool CompletedSynchronously

@@ -11,9 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.IO;
+
 using NUnit.Framework;
 using bedrock.io;
 using bedrock.util;
@@ -32,12 +32,11 @@ namespace test.bedrock.io
         // python:
         // [ord(x) for x in zlib.compress("Hello, world")]
         private const string HELLO_STR = "Hello, world";
-
         private static readonly byte[] HELLO_BYTES = new byte[]
         {
-            120, 156, 243, 72, 205, 201, 201, 215,
-            81, 40, 207, 47, 202, 73, 1, 0,
-            27, 212, 4, 105
+            120, 156, 243,  72, 205, 201, 201, 215,
+             81,  40, 207,  47, 202,  73,   1,   0,
+             27, 212,   4, 105
         };
 
         [Test]

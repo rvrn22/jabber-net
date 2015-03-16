@@ -11,18 +11,16 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Xml;
+
 using bedrock.util;
 using jabber;
 using jabber.protocol;
 
 namespace jabber.protocol.iq
 {
-
-    #region enums
-
+#region enums
     /// <summary>
     /// Affiliation with a MUC room, per user.
     /// </summary>
@@ -32,27 +30,22 @@ namespace jabber.protocol.iq
         /// No attribute specified
         /// </summary>
         UNSPECIFIED = -1,
-
         /// <summary>
         /// Administrator
         /// </summary>
         admin = 0,
-
         /// <summary>
         /// Member
         /// </summary>
         member,
-
         /// <summary>
         /// No affiliation
         /// </summary>
         none,
-
         /// <summary>
         /// Banned
         /// </summary>
         outcast,
-
         /// <summary>
         /// Room owner
         /// </summary>
@@ -68,22 +61,18 @@ namespace jabber.protocol.iq
         /// No attribute specified
         /// </summary>
         UNSPECIFIED = -1,
-
         /// <summary>
         /// Room moderator.  Can grant/revoke voice
         /// </summary>
         moderator = 0,
-
         /// <summary>
         /// No role
         /// </summary>
         none,
-
         /// <summary>
         /// Can speak
         /// </summary>
         participant,
-
         /// <summary>
         /// Can listen
         /// </summary>
@@ -199,11 +188,9 @@ namespace jabber.protocol.iq
         /// </summary>
         REMOVED_SHUTDOWN = 332,
     }
+#endregion
 
-    #endregion
-
-    #region base protocol
-
+#region base protocol
     /// <summary>
     /// Presence to join a multi-user chat.
     /// </summary>
@@ -337,7 +324,6 @@ namespace jabber.protocol.iq
             get { return GetIntAttr("maxchars"); }
             set { SetIntAttr("maxchars", value); }
         }
-
         /// <summary>
         /// Maximum number of stanzas.  -1 if not specified.
         /// </summary>
@@ -346,7 +332,6 @@ namespace jabber.protocol.iq
             get { return GetIntAttr("maxstanzas"); }
             set { SetIntAttr("maxstanzas", value); }
         }
-
         /// <summary>
         /// Number of seconds of history to retreive.
         /// </summary>
@@ -355,7 +340,6 @@ namespace jabber.protocol.iq
             get { return GetIntAttr("seconds"); }
             set { SetIntAttr("seconds", value); }
         }
-
         /// <summary>
         /// Date of earliest history desired.
         /// DateTime.MinValue for not specified.
@@ -366,11 +350,10 @@ namespace jabber.protocol.iq
             set { SetDateTimeAttr("since", value); }
         }
     }
+#endregion
 
-    #endregion
 
-    #region Users
-
+#region Users
     /// <summary>
     /// Information about users
     /// </summary>
@@ -429,7 +412,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public Destroy Destroy
         {
-            get { return GetChildElement<Destroy>(); }
+            get { return GetChildElement<Destroy>();  }
             set { ReplaceChild<Destroy>(value); }
         }
 
@@ -498,7 +481,7 @@ namespace jabber.protocol.iq
                 {
                     try
                     {
-                        ret[i] = (RoomStatus) int.Parse(status.GetAttribute("code"));
+                        ret[i] = (RoomStatus)int.Parse(status.GetAttribute("code"));
                     }
                     catch
                     {
@@ -515,7 +498,7 @@ namespace jabber.protocol.iq
                 foreach (RoomStatus i in value)
                 {
                     XmlElement status = this.OwnerDocument.CreateElement("status");
-                    status.SetAttribute("code", ((int) i).ToString());
+                    status.SetAttribute("code", ((int)i).ToString());
                     this.AppendChild(status);
                 }
             }
@@ -528,7 +511,7 @@ namespace jabber.protocol.iq
         /// <returns></returns>
         public bool HasStatus(RoomStatus status)
         {
-            string s = ((int) status).ToString();
+            string s = ((int)status).ToString();
             XmlNodeList nl = this.GetElementsByTagName("status");
             foreach (XmlElement stat in nl)
             {
@@ -577,7 +560,7 @@ namespace jabber.protocol.iq
                     return null;
                 return new JID(from);
             }
-            set { SetAttr("from", (string) value); }
+            set { SetAttr("from", (string)value); }
         }
 
         /// <summary>
@@ -592,7 +575,7 @@ namespace jabber.protocol.iq
                     return null;
                 return new JID(to);
             }
-            set { SetAttr("to", (string) value); }
+            set { SetAttr("to", (string)value); }
         }
 
         /// <summary>
@@ -643,7 +626,7 @@ namespace jabber.protocol.iq
                     return null;
                 return new JID(from);
             }
-            set { SetAttr("from", (string) value); }
+            set { SetAttr("from", (string)value); }
         }
 
         /// <summary>
@@ -658,7 +641,7 @@ namespace jabber.protocol.iq
                     return null;
                 return new JID(to);
             }
-            set { SetAttr("to", (string) value); }
+            set { SetAttr("to", (string)value); }
         }
 
         /// <summary>
@@ -709,7 +692,7 @@ namespace jabber.protocol.iq
                     return null;
                 return new JID(jid);
             }
-            set { SetAttr("jid", (string) value); }
+            set { SetAttr("jid", (string)value); }
         }
 
         /// <summary>
@@ -806,14 +789,12 @@ namespace jabber.protocol.iq
                     return null;
                 return new JID(jid);
             }
-            set { SetAttr("jid", (string) value); }
+            set { SetAttr("jid", (string)value); }
         }
     }
+#endregion
 
-    #endregion
-
-    #region admin
-
+#region admin
     /// <summary>
     /// An IQ with a AdminQuery inside.
     /// </summary>
@@ -863,10 +844,10 @@ namespace jabber.protocol.iq
         {
             XmlNodeList nl = GetElementsByTagName("item", URI.MUC_ADMIN);
             AdminItem[] items = new AdminItem[nl.Count];
-            int i = 0;
+            int i=0;
             foreach (XmlNode n in nl)
             {
-                items[i] = (AdminItem) n;
+                items[i] = (AdminItem)n;
                 i++;
             }
             return items;
@@ -927,7 +908,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public RoomActor Actor
         {
-            get { return GetOrCreateElement("actor", null, typeof (RoomActor)) as RoomActor; }
+            get { return GetOrCreateElement("actor", null, typeof(RoomActor)) as RoomActor; }
             set { ReplaceChild(value); }
         }
 
@@ -945,7 +926,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public RoomAffiliation Affiliation
         {
-            get { return (RoomAffiliation) GetEnumAttr("affiliation", typeof (RoomAffiliation)); }
+            get { return (RoomAffiliation)GetEnumAttr("affiliation", typeof(RoomAffiliation)); }
             set { SetEnumAttr("affiliation", value); }
         }
 
@@ -954,7 +935,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public RoomRole Role
         {
-            get { return (RoomRole) GetEnumAttr("role", typeof (RoomRole)); }
+            get { return (RoomRole)GetEnumAttr("role", typeof(RoomRole)); }
             set { SetEnumAttr("role", value); }
         }
 
@@ -970,7 +951,7 @@ namespace jabber.protocol.iq
                     return null;
                 return new JID(jid);
             }
-            set { SetAttr("jid", (string) value); }
+            set { SetAttr("jid", (string)value); }
         }
 
         /// <summary>
@@ -982,11 +963,9 @@ namespace jabber.protocol.iq
             set { SetAttr("nick", value); }
         }
     }
+#endregion
 
-    #endregion
-
-    #region owner
-
+#region owner
     /// <summary>
     /// IQ with an OwnerQuery inside
     /// </summary>
@@ -1034,7 +1013,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public jabber.protocol.x.Data Form
         {
-            get { return GetOrCreateElement("x", URI.XDATA, typeof (jabber.protocol.x.Data)) as jabber.protocol.x.Data; }
+            get { return GetOrCreateElement("x", URI.XDATA, typeof(jabber.protocol.x.Data)) as jabber.protocol.x.Data; }
             set { ReplaceChild(value); }
         }
 
@@ -1043,7 +1022,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public OwnerDestroy Destroy
         {
-            get { return GetOrCreateElement("destroy", URI.MUC_OWNER, typeof (OwnerDestroy)) as OwnerDestroy; }
+            get { return GetOrCreateElement("destroy", URI.MUC_OWNER, typeof(OwnerDestroy)) as OwnerDestroy; }
             set { ReplaceChild(value); }
         }
     }
@@ -1104,11 +1083,10 @@ namespace jabber.protocol.iq
                     return null;
                 return new JID(jid);
             }
-            set { SetAttr("jid", (string) value); }
+            set { SetAttr("jid", (string)value); }
         }
     }
-
-    #endregion
+#endregion
 
     /// <summary>
     /// Request for a unique room name.  Seems like just using a GUID on the

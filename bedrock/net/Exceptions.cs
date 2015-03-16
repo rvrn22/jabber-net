@@ -11,7 +11,6 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using bedrock.util;
 
@@ -63,7 +62,7 @@ namespace bedrock.net
         protected AsyncSocketConnectionException(System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext ctx)
             :
-                base(info, ctx)
+            base(info, ctx)
         {
         }
     }

@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using NUnit.Framework;
 using bedrock.collections;
 using bedrock.util;
@@ -27,8 +27,7 @@ namespace test.bedrock.collections
     public class SetTest
     {
         //[ExpectedException(typeof(ArgumentException))]
-        [Test]
-        public void Test_Hashtable_Double_Add()
+        [Test] public void Test_Hashtable_Double_Add()
         {
             Set s = new Set(SetImplementation.Hashtable);
             Assert.AreEqual(0, s.Count);
@@ -36,10 +35,8 @@ namespace test.bedrock.collections
             Assert.AreEqual(1, s.Count);
             s.Add("one");
         }
-
         //[ExpectedException(typeof(ArgumentException))]
-        [Test]
-        public void Test_SkipList_Double_Add()
+        [Test] public void Test_SkipList_Double_Add()
         {
             Set s = new Set(SetImplementation.SkipList);
             Assert.AreEqual(0, s.Count);
@@ -47,10 +44,8 @@ namespace test.bedrock.collections
             Assert.AreEqual(1, s.Count);
             s.Add("one");
         }
-
         //[ExpectedException(typeof(ArgumentException))]
-        [Test]
-        public void Test_Tree_Double_Add()
+        [Test] public void Test_Tree_Double_Add()
         {
             Set s = new Set(SetImplementation.Tree);
             Assert.AreEqual(0, s.Count);
@@ -103,20 +98,15 @@ namespace test.bedrock.collections
             Assert.AreEqual(2, count);
         }
 
-        [Test]
-        public void Test_Hashtable()
+        [Test] public void Test_Hashtable()
         {
             all(SetImplementation.Hashtable);
         }
-
-        [Test]
-        public void Test_Skiplist()
+        [Test] public void Test_Skiplist()
         {
             all(SetImplementation.SkipList);
         }
-
-        [Test]
-        public void Test_Tree()
+        [Test] public void Test_Tree()
         {
             all(SetImplementation.Tree);
         }

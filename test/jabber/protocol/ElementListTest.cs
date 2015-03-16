@@ -11,11 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Text;
 using System.Xml;
 using NUnit.Framework;
+
 using bedrock;
 using bedrock.util;
 using jabber.protocol;
@@ -35,7 +36,7 @@ namespace test.jabber.protocol
         {
             Element parent = new Element("rent", "f", doc);
             Element child;
-            for (int i = 0; i < 10; i++)
+            for (int i=0; i<10; i++)
             {
                 child = new Element("foo", "f", doc);
                 child.InnerText = i.ToString();
@@ -47,19 +48,16 @@ namespace test.jabber.protocol
             return parent;
         }
 
-        [Test]
-        public void Test_Count()
+        [Test] public void Test_Count()
         {
             Element parent = Parent();
-            Assert.AreEqual(10, parent.GetElementsByTagName("foo").Count);
-            Assert.AreEqual(10, parent.GetElementsByTagName("bar").Count);
-            Assert.AreEqual(10, parent.GetElementsByTagName("foo", "f").Count);
-            Assert.AreEqual(10, parent.GetElementsByTagName("bar", "f").Count);
-            Assert.AreEqual(0, parent.GetElementsByTagName("bar", "g").Count);
+            Assert.AreEqual(10,  parent.GetElementsByTagName("foo").Count);
+            Assert.AreEqual(10,  parent.GetElementsByTagName("bar").Count);
+            Assert.AreEqual(10,  parent.GetElementsByTagName("foo", "f").Count);
+            Assert.AreEqual(10,  parent.GetElementsByTagName("bar", "f").Count);
+            Assert.AreEqual(0,  parent.GetElementsByTagName("bar", "g").Count);
         }
-
-        [Test]
-        public void Test_Enum()
+        [Test] public void Test_Enum()
         {
             Element parent = Parent();
             int c = 0;
@@ -71,8 +69,7 @@ namespace test.jabber.protocol
             Assert.AreEqual(10, c);
         }
 
-        [Test]
-        public void Test_Grandkids()
+        [Test] public void Test_Grandkids()
         {
             Element parent = Parent();
             Element g = new Element("foo", "f", doc);

@@ -11,13 +11,14 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+
 using bedrock.util;
 
 namespace muzzle
@@ -31,13 +32,11 @@ namespace muzzle
         /// Just shades of blue
         /// </summary>
         Blue,
-
         /// <summary>
         /// More colors for non-ASCII
         /// </summary>
         Multicolor
     }
-
     /// <summary>
     /// Litmus is like StripChart, but shows a graphical representation of protocol going by.
     /// This was inspired by DW &amp; Craig&apos;s suggestion that the next generation protocol should
@@ -48,13 +47,12 @@ namespace muzzle
     [SVN(@"$Id$")]
     public class Litmus : System.Windows.Forms.UserControl
     {
-        private int m_hist = -1;
-        private int m_max = 0;
-        private bool m_pause = false;
-        private Queue m_list = new Queue(100);
+        private int               m_hist  = -1;
+        private int               m_max   = 0;
+        private bool              m_pause = false;
+        private Queue             m_list  = new Queue(100);
         private LitmusColorScheme m_scheme = LitmusColorScheme.Blue;
         private System.Windows.Forms.PictureBox pictureBox1;
-
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -72,18 +70,17 @@ namespace muzzle
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose(bool disposing)
+        protected override void Dispose( bool disposing )
         {
-            if (disposing)
+            if( disposing )
             {
-                if (components != null)
+                if(components != null)
                 {
                     components.Dispose();
                 }
             }
-            base.Dispose(disposing);
+            base.Dispose( disposing );
         }
-
         /// <summary>
         /// Color scheme to use.
         /// </summary>
@@ -92,10 +89,15 @@ namespace muzzle
         [Category("Chart")]
         public LitmusColorScheme ColorScheme
         {
-            get { return m_scheme; }
-            set { m_scheme = value; }
+            get
+            {
+                return m_scheme;
+            }
+            set
+            {
+                m_scheme = value;
+            }
         }
-
         /// <summary>
         /// Number of points to show.  -1 means all
         /// </summary>
@@ -104,16 +106,24 @@ namespace muzzle
         [Category("Chart")]
         public int History
         {
-            get { return m_hist; }
-            set { m_hist = value; }
+            get
+            {
+                return m_hist;
+            }
+            set
+            {
+                m_hist = value;
+            }
         }
-
         /// <summary>
         /// Don't update the display for now.  Useful for bulk loads.
         /// </summary>
         public bool Paused
         {
-            get { return m_pause; }
+            get
+            {
+                return m_pause;
+            }
             set
             {
                 m_pause = value;
@@ -166,7 +176,6 @@ namespace muzzle
                 m_max = length;
             ReDraw();
         }
-
         private void ReDraw()
         {
             if (m_pause)
@@ -178,8 +187,8 @@ namespace muzzle
             SolidBrush brush = new SolidBrush(this.ForeColor);
             float h = this.Height;
             float w = this.Width;
-            float stripw = w/((float) m_list.Count - 1F);
-            float striph = h/((float) m_max - 1F);
+            float stripw = w / ((float)m_list.Count - 1F);
+            float striph = h / ((float)m_max  - 1F);
             int sc = 0;
             int cc = 0;
             switch (m_scheme)
@@ -193,7 +202,7 @@ namespace muzzle
                             /*
                             */
                             brush.Color = Color.FromArgb(0, 0, 255 - b);
-                            g.FillRectangle(brush, sc*stripw, cc*striph, stripw, striph);
+                            g.FillRectangle(brush, sc * stripw, cc * striph, stripw, striph);
                             cc++;
                         }
                         sc++;
@@ -208,12 +217,12 @@ namespace muzzle
                             if (b == 0)
                                 brush.Color = Color.White;
                             else if (b < 65)
-                                brush.Color = Color.FromArgb(b*4 - 1, 0, 0);
+                                brush.Color = Color.FromArgb(b * 4 - 1, 0, 0);
                             else if (b < 128)
-                                brush.Color = Color.FromArgb(0, 0, b*2);
+                                brush.Color = Color.FromArgb(0, 0, b * 2);
                             else
-                                brush.Color = Color.FromArgb(0, (b - 128)*2, 0);
-                            g.FillRectangle(brush, sc*stripw, cc*striph, stripw, striph);
+                                brush.Color = Color.FromArgb(0, (b - 128) * 2, 0);
+                            g.FillRectangle(brush, sc * stripw, cc * striph, stripw, striph);
                             cc++;
                         }
                         sc++;
@@ -222,9 +231,7 @@ namespace muzzle
             }
             pictureBox1.Image = bm;
         }
-
         #region Component Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -244,23 +251,19 @@ namespace muzzle
             //
             // Litmus
             //
-            this.Controls.AddRange(new System.Windows.Forms.Control[]
-            {
-                this.pictureBox1
-            });
+            this.Controls.AddRange(new System.Windows.Forms.Control[] {
+                                                                          this.pictureBox1});
             this.Name = "Litmus";
             this.Resize += new System.EventHandler(this.Litmus_Resize);
             this.Load += new System.EventHandler(this.Litmus_Load);
             this.ResumeLayout(false);
+
         }
-
         #endregion
-
         private void Litmus_Load(object sender, System.EventArgs e)
         {
             ReDraw();
         }
-
         private void Litmus_Resize(object sender, System.EventArgs e)
         {
             ReDraw();

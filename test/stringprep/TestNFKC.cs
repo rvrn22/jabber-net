@@ -11,7 +11,6 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 #if !NO_STRINGPREP
 
 using System;
@@ -27,8 +26,8 @@ namespace test.stringprep
     [TestFixture]
     public class TestNFKC
     {
-        private System.Text.Encoding UTF8 = System.Text.Encoding.UTF8;
-        private NFKCStep step = new NFKCStep();
+        System.Text.Encoding UTF8 = System.Text.Encoding.UTF8;
+        NFKCStep step = new NFKCStep();
 
         private void TryOne(string input, string expected)
         {
@@ -37,27 +36,23 @@ namespace test.stringprep
             Assert.AreEqual(expected, i.ToString());
         }
 
-        [Test]
-        public void Test_1()
+        [Test] public void Test_1()
         {
             TryOne(UTF8.GetString(new byte[] {0xC2, 0xB5}), UTF8.GetString(new byte[] {0xCE, 0xBC}));
         }
 
-        [Test]
-        public void Test_2()
+        [Test] public void Test_2()
         {
             TryOne(UTF8.GetString(new byte[] {0xC2, 0xAA}), UTF8.GetString(new byte[] {0x61}));
         }
 
-        [Test]
-        public void Test_Normalization()
+        [Test] public void Test_Normalization()
         {
             // http://www.unicode.org/unicode/faq/normalization.html
             TryOne("\x03D3", "\x038E");
         }
 
-        [Test]
-        public void Test_Gurmukhi()
+        [Test] public void Test_Gurmukhi()
         {
             // http://www.unicode.org/charts/normalization/
             TryOne("\x0a59", "\x0a16\x0a3c");
@@ -68,14 +63,12 @@ namespace test.stringprep
             TryOne("\x0A36", "\x0A38\x0A3C");
         }
 
-        [Test]
-        public void Test_Unchanged()
+        [Test] public void Test_Unchanged()
         {
             TryOne("\x0144\x0020\x03b9", "\x0144\x0020\x03b9");
         }
 
-        [Test]
-        public void Test_Navajo()
+        [Test] public void Test_Navajo()
         {
             // a + ogonek + acute ==> a-ogonek + acute
             TryOne("\x0061\x0328\x0301", "\x0105\x0301");
@@ -83,8 +76,7 @@ namespace test.stringprep
             TryOne("i\x0328\x0301", "\x012F\x0301");
         }
 
-        [Test]
-        public void Test_CannonicalOrdering()
+        [Test] public void Test_CannonicalOrdering()
         {
             // From Unicode 3.2, section 3.10
 
@@ -117,8 +109,7 @@ namespace test.stringprep
             TryOne("\x0103\x0308", "\x0103\x0308");
         }
 
-        [Test]
-        public void Test_TR15_Annex_1()
+        [Test] public void Test_TR15_Annex_1()
         {
             TryOne("\x1E0A", "\x1E0A"); //a
             TryOne("D\x0307", "\x1E0A"); //b
@@ -145,13 +136,11 @@ namespace test.stringprep
         }
 
         // http://www.unicode.org/review/pr-29.html
-        [Test]
-        public void Test_PR29()
+        [Test] public void Test_PR29()
         {
             //TODO: Try again with NFC, rather than NFKC.
             TryOne("\x1100\x0300\x1161", "\x1100\x0300\x1161");
         }
     }
 }
-
 #endif

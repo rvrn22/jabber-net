@@ -11,13 +11,13 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Xml;
+
 using bedrock.util;
 
 namespace muzzle
@@ -252,7 +252,7 @@ namespace muzzle
             catch (XmlException ex)
             {
                 int offset = ex.LinePosition;
-                for (int i = 0; (i < ex.LineNumber - 1) && (i < rtSend.Lines.Length); i++)
+                for (int i=0; (i<ex.LineNumber-1) && (i < rtSend.Lines.Length); i++)
                 {
                     offset += rtSend.Lines[i].Length + 2;
                 }
@@ -381,8 +381,10 @@ namespace muzzle
             this.Name = "XmppDebugger";
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.XmppDebugger_KeyUp);
             this.ResumeLayout(false);
+
         }
 
         #endregion
+
     }
 }

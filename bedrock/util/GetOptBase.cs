@@ -11,7 +11,6 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 namespace bedrock.util
 
 {
@@ -34,9 +33,8 @@ namespace bedrock.util
     [SVN(@"$Id$")]
     public class GetOpt
     {
-        private object m_obj = null;
-        private string[] m_args = null;
-
+        private object    m_obj   = null;
+        private string[]  m_args  = null;
         private Hashtable m_flags =
             new Hashtable(StringComparer.InvariantCultureIgnoreCase);
 
@@ -47,7 +45,6 @@ namespace bedrock.util
         // -a:foo
         private static readonly Regex FLAG_REGEX =
             new Regex("[/-]([a-z0-9_]+)([:=](.*))?", RegexOptions.IgnoreCase);
-
         /// <summary>
         /// Really only useful for subclasses, I think.
         /// </summary>
@@ -56,7 +53,6 @@ namespace bedrock.util
             // Debug.Assert(this.GetType() != typeof(GetOpt));
             m_obj = this;
         }
-
         /// <summary>
         /// Get ready to process command line parameters for the given target object.
         /// </summary>
@@ -65,7 +61,6 @@ namespace bedrock.util
         {
             m_obj = (target == null) ? this : target;
         }
-
         /// <summary>
         /// Process command line parameters for the given target object, with the
         /// given arguments.
@@ -76,7 +71,6 @@ namespace bedrock.util
         {
             Process(args);
         }
-
         /// <summary>
         /// Subclass interface, processing immediately.
         /// </summary>
@@ -84,30 +78,29 @@ namespace bedrock.util
         public GetOpt(string[] args) : this(null, args)
         {
         }
-
         /// <summary>
         /// Process the given command line parameters.
         /// </summary>
         /// <param name="args">An array of arguments.  If null, use the environment's command line.</param>
         public void Process(string[] args)
         {
-            int i;
+            int        i;
             MemberInfo mi;
-            Match rm;
-            Type mit;
+            Match      rm;
+            Type       mit;
 
             SetFlags();
             if (args == null)
             {
                 string[] e = Environment.GetCommandLineArgs();
                 args = new string[e.Length - 1];
-                Array.Copy(e, 1, args, 0, e.Length - 1);
+                Array.Copy(e, 1, args, 0, e.Length-1);
             }
 
-            for (i = 0; i < args.Length; i++)
+            for (i=0; i<args.Length; i++)
             {
                 rm = FLAG_REGEX.Match(args[i]);
-                if (!rm.Success) // no more flags
+                if (!rm.Success)   // no more flags
                 {
                     break;
                 }
@@ -128,9 +121,9 @@ namespace bedrock.util
                     MethodInfo meth = (MethodInfo) mi;
                     ParameterInfo[] pi = meth.GetParameters();
                     object[] parms = new object[pi.Length];
-                    for (int j = 0; j < pi.Length; j++)
+                    for (int j=0; j<pi.Length; j++)
                     {
-                        if (i + 1 >= args.Length)
+                        if (i+1 >= args.Length)
                         {
                             throw new IndexOutOfRangeException("Not enough parameters for: " + old_flag);
                         }
@@ -141,9 +134,9 @@ namespace bedrock.util
                 }
 
                 // bool flags act as toggles
-                else if (mit == typeof (bool))
+                else if (mit == typeof(bool))
                 {
-                    SetValue(mi, !(bool) GetValue(mi));
+                    SetValue(mi, ! (bool) GetValue(mi));
                 }
                 else
                 {
@@ -154,7 +147,7 @@ namespace bedrock.util
                     }
                     else
                     {
-                        if (i + 1 >= args.Length)
+                        if (i+1 >= args.Length)
                         {
                             throw new IndexOutOfRangeException("Not enough parameters for: " + args[i]);
                         }
@@ -168,7 +161,6 @@ namespace bedrock.util
             Array.Copy(args, i, m_args, 0, args.Length - i);
             CheckRequired();
         }
-
         /// <summary>
         /// Look at myself, to see if there are any command line
         /// parameter fields or properties.
@@ -195,7 +187,6 @@ namespace bedrock.util
                 m_flags[cf] = mi;
             }
         }
-
         /// <summary>
         /// Make sure all required fields got hit.
         /// </summary>
@@ -211,7 +202,6 @@ namespace bedrock.util
                 }
             }
         }
-
         /// <summary>
         /// Set the value of a field or property, depending on the kind of member.
         /// Coerce the type of the value passed in, as possible
@@ -222,19 +212,18 @@ namespace bedrock.util
         {
             switch (mi.MemberType)
             {
-                case MemberTypes.Field:
-                    FieldInfo fi = (FieldInfo) mi;
-                    fi.SetValue(m_obj, ConvertValue(val, fi.FieldType));
-                    break;
-                case MemberTypes.Property:
-                    PropertyInfo pi = (PropertyInfo) mi;
-                    pi.SetValue(m_obj, ConvertValue(val, pi.PropertyType), null);
-                    break;
-                default:
-                    throw new ArgumentException("Invalid member type", "mi");
+            case MemberTypes.Field:
+                FieldInfo fi = (FieldInfo) mi;
+                fi.SetValue(m_obj, ConvertValue(val, fi.FieldType));
+                break;
+            case MemberTypes.Property:
+                PropertyInfo pi = (PropertyInfo) mi;
+                pi.SetValue(m_obj, ConvertValue(val, pi.PropertyType), null);
+                break;
+            default:
+                throw new ArgumentException("Invalid member type", "mi");
             }
         }
-
         /// <summary>
         /// Convert a field value representation to a value of the correct type.
         /// Enums need special handling, at least for now.
@@ -249,7 +238,6 @@ namespace bedrock.util
             }
             return Convert.ChangeType(val, TargetType);
         }
-
         /// <summary>
         /// Get the value from a field or property, depending on the type of member.
         /// </summary>
@@ -259,20 +247,19 @@ namespace bedrock.util
             object ret = null;
             switch (mi.MemberType)
             {
-                case MemberTypes.Field:
-                    FieldInfo fi = (FieldInfo) mi;
-                    ret = fi.GetValue(m_obj);
-                    break;
-                case MemberTypes.Property:
-                    PropertyInfo pi = (PropertyInfo) mi;
-                    ret = pi.GetValue(m_obj, null);
-                    break;
-                default:
-                    throw new ArgumentException("Invalid member type", "mi");
+            case MemberTypes.Field:
+                FieldInfo fi = (FieldInfo) mi;
+                ret = fi.GetValue(m_obj);
+                break;
+            case MemberTypes.Property:
+                PropertyInfo pi = (PropertyInfo) mi;
+                ret = pi.GetValue(m_obj, null);
+                break;
+            default:
+                throw new ArgumentException("Invalid member type", "mi");
             }
             return ret;
         }
-
         /// <summary>
         /// Get the type contained in the given member.
         /// </summary>
@@ -282,23 +269,22 @@ namespace bedrock.util
             Type ret = null;
             switch (mi.MemberType)
             {
-                case MemberTypes.Field:
-                    FieldInfo fi = (FieldInfo) mi;
-                    ret = fi.FieldType;
-                    break;
-                case MemberTypes.Property:
-                    PropertyInfo pi = (PropertyInfo) mi;
-                    ret = pi.PropertyType;
-                    break;
-                case MemberTypes.Method:
-                    ret = null;
-                    break;
-                default:
-                    throw new ArgumentException("Invalid member type", "mi");
+            case MemberTypes.Field:
+                FieldInfo fi = (FieldInfo) mi;
+                ret = fi.FieldType;
+                break;
+            case MemberTypes.Property:
+                PropertyInfo pi = (PropertyInfo) mi;
+                ret = pi.PropertyType;
+                break;
+            case MemberTypes.Method:
+                ret = null;
+                break;
+            default:
+                throw new ArgumentException("Invalid member type", "mi");
             }
             return ret;
         }
-
         /// <summary>
         /// Get all of the members that are tagged with the CommandLineAttribute.
         /// NOTE: this currently returns private members as well, but setting the
@@ -308,9 +294,9 @@ namespace bedrock.util
         {
             Type t = m_obj.GetType();
             MemberInfo[] mis = t.FindMembers(MemberTypes.All,
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance,
-                new MemberFilter(AttrMemberFilter),
-                typeof (CommandLineAttribute));
+                                             BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance,
+                                             new MemberFilter(AttrMemberFilter),
+                                             typeof(CommandLineAttribute));
             Debug.Assert(mis.Length > 0, "Must have at least one CommandLine attribute on class: " + t.FullName);
             return mis;
         }
@@ -323,9 +309,8 @@ namespace bedrock.util
         /// <param name="filterCriteria">The attribute type to check for</param>
         private static bool AttrMemberFilter(MemberInfo m, object filterCriteria)
         {
-            return m.GetCustomAttributes((Type) filterCriteria, true).Length > 0;
+            return m.GetCustomAttributes((Type)filterCriteria, true).Length > 0;
         }
-
         /// <summary>
         /// Get the CommandLineAttribute off of a member.  Assumes that the member implements
         ///<i>exactly</i> one instance of the attribute.
@@ -333,11 +318,10 @@ namespace bedrock.util
         /// <param name="mi">The member to retrieve from</param>
         private CommandLineAttribute GetOption(MemberInfo mi)
         {
-            object[] o = mi.GetCustomAttributes(typeof (CommandLineAttribute), true);
+            object[] o = mi.GetCustomAttributes(typeof(CommandLineAttribute), true);
             Debug.Assert(o.Length == 1);
             return ((CommandLineAttribute[]) o)[0];
         }
-
         /// <summary>
         /// The list of command-line arguments that were not associated with flags.
         /// </summary>
@@ -345,7 +329,6 @@ namespace bedrock.util
         {
             get { return m_args; }
         }
-
         /// <summary>
         /// Get/Set a parameter on the managed object, using the flag.
         /// Warning: this will do an implicit conversion to the type of the
@@ -367,7 +350,6 @@ namespace bedrock.util
                 SetValue(mi, value);
             }
         }
-
         /// <summary>
         /// Get a usage description string from the object.
         /// Use the CommandLineAttribute descriptions wherever possible.
@@ -388,7 +370,7 @@ namespace bedrock.util
                 {
                     MemberInfo mi = (MemberInfo) m_flags[key];
                     CommandLineAttribute cla = GetOption(mi);
-                    Type mit = GetMemberType(mi);
+                    Type       mit = GetMemberType(mi);
                     sb.Append(" ");
                     if (!cla.Required)
                     {
@@ -407,7 +389,7 @@ namespace bedrock.util
                             sb.Append(pi.ParameterType.Name);
                         }
                     }
-                    else if (mit == typeof (bool))
+                    else if (mit == typeof(bool))
                     {
                         sb.AppendFormat("/{0}", key);
                     }
@@ -450,13 +432,12 @@ namespace bedrock.util
                 sb.Append(Environment.NewLine);
                 foreach (object key in keys)
                 {
-                    sb.AppendFormat("\t/{0}: \t{1}", key, GetOption((MemberInfo) m_flags[key]).Description);
+                    sb.AppendFormat("\t/{0}: \t{1}", key, GetOption((MemberInfo)m_flags[key]).Description);
                     sb.Append(Environment.NewLine);
                 }
                 return sb.ToString();
             }
         }
-
         /// <summary>
         /// Print out the usage information on StdErr, and exit with code 64.
         /// </summary>
@@ -481,28 +462,25 @@ namespace bedrock.util
             throw new NotImplementedException("This is the only thing that requires Windows.Forms.  Removed.");
         }
     }
-
     /// <summary>
     /// Attribute to annotate subclasses of GetOpt.  Any field or property
     /// that gets this attribute is a possible command-line argument for the
     /// program containing the GetOpt subclass.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method,
-        AllowMultiple = false)]
+                    AllowMultiple=false)]
     [SVN(@"$Id$")]
     public class CommandLineAttribute : Attribute
     {
         private string m_commandFlag = null;
         private string m_description = null;
-        private bool m_required = false;
-
+        private bool   m_required    = false;
         /// <summary>
         /// Use the member name for the command-line parameter.
         /// </summary>
         public CommandLineAttribute()
         {
         }
-
         /// <summary>
         /// Use the given string as the command-line parameter.
         /// </summary>
@@ -511,7 +489,6 @@ namespace bedrock.util
         {
             m_commandFlag = commandFlag;
         }
-
         /// <summary>
         /// Use the given string as the command-line parameter.
         /// </summary>
@@ -522,7 +499,6 @@ namespace bedrock.util
             m_commandFlag = commandFlag;
             m_description = description;
         }
-
         /// <summary>
         /// Use the given string as the command-line parameter.
         /// </summary>
@@ -533,33 +509,45 @@ namespace bedrock.util
         {
             m_commandFlag = commandFlag;
             m_description = description;
-            m_required = required;
+            m_required    = required;
         }
-
         /// <summary>
         /// Get the command-line flag.  If none was specified, returns null.
         /// </summary>
         public string CommandFlag
         {
-            get { return m_commandFlag; }
+            get
+            {
+                return m_commandFlag;
+            }
         }
-
         /// <summary>
         /// Get the command-line description.  If none was specified, returns null.
         /// </summary>
         public string Description
         {
-            get { return m_description; }
-            set { m_description = value; }
+            get
+            {
+                return m_description;
+            }
+            set
+            {
+                m_description = value;
+            }
         }
-
         /// <summary>
         /// Is the option required?  Defaults to false.
         /// </summary>
         public bool Required
         {
-            get { return m_required; }
-            set { m_required = value; }
+            get
+            {
+                return m_required;
+            }
+            set
+            {
+                m_required = value;
+            }
         }
     }
 }

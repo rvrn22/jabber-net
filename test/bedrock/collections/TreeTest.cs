@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using NUnit.Framework;
 using bedrock.collections;
@@ -31,27 +31,23 @@ namespace test.bedrock.collections
         {
             Tree t = new Tree();
             t.Add("one", "one");
-            t["2"] = "12";
-            t["~"] = "2~";
+            t["2"]  = "12";
+            t["~"]  = "2~";
             t["a~"] = "3a~";
             t["~a"] = "4~a";
-            t[" "] = "5 ";
+            t[" "]  = "5 ";
             t["  "] = "6  ";
             Assert.AreEqual(t.Count, 7);
             Assert.IsTrue(t.Contains("~"));
             Assert.IsTrue(!t.Contains("~~"));
             return t;
         }
-
-        [Test]
-        public void Test_Type()
+        [Test] public void Test_Type()
         {
             Tree t = new Tree();
             Assert.AreEqual("bedrock.collections.Tree", t.GetType().FullName);
         }
-
-        [Test]
-        public void Test_Main()
+        [Test] public void Test_Main()
         {
             Tree t = new Tree();
             t["one"] = "two";
@@ -61,9 +57,7 @@ namespace test.bedrock.collections
             Assert.AreEqual(t.Count, 0);
             Assert.AreEqual(null, t["one"]);
         }
-
-        [Test]
-        public void Test_Enum()
+        [Test] public void Test_Enum()
         {
             Tree t = data();
             int i = 0;
@@ -76,9 +70,7 @@ namespace test.bedrock.collections
             }
             Assert.AreEqual(7, i);
         }
-
-        [Test]
-        public void Test_Clear()
+        [Test] public void Test_Clear()
         {
             Tree t = new Tree();
             Assert.AreEqual(t.Count, 0);
@@ -89,9 +81,7 @@ namespace test.bedrock.collections
             t.Clear();
             Assert.AreEqual(t.Count, 0);
         }
-
-        [Test]
-        public void Test_Values()
+        [Test] public void Test_Values()
         {
             Tree t = data();
             ICollection ic = t.Values;
@@ -99,9 +89,7 @@ namespace test.bedrock.collections
             object[] o = (object[]) ic;
             Assert.AreEqual("5 ", o[0]);
         }
-
-        [Test]
-        public void Test_Keys()
+        [Test] public void Test_Keys()
         {
             Tree t = data();
             ICollection ic = t.Keys;
@@ -110,29 +98,26 @@ namespace test.bedrock.collections
             Assert.AreEqual(" ", o[0]);
         }
 
-        [Test]
-        public void Test_Lots_InOrder()
+        [Test] public void Test_Lots_InOrder()
         {
             Tree sl = new Tree();
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 sl[i] = i.ToString();
             }
             Assert.AreEqual(4096, sl.Count);
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 Assert.AreEqual(i.ToString(), sl[i]);
             }
         }
-
-        [Test]
-        public void Test_Lots_Random()
+        [Test] public void Test_Lots_Random()
         {
             Tree sl = new Tree();
             Random r = new Random();
             int[] nums = new int[4096];
 
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 nums[i] = r.Next(10000);
                 while (sl.Contains(nums[i]))
@@ -142,17 +127,15 @@ namespace test.bedrock.collections
                 sl[nums[i]] = i.ToString();
             }
             Assert.AreEqual(4096, sl.Count);
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 Assert.AreEqual(i.ToString(), sl[nums[i]]);
             }
         }
-
-        [Test]
-        public void Test_Iteration()
+        [Test] public void Test_Iteration()
         {
             Tree sl = new Tree();
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 sl[i] = i.ToString();
             }
@@ -167,11 +150,10 @@ namespace test.bedrock.collections
             Assert.AreEqual(4096, count);
         }
 
-        [Test]
-        public void Test_DictIteration()
+        [Test] public void Test_DictIteration()
         {
             Tree sl = new Tree();
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 sl[i] = i.ToString();
             }
@@ -187,9 +169,8 @@ namespace test.bedrock.collections
             Assert.AreEqual(4096, count);
         }
 
-        [ExpectedException(typeof (ArgumentNullException))]
-        [Test]
-        public void Test_Null()
+        [ExpectedException(typeof(ArgumentNullException))]
+        [Test] public void Test_Null()
         {
             Tree sl = new Tree();
             sl[null] = "n";

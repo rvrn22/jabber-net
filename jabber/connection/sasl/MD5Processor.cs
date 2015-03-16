@@ -11,7 +11,6 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Diagnostics;
 using System.Collections;
@@ -20,6 +19,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Xml;
+
 using bedrock.util;
 using jabber.protocol.stream;
 
@@ -34,49 +34,42 @@ namespace jabber.connection.sasl
         /// <summary>
         /// Private members
         /// </summary>
-        private string m_response;
-
-        private string m_realm;
-        private string m_username;
-        private string m_password;
-        private string m_nonce;
-        private string m_cnonce;
-        private int m_nc;
-        private string m_ncString;
-        private string m_qop;
-        private string m_charset;
-        private string m_authzid;
+        private string  m_response;
+        private string  m_realm;
+        private string  m_username;
+        private string  m_password;
+        private string  m_nonce;
+        private string  m_cnonce;
+        private int     m_nc;
+        private string  m_ncString;
+        private string  m_qop;
+        private string  m_charset;
+        private string  m_authzid;
 
         private readonly MD5CryptoServiceProvider MD5 = new MD5CryptoServiceProvider();
-
         private readonly Regex CSV = new Regex(@"(?<tag>[^= \t\r\n]+)=(?:(?<data>[^,"" \t\r\n]+)|(?:""(?<data>[^""]*)"")),?",
-            RegexOptions.ExplicitCapture);
+                RegexOptions.ExplicitCapture);
 
         /// <summary>
         /// DIGEST-MD5 Realm
         /// </summary>
         public const string REALM = "realm";
-
         /// <summary>
         /// DIGEST-MD5 nonce
         /// </summary>
         public const string NONCE = "nonce";
-
         /// <summary>
         /// DIGEST-MD5 qop
         /// </summary>
         public const string QOP = "qop";
-
         /// <summary>
         /// DIGEST-MD5 charset
         /// </summary>
         public const string CHARSET = "charset";
-
         /// <summary>
         /// DIGEST-MD5 algorithm
         /// </summary>
         public const string ALGORITHM = "algorithm";
-
         /// <summary>
         /// DIGEST-MD5 authorization id
         /// </summary>
@@ -109,8 +102,7 @@ namespace jabber.connection.sasl
             Step resp = null;
 
             if (s == null)
-            {
-                // first step
+            { // first step
                 Auth a = new Auth(doc);
                 a.Mechanism = MechanismType.DIGEST_MD5;
                 return a;
@@ -122,7 +114,7 @@ namespace jabber.connection.sasl
 
 
             resp = new Response(doc);
-            if (this["rspauth"] == null) // we haven't authenticated yet
+            if (this["rspauth"] == null)  // we haven't authenticated yet
             {
                 generateResponseString();
                 resp.Bytes = generateResponse();
@@ -160,7 +152,7 @@ namespace jabber.connection.sasl
         {
             Object n;
             string temp;
-            if ((n = this[USERNAME]) != null)
+            if ( (n = this[USERNAME]) != null)
             {
                 temp = n.ToString();
                 m_username = ENC.GetString(ENC.GetBytes(temp));
@@ -169,7 +161,7 @@ namespace jabber.connection.sasl
             {
                 throw new MissingDirectiveException("Missing SASL username directive");
             }
-            if ((n = this[PASSWORD]) != null)
+            if ( (n = this[PASSWORD]) != null)
             {
                 temp = n.ToString();
                 m_password = ENC.GetString(ENC.GetBytes(temp));
@@ -179,7 +171,7 @@ namespace jabber.connection.sasl
                 throw new MissingDirectiveException("Missing SASL password directive");
             }
 
-            if ((n = this[REALM]) != null)
+            if ( (n = this[REALM]) != null)
             {
                 m_realm = n.ToString();
             }
@@ -187,7 +179,7 @@ namespace jabber.connection.sasl
             {
                 throw new InvalidServerChallengeException("Missing SASL realm");
             }
-            if ((n = this[NONCE]) != null)
+            if ( (n = this[NONCE]) != null)
             {
                 m_nonce = n.ToString();
             }
@@ -195,7 +187,7 @@ namespace jabber.connection.sasl
             {
                 throw new InvalidServerChallengeException("Missing nonce directive");
             }
-            if ((n = this[QOP]) != null)
+            if ( (n = this[QOP]) != null)
             {
                 m_qop = n.ToString();
             }
@@ -203,11 +195,11 @@ namespace jabber.connection.sasl
             {
                 throw new InvalidServerChallengeException("Missing qop directive");
             }
-            if ((n = this[CHARSET]) != null)
+            if ( (n = this[CHARSET]) != null)
             {
                 m_charset = n.ToString();
             }
-            if ((n = this[AUTHZID]) != null)
+            if ( (n = this[AUTHZID]) != null)
             {
                 m_authzid = n.ToString();
             }
@@ -249,7 +241,6 @@ namespace jabber.connection.sasl
             sb.Append(m_charset);
             return ENC.GetBytes(sb.ToString());
         }
-
         /// <summary>
         /// Generates the MD5 hash that goes in the response attribute of the
         /// response sent to the server.
@@ -275,9 +266,9 @@ namespace jabber.connection.sasl
             m_cnonce = HexString(AE.GetBytes(sb.ToString())).ToLower();
 
             m_nc++;
-            m_ncString = m_nc.ToString().PadLeft(8, '0');
+            m_ncString = m_nc.ToString().PadLeft(8,'0');
 
-            sb.Remove(0, sb.Length);
+            sb.Remove(0,sb.Length);
             sb.Append(m_username);
             sb.Append(":");
             sb.Append(m_realm);
@@ -299,13 +290,13 @@ namespace jabber.connection.sasl
             A1 = sb.ToString();
 
             MemoryStream ms = new MemoryStream();
-            ms.Write(H1, 0, 16);
+            ms.Write(H1,0,16);
             temp = AE.GetBytes(A1);
-            ms.Write(temp, 0, temp.Length);
-            ms.Seek(0, System.IO.SeekOrigin.Begin);
+            ms.Write(temp,0,temp.Length);
+            ms.Seek(0,System.IO.SeekOrigin.Begin);
             H1 = MD5.ComputeHash(ms);
 
-            sb.Remove(0, sb.Length);
+            sb.Remove(0,sb.Length);
             sb.Append("AUTHENTICATE:");
             sb.Append(uri);
             if (m_qop.CompareTo("auth") != 0)

@@ -11,7 +11,6 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -20,10 +19,12 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
+
 using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
 using jabber.protocol.x;
+
 using bedrock.util;
 using bedrock.io;
 
@@ -34,13 +35,12 @@ namespace jabber.connection
     /// See XEP-0115, version 1.5 for details.
     /// </summary>
     [SVN("$Id$")]
-    public class CapsManager : StreamComponent
+    public class CapsManager: StreamComponent
     {
         /// <summary>
         /// Defines the default hash function to use for calculating ver attributes.
         /// </summary>
         public const string DEFAULT_HASH = "sha-1";
-
         private const string SEP = "<";
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace jabber.connection
         /// <summary>
         /// Creates a new capability manager.
         /// </summary>
-        public CapsManager() : this((DiscoNode) null)
+        public CapsManager() : this((DiscoNode)null)
         {
         }
 
@@ -66,7 +66,7 @@ namespace jabber.connection
         /// Creates a new capability manager and associates it with a container.
         /// </summary>
         /// <param name="container">Parent container.</param>
-        public CapsManager(IContainer container) : this((DiscoNode) null)
+        public CapsManager(IContainer container) : this((DiscoNode)null)
         {
             container.Add(this);
         }
@@ -113,14 +113,14 @@ namespace jabber.connection
                 // If we are running in the designer, let's try to auto-hook a RosterManager
                 if ((m_discoManager == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
-                    this.DiscoManager = (DiscoManager) jabber.connection.StreamComponent.GetComponentFromHost(host, typeof (DiscoManager));
+                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
+                    this.DiscoManager = (DiscoManager)jabber.connection.StreamComponent.GetComponentFromHost(host, typeof(DiscoManager));
                 }
                 return m_discoManager;
             }
             set
             {
-                if ((object) m_discoManager == (object) value)
+                if ((object)m_discoManager == (object)value)
                     return;
                 m_discoManager = value;
             }
@@ -200,18 +200,18 @@ namespace jabber.connection
         {
             switch (name)
             {
-                case null:
-                    return null;
-                case "sha-1":
-                    return SHA1.Create();
-                case "sha-256":
-                    return SHA256.Create();
-                case "sha-512":
-                    return SHA512.Create();
-                case "sha-384":
-                    return SHA384.Create();
-                case "md5":
-                    return MD5.Create();
+            case null:
+                return null;
+            case "sha-1":
+                return SHA1.Create();
+            case "sha-256":
+                return SHA256.Create();
+            case "sha-512":
+                return SHA512.Create();
+            case "sha-384":
+                return SHA384.Create();
+            case "md5":
+                return MD5.Create();
             }
             throw new ArgumentException("Invalid hash method: " + name, "Hash");
         }
@@ -226,7 +226,7 @@ namespace jabber.connection
             get { return m_hash; }
             set
             {
-                GetHasher(value); // throws if bad.
+                GetHasher(value);  // throws if bad.
                 m_hash = value;
             }
         }
@@ -272,7 +272,7 @@ namespace jabber.connection
             if (ext != null)
             {
                 Array.Sort(ext, new FormTypeComparer());
-                foreach (Data x in ext)
+                foreach (Data x in ext)  
                 {
                     // For each extended service discovery information form:
 
@@ -289,7 +289,7 @@ namespace jabber.connection
                     // 3. For each field:
                     foreach (System.Collections.DictionaryEntry entry in fields)
                     {
-                        Field f = (Field) entry.Value;
+                        Field f = (Field)entry.Value;
                         if (f.Var == "FORM_TYPE")
                             continue;
 
@@ -423,7 +423,7 @@ namespace jabber.connection
             Caps c = pres["c", URI.CAPS] as Caps;
             if (c == null)
                 return;
-
+            
             // TODO: ignoring old-style caps for now.
             if (!c.NewStyle)
                 return;
@@ -446,7 +446,7 @@ namespace jabber.connection
             if (node == null)
                 return;
 
-            string ver = (string) state;
+            string ver = (string)state;
             string calc = CalculateVer(node);
             if (ver != calc)
             {
@@ -531,7 +531,7 @@ namespace jabber.connection
                 return;
 
             IQ resp = iq.GetResponse(m_stream.Document);
-            info = (DiscoInfo) resp.Query;
+            info = (DiscoInfo)resp.Query;
             FillInInfo(info);
 
             Write(resp);

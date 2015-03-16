@@ -11,12 +11,13 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
+
 using bedrock.util;
+
 using jabber.client;
 using jabber.connection;
 
@@ -29,7 +30,6 @@ namespace Example
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
         private TreeView tvServices;
         private Splitter splitter2;
         private PropertyGrid pgServices;
@@ -107,9 +107,11 @@ namespace Example
             this.Name = "ServiceDisplay";
             this.Size = new System.Drawing.Size(544, 281);
             this.ResumeLayout(false);
+
         }
 
         #endregion
+
 
         /// <summary>
         /// The JabberClient or JabberService to hook up to.
@@ -124,14 +126,14 @@ namespace Example
                 // from the environment.
                 if ((this.m_stream == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
-                    this.Stream = (JabberClient) jabber.connection.StreamComponent.GetComponentFromHost(host, typeof (JabberClient));
+                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
+                    this.Stream = (JabberClient)jabber.connection.StreamComponent.GetComponentFromHost(host, typeof(JabberClient));
                 }
                 return m_stream;
             }
             set
             {
-                if ((object) m_stream != (object) value)
+                if ((object)m_stream != (object)value)
                 {
                     m_stream = value;
                     m_stream.OnAuthenticate += new bedrock.ObjectHandler(m_stream_OnAuthenticate);
@@ -149,14 +151,14 @@ namespace Example
                 // from the environment.
                 if ((this.m_disco == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
-                    this.m_disco = (DiscoManager) StreamComponent.GetComponentFromHost(host, typeof (DiscoManager));
+                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
+                    this.m_disco = (DiscoManager)StreamComponent.GetComponentFromHost(host, typeof(DiscoManager));
                 }
                 return m_disco;
             }
             set
             {
-                if ((object) m_disco != (object) value)
+                if ((object)m_disco != (object)value)
                     m_disco = value;
             }
         }
@@ -200,16 +202,16 @@ namespace Example
         }
 
         private void tvServices_NodeMouseDoubleClick(object sender,
-            TreeNodeMouseClickEventArgs e)
+                                             TreeNodeMouseClickEventArgs e)
         {
-            jabber.connection.DiscoNode dn = (jabber.connection.DiscoNode) e.Node.Tag;
+            jabber.connection.DiscoNode dn = (jabber.connection.DiscoNode)e.Node.Tag;
             if (dn.Children == null)
                 m_disco.BeginGetItems(dn.JID, dn.Node, new jabber.connection.DiscoNodeHandler(GotItems), null);
         }
 
         private void tvServices_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            jabber.connection.DiscoNode dn = (jabber.connection.DiscoNode) e.Node.Tag;
+            jabber.connection.DiscoNode dn = (jabber.connection.DiscoNode)e.Node.Tag;
             m_disco.BeginGetFeatures(dn, new jabber.connection.DiscoNodeHandler(GotInfo), null);
         }
 

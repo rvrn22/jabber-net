@@ -11,9 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol.client
@@ -28,17 +29,14 @@ namespace jabber.protocol.client
         /// type='get'
         /// </summary>
         get,
-
         /// <summary>
         /// type='set'
         /// </summary>
         set,
-
         /// <summary>
         /// type='result'
         /// </summary>
         result,
-
         /// <summary>
         /// type='error'
         /// </summary>
@@ -61,10 +59,9 @@ namespace jabber.protocol.client
         /// <param name="doc"></param>
         public IQ(XmlDocument doc) : base("iq", doc)
         {
-            ID = NextID();
-            Type = IQType.get; // get better errors than when there is no type specified.
+            ID   = NextID();
+            Type = IQType.get;  // get better errors than when there is no type specified.
         }
-
         /// <summary>
         ///
         /// </summary>
@@ -92,7 +89,7 @@ namespace jabber.protocol.client
         public IQType Type
         {
             get { return GetEnumAttr<IQType>("type"); }
-            set
+            set 
             {
                 IQType cur = this.Type;
                 if (cur == value)
@@ -128,17 +125,12 @@ namespace jabber.protocol.client
         public XmlElement Query
         {
             get { return this.GetFirstChildElement(); }
-            set
-            {
-                this.InnerXml = "";
-                this.AddChild(value);
-            }
+            set { this.InnerXml = ""; this.AddChild(value); }
         }
 
 #if __MonoCS__
 #pragma warning disable 0809
 #endif
-
         /// <summary>
         /// Swap the To and the From addresses.
         /// Obsolete: Use GetResponse or GetErrorResponse, now, for IQs.
@@ -148,7 +140,6 @@ namespace jabber.protocol.client
         {
             base.Swap();
         }
-
 #if __MonoCS__
 #pragma warning restore 0809
 #endif
@@ -170,7 +161,7 @@ namespace jabber.protocol.client
             if (q != null)
             {
                 if (q is Element)
-                    resp.AppendChild((XmlElement) ((Element) q).CloneNode(true, doc));
+                    resp.AppendChild((XmlElement)((Element)q).CloneNode(true, doc));
                 else
                     resp.AppendChild(doc.ImportNode(q, true));
             }
@@ -197,7 +188,7 @@ namespace jabber.protocol.client
             if (q != null)
             {
                 if (q is Element)
-                    resp.AppendChild((XmlElement) ((Element) q).CloneNode(true, doc));
+                    resp.AppendChild((XmlElement)((Element)q).CloneNode(true, doc));
                 else
                     resp.AppendChild(doc.ImportNode(q, true));
             }
@@ -235,4 +226,5 @@ namespace jabber.protocol.client
             set { ReplaceChild<T>(value); }
         }
     }
+
 }

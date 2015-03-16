@@ -11,14 +11,16 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Collections;
 using System.Diagnostics;
+
 using bedrock.collections;
 using bedrock.util;
+
 using jabber.protocol.client;
 using jabber.protocol.iq;
 
@@ -54,17 +56,14 @@ namespace jabber.client
         /// Do not do any automatic processing
         /// </summary>
         NONE = 0,
-
         /// <summary>
         /// Reply with a subscribed to every subscribe
         /// </summary>
         AllowAll,
-
         /// <summary>
         /// Reply with an unsubscribed to every subscribe
         /// </summary>
         DenyAll,
-
         /// <summary>
         /// If the user is either subscribed or trying to subscribe to another user,
         /// allow the other user's subscription.
@@ -239,73 +238,73 @@ namespace jabber.client
             PresenceType typ = pres.Type;
             switch (typ)
             {
-                case PresenceType.available:
-                case PresenceType.unavailable:
-                case PresenceType.error:
-                case PresenceType.probe:
+            case PresenceType.available:
+            case PresenceType.unavailable:
+            case PresenceType.error:
+            case PresenceType.probe:
+                return;
+            case PresenceType.subscribe:
+                switch (m_autoAllow)
+                {
+                case AutoSubscriptionHanding.AllowAll:
+                    ReplyAllow(pres);
                     return;
-                case PresenceType.subscribe:
-                    switch (m_autoAllow)
+                case AutoSubscriptionHanding.DenyAll:
+                    ReplyDeny(pres);
+                    return;
+                case AutoSubscriptionHanding.NONE:
+                    if (OnSubscription != null)
+                        OnSubscription(this, this[pres.From], pres);
+                    return;
+                case AutoSubscriptionHanding.AllowIfSubscribed:
+                    Item ri = this[pres.From];
+                    if (ri != null)
                     {
-                        case AutoSubscriptionHanding.AllowAll:
+                        switch (ri.Subscription)
+                        {
+                        case Subscription.to:
                             ReplyAllow(pres);
                             return;
-                        case AutoSubscriptionHanding.DenyAll:
-                            ReplyDeny(pres);
-                            return;
-                        case AutoSubscriptionHanding.NONE:
-                            if (OnSubscription != null)
-                                OnSubscription(this, this[pres.From], pres);
-                            return;
-                        case AutoSubscriptionHanding.AllowIfSubscribed:
-                            Item ri = this[pres.From];
-                            if (ri != null)
+                        case Subscription.from:
+                        case Subscription.both:
+                            // Almost an assert
+                            throw new InvalidOperationException("Server sent a presence subscribe for an already-subscribed contact");
+                        case Subscription.none:
+                            if (ri.Ask == Ask.subscribe)
                             {
-                                switch (ri.Subscription)
-                                {
-                                    case Subscription.to:
-                                        ReplyAllow(pres);
-                                        return;
-                                    case Subscription.from:
-                                    case Subscription.both:
-                                        // Almost an assert
-                                        throw new InvalidOperationException("Server sent a presence subscribe for an already-subscribed contact");
-                                    case Subscription.none:
-                                        if (ri.Ask == Ask.subscribe)
-                                        {
-                                            ReplyAllow(pres);
-                                            return;
-                                        }
-                                        break;
-                                }
+                                ReplyAllow(pres);
+                                return;
                             }
-                            if (OnSubscription != null)
-                                OnSubscription(this, ri, pres);
                             break;
+                        }
                     }
+                    if (OnSubscription != null)
+                        OnSubscription(this, ri, pres);
                     break;
-                case PresenceType.subscribed:
-                    // This is the new ack case.
-                    Presence sub_ack = new Presence(m_stream.Document);
-                    sub_ack.To = pres.From;
-                    sub_ack.Type = PresenceType.subscribe;
-                    Write(sub_ack);
-                    break;
-                case PresenceType.unsubscribe:
-                    // ack.  we'll likely get an unsubscribed soon, anyway.
-                    Presence un_ack = new Presence(m_stream.Document);
-                    un_ack.To = pres.From;
-                    un_ack.Type = PresenceType.unsubscribed;
-                    Write(un_ack);
-                    break;
-                case PresenceType.unsubscribed:
-                    bool remove = true;
-                    if (OnUnsubscription != null)
-                        OnUnsubscription(this, pres, ref remove);
+                }
+                break;
+            case PresenceType.subscribed:
+                // This is the new ack case.
+                Presence sub_ack = new Presence(m_stream.Document);
+                sub_ack.To = pres.From;
+                sub_ack.Type = PresenceType.subscribe;
+                Write(sub_ack);                
+                break;
+            case PresenceType.unsubscribe:
+                // ack.  we'll likely get an unsubscribed soon, anyway.
+                Presence un_ack = new Presence(m_stream.Document);
+                un_ack.To = pres.From;
+                un_ack.Type = PresenceType.unsubscribed;
+                Write(un_ack);
+                break;
+            case PresenceType.unsubscribed:
+                bool remove = true;
+                if (OnUnsubscription != null)
+                    OnUnsubscription(this, pres, ref remove);
 
-                    if (remove)
-                        Remove(pres.From);
-                    break;
+                if (remove)
+                    Remove(pres.From);
+                break;
             }
         }
 
@@ -410,7 +409,7 @@ C: <iq from='juliet@example.com/balcony' type='set' id='delete_1'>
             Item item = r.AddItem();
             item.JID = jid;
             item.Subscription = Subscription.remove;
-            Write(iq); // ignore response
+            Write(iq);  // ignore response
         }
 
         /// <summary>
@@ -425,11 +424,10 @@ C: <iq from='juliet@example.com/balcony' type='set' id='delete_1'>
             iq.Type = IQType.set;
             Roster r = iq.Instruction;
             r.AppendChild(item);
-            Write(iq); // ignore response
+            Write(iq);  // ignore response
         }
 
         #region Component Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -438,7 +436,6 @@ C: <iq from='juliet@example.com/balcony' type='set' id='delete_1'>
         {
             components = new System.ComponentModel.Container();
         }
-
         #endregion
 
         #region IEnumerable Members

@@ -11,11 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using bedrock.util;
-
 namespace bedrock.collections
 {
     /// <summary>
@@ -24,9 +23,9 @@ namespace bedrock.collections
     [SVN(@"$Id$")]
     public class Tree : IEnumerable, IDictionary
     {
-        private Node root = null;
-        private int size = 0;
-        private int modCount = 0;
+        private Node      root       = null;
+        private int       size       = 0;
+        private int       modCount   = 0;
         private IComparer comparator = System.Collections.Comparer.Default;
         //private bool      readOnly   = false;
         //private bool      synch      = false;
@@ -39,9 +38,7 @@ namespace bedrock.collections
             // TODO: Add Constructor Logic here
             //
         }
-
         #region IEnumerable
-
         /// <summary>
         /// Iterate over the tree
         /// </summary>
@@ -50,17 +47,17 @@ namespace bedrock.collections
         {
             return new TreeEnumerator(this);
         }
-
         #endregion
-
         #region ICollection
-
         /// <summary>
         /// The number of items in the tree.
         /// </summary>
         public int Count
         {
-            get { return size; }
+            get
+            {
+                return size;
+            }
         }
 
         /// <summary>
@@ -69,7 +66,10 @@ namespace bedrock.collections
         /// </summary>
         public bool IsSynchronized
         {
-            get { return false; }
+            get
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -91,13 +91,14 @@ namespace bedrock.collections
         /// </summary>
         public object SyncRoot
         {
-            get { return null; }
+            get
+            {
+                return null;
+            }
         }
 
         #endregion
-
         #region IDictionary
-
         /// <summary>
         /// Add an item to the tree
         /// </summary>
@@ -105,7 +106,7 @@ namespace bedrock.collections
         /// <param name="value">The data to store with this key</param>
         /// <exception cref="ArgumentException">Thrown if the same key is added twice</exception>
         /// <exception cref="ArgumentNullException">Thrown if key is null</exception>
-        public void Add(object key, object value)
+        public void Add(object key,object value)
         {
             if (key == null)
                 throw new ArgumentNullException("key");
@@ -144,8 +145,7 @@ namespace bedrock.collections
                 }
                 else // cmp > 0
                 {
-                    if (n.right != null)
-                    {
+                    if (n.right != null) {
                         n = n.right;
                     }
                     else
@@ -157,6 +157,7 @@ namespace bedrock.collections
                     }
                 }
             }
+
         }
 
         /// <summary>
@@ -228,7 +229,7 @@ namespace bedrock.collections
 
                 // Fix replacement
                 if (n.color == NodeColor.BLACK)
-                    fixAfterDeletion(replacement);
+                fixAfterDeletion(replacement);
             }
             else if (n.parent == null)
             {
@@ -262,7 +263,10 @@ namespace bedrock.collections
                     return null;
                 return n.value;
             }
-            set { Add(key, value); }
+            set
+            {
+                Add(key, value);
+            }
         }
 
         /// <summary>
@@ -273,7 +277,7 @@ namespace bedrock.collections
             get
             {
                 object[] keys = new object[Count];
-                int i = 0;
+                int i=0;
                 if (root == null)
                     return keys;
                 Node n = first(root);
@@ -294,7 +298,7 @@ namespace bedrock.collections
             get
             {
                 object[] vals = new object[Count];
-                int i = 0;
+                int i=0;
                 Node n = first(root);
                 while (n != null)
                 {
@@ -310,7 +314,10 @@ namespace bedrock.collections
         /// </summary>
         public bool IsFixedSize
         {
-            get { return false; }
+            get
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -318,13 +325,13 @@ namespace bedrock.collections
         /// </summary>
         public bool IsReadOnly
         {
-            get { return false; }
+            get
+            {
+                return false;
+            }
         }
-
         #endregion
-
         #region Object
-
         /// <summary>
         /// Retrieves a string representation of the tree.
         /// </summary>
@@ -350,7 +357,6 @@ namespace bedrock.collections
         }
 
         #endregion
-
         /// <summary>
         /// Retrieve a string representation of the tree.
         /// Nice for debugging, but otherwise useless.
@@ -360,9 +366,7 @@ namespace bedrock.collections
         {
             return root.ToString();
         }
-
         #region hidden
-
         private static Node first(Node n)
         {
             if (n != null)
@@ -503,9 +507,9 @@ namespace bedrock.collections
             return (n == null ? NodeColor.BLACK : n.color);
         }
 
-        private static Node parentOf(Node n)
+        private static Node  parentOf(Node n)
         {
-            return (n == null ? null : n.parent);
+            return (n == null ? null: n.parent);
         }
 
         private static void setColor(Node n, NodeColor c)
@@ -516,12 +520,12 @@ namespace bedrock.collections
 
         private static Node leftOf(Node n)
         {
-            return (n == null) ? null : n.left;
+            return (n == null)? null: n.left;
         }
 
         private static Node rightOf(Node n)
         {
-            return (n == null) ? null : n.right;
+            return (n == null)? null: n.right;
         }
 
         private void rotateLeft(Node n)
@@ -539,7 +543,7 @@ namespace bedrock.collections
             else
                 n.parent.right = r;
 
-            r.left = n;
+            r.left   = n;
             n.parent = r;
         }
 
@@ -612,7 +616,7 @@ namespace bedrock.collections
                             n = parentOf(n);
                             rotateRight(n);
                         }
-                        setColor(parentOf(n), NodeColor.BLACK);
+                        setColor(parentOf(n),  NodeColor.BLACK);
                         setColor(parentOf(parentOf(n)), NodeColor.RED);
                         if (parentOf(parentOf(n)) != null)
                             rotateLeft(parentOf(parentOf(n)));
@@ -638,10 +642,10 @@ namespace bedrock.collections
                         sib = rightOf(parentOf(x));
                     }
 
-                    if ((colorOf(leftOf(sib)) == NodeColor.BLACK) &&
+                    if ((colorOf(leftOf(sib))  == NodeColor.BLACK) &&
                         (colorOf(rightOf(sib)) == NodeColor.BLACK))
                     {
-                        setColor(sib, NodeColor.RED);
+                        setColor(sib,  NodeColor.RED);
                         x = parentOf(x);
                     }
                     else
@@ -675,17 +679,16 @@ namespace bedrock.collections
                     if (colorOf(rightOf(sib)) == NodeColor.BLACK &&
                         colorOf(leftOf(sib)) == NodeColor.BLACK)
                     {
-                        setColor(sib, NodeColor.RED);
+                        setColor(sib,  NodeColor.RED);
                         x = parentOf(x);
                     }
                     else
                     {
-                        if (colorOf(leftOf(sib)) == NodeColor.BLACK)
-                        {
-                            setColor(rightOf(sib), NodeColor.BLACK);
-                            setColor(sib, NodeColor.RED);
-                            rotateLeft(sib);
-                            sib = leftOf(parentOf(x));
+                        if (colorOf(leftOf(sib)) == NodeColor.BLACK) {
+                        setColor(rightOf(sib), NodeColor.BLACK);
+                        setColor(sib, NodeColor.RED);
+                        rotateLeft(sib);
+                        sib = leftOf(parentOf(x));
                         }
                         setColor(sib, colorOf(parentOf(x)));
                         setColor(parentOf(x), NodeColor.BLACK);
@@ -699,22 +702,10 @@ namespace bedrock.collections
             setColor(x, NodeColor.BLACK);
         }
 
-        private void sizeUp()
-        {
-            modCount++;
-            size++;
-        }
-
-        private void sizeDown()
-        {
-            modCount++;
-            size--;
-        }
-
+        private void sizeUp()   { modCount++; size++; }
+        private void sizeDown() { modCount++; size--; }
         #endregion
-
         #region node
-
         private enum NodeColor : byte
         {
             RED,
@@ -755,25 +746,23 @@ namespace bedrock.collections
             public override string ToString()
             {
                 //return key + "=" + value + " (" + color + ")";
-                if ((left == null) && (right == null))
+                if ((left==null) && (right==null))
                 {
                     return key.ToString();
                 }
                 return key + " (" +
-                       ((left == null) ? "null" : left.ToString()) + "," +
-                       ((right == null) ? "null" : right.ToString()) + ")";
+                    ((left == null) ? "null" : left.ToString()) + "," +
+                    ((right == null) ? "null" : right.ToString()) + ")";
             }
+
         }
-
         #endregion
-
         #region enumerator
-
         private class TreeEnumerator : IDictionaryEnumerator
         {
-            private Tree tree = null;
-            private Node current = null;
-            private int mods = -1;
+            private Tree  tree    = null;
+            private Node  current = null;
+            private int   mods    = -1;
 
             public TreeEnumerator(Tree t) : this(t, t.root)
             {
@@ -781,8 +770,8 @@ namespace bedrock.collections
 
             public TreeEnumerator(Tree t, Node n)
             {
-                tree = t;
-                mods = t.modCount;
+                tree    = t;
+                mods    = t.modCount;
 
                 // foreach calls MoveNext before starting.  Create a dummy node before the first one.
                 current = new Node(null, null, null);
@@ -839,10 +828,12 @@ namespace bedrock.collections
 
             public DictionaryEntry Entry
             {
-                get { return new DictionaryEntry(current.key, current.value); }
+                get
+                {
+                    return new DictionaryEntry(current.key, current.value);
+                }
             }
         }
-
         #endregion
     }
 }

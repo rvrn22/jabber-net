@@ -11,10 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
 using NUnit.Framework;
+
 using bedrock.util;
 using jabber;
 using jabber.client;
@@ -34,11 +35,11 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
     [TestFixture]
     public class PresenceManagerTest
     {
-        private XmlDocument doc = new XmlDocument();
+        XmlDocument doc = new XmlDocument();
 
-        private JID bare = "foo@bar";
-        private JID baz = "foo@bar/baz";
-        private JID boo = "foo@bar/boo";
+        JID bare = "foo@bar";
+        JID baz  = "foo@bar/baz";
+        JID boo  = "foo@bar/boo";
 
 
         [Test]
@@ -47,7 +48,6 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
             PresenceManager pp = new PresenceManager();
             Assert.AreEqual("jabber.client.PresenceManager", pp.GetType().FullName);
         }
-
         [Test]
         public void TestAdd()
         {
@@ -66,7 +66,6 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
             pp.AddPresence(pres);
             Assert.AreEqual("wandering", pp[f].Status);
         }
-
         [Test]
         public void TestRetrieve()
         {
@@ -91,7 +90,6 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
             pp.AddPresence(pres);
             Assert.AreEqual("foo@bar/baz", pp[f.Bare].From.ToString());
         }
-
         [Test]
         public void TestUserHost()
         {
@@ -102,7 +100,6 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
             pp.AddPresence(pres);
             Assert.AreEqual("foo@bar", pp[f.Bare].From.ToString());
         }
-
         [Test]
         public void TestHost()
         {
@@ -113,7 +110,6 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
             pp.AddPresence(pres);
             Assert.AreEqual("bar", pp[f.Bare].From.ToString());
         }
-
         [Test]
         public void TestHostResource()
         {
@@ -124,7 +120,6 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
             pp.AddPresence(pres);
             Assert.AreEqual("bar/baz", pp[f.Bare].From.ToString());
         }
-
         [Test]
         public void TestRemove()
         {
@@ -151,7 +146,6 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
             pp.AddPresence(pres);
             Assert.AreEqual("Working", pp[f].Status);
         }
-
         [Test]
         public void TestNumeric()
         {
@@ -181,7 +175,7 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
 
             Presence[] pa = pp.GetAll(bare);
             Assert.AreEqual(2, pa.Length);
-            Assert.AreEqual(pa[0].GetType(), typeof (Presence));
+            Assert.AreEqual(pa[0].GetType(), typeof(Presence));
         }
 
         [Test]

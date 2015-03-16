@@ -11,10 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Text;
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -384,7 +384,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public override PubSubCommandType CommandType
         {
-            get { return PubSubCommandType.purge; }
+            get { return PubSubCommandType.purge;  }
         }
     }
 
@@ -414,4 +414,6 @@ namespace jabber.protocol.iq
         {
         }
     }
+
 }
+    

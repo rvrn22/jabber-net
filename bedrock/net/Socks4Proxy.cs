@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Diagnostics;
 using System.Text;
 using System.Net;
@@ -26,15 +26,7 @@ namespace bedrock.net
     [SVN(@"$Id$")]
     public class Socks4Proxy : ProxySocket
     {
-        private enum States
-        {
-            None,
-            Connecting,
-            RequestingProxy,
-            Running,
-            Closed
-        }
-
+        private enum States { None, Connecting, RequestingProxy, Running, Closed }
         private States m_state = States.None;
 
         /// <summary>
@@ -74,7 +66,6 @@ namespace bedrock.net
             report different user-ids
 
      */
-
         private bool HandleRequestResponse(int ver, int reply)
         {
             if (ver != 0)
@@ -110,21 +101,21 @@ namespace bedrock.net
                 byte[] addr = ip_addr.GetAddressBytes();
 
                 int port = RemoteAddress.Port;
-                byte[] buffer = new Byte[14];
-                buffer[0] = 4; // protocol version.
-                buffer[1] = 1; // connect.
-                buffer[2] = (byte) (port >> 8);
-                buffer[3] = (byte) port;
+                byte [] buffer = new Byte[14];
+                buffer[0] = 4;  // protocol version.
+                buffer[1] = 1;  // connect.
+                buffer[2] = (byte)(port >> 8);
+                buffer[3] = (byte)port;
                 // TODO: test byte order!
                 buffer[4] = addr[3];
                 buffer[5] = addr[2];
                 buffer[6] = addr[1];
                 buffer[7] = addr[0];
-                buffer[8] = (byte) 'i';
-                buffer[9] = (byte) 'd';
-                buffer[10] = (byte) 'e';
-                buffer[11] = (byte) 'n';
-                buffer[12] = (byte) 't';
+                buffer[8] = (byte)'i';
+                buffer[9] = (byte)'d';
+                buffer[10] = (byte)'e';
+                buffer[11] = (byte)'n';
+                buffer[12] = (byte)'t';
                 buffer[13] = 0;
 
                 /*
@@ -180,7 +171,6 @@ namespace bedrock.net
                 base.OnWrite(sock, buf, offset, length);
             }
         }
-
         #endregion
     }
 }

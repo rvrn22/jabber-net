@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using bedrock.util;
 
@@ -28,12 +28,10 @@ namespace bedrock.collections
         /// Hash table.
         /// </summary>
         Hashtable,
-
         /// <summary>
         /// Red/Black tree.
         /// </summary>
         Tree,
-
         /// <summary>
         /// Skip List.
         /// </summary>
@@ -81,7 +79,6 @@ namespace bedrock.collections
         }
 
         #region Implementation of ISet
-
         /// <summary>
         /// Adds an object to the set.
         /// </summary>
@@ -144,11 +141,9 @@ namespace bedrock.collections
         {
             throw new NotImplementedException();
         }
-
         #endregion
 
         #region Implementation of ICollection
-
         /// <summary>
         /// Copies the elements of the ICollection to an Array, starting at a particular Array index.
         /// </summary>
@@ -187,11 +182,9 @@ namespace bedrock.collections
         {
             get { return m_dict.SyncRoot; }
         }
-
         #endregion
 
         #region Implementation of IEnumerable
-
         /// <summary>
         /// Returns an enumerator that iterates through all items in the set.
         /// </summary>
@@ -200,7 +193,6 @@ namespace bedrock.collections
         {
             return new TreeSetEnumerator(m_dict);
         }
-
         #endregion
 
         private class TreeSetEnumerator : IEnumerator
@@ -213,7 +205,6 @@ namespace bedrock.collections
             }
 
             #region Implementation of IEnumerator
-
             public void Reset()
             {
                 m_enum.Reset();
@@ -232,7 +223,6 @@ namespace bedrock.collections
                     return entry.Key;
                 }
             }
-
             #endregion
         }
     }

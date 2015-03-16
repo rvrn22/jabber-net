@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using NUnit.Framework;
+
 using bedrock.net;
 using bedrock.util;
 using System.Threading;
@@ -15,7 +17,7 @@ namespace test.bedrock.net
     {
         private static readonly Encoding ENC = Encoding.UTF8;
 
-        private class ServerListener : ISocketEventListener
+        private class ServerListener: ISocketEventListener
         {
             #region ISocketEventListener Members
 
@@ -30,7 +32,7 @@ namespace test.bedrock.net
 
             public bool OnAccept(BaseSocket newsocket)
             {
-                AsyncSocket s = (AsyncSocket) newsocket;
+                AsyncSocket s = (AsyncSocket)newsocket;
                 newsocket.RequestRead();
                 return true;
             }
@@ -42,6 +44,7 @@ namespace test.bedrock.net
 
             public void OnClose(BaseSocket sock)
             {
+                
             }
 
             public void OnError(BaseSocket sock, Exception ex)
@@ -55,7 +58,7 @@ namespace test.bedrock.net
                 Console.WriteLine("SR: " + str);
                 if (str.Contains("11111"))
                 {
-                    sock.Write(ENC.GetBytes(@"HTTP/1.1 200 OK
+                sock.Write(ENC.GetBytes(@"HTTP/1.1 200 OK
 Content-Length: 10
 Content-Type: text/plain
 
@@ -93,8 +96,7 @@ Content-Type: text/plain
                 Console.WriteLine("SW: " + ENC.GetString(buf, offset, length));
             }
 
-            public bool OnInvalidCertificate(BaseSocket sock, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain,
-                System.Net.Security.SslPolicyErrors sslPolicyErrors)
+            public bool OnInvalidCertificate(BaseSocket sock, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
             {
                 throw new NotImplementedException("The method or operation is not implemented.");
             }
@@ -102,10 +104,11 @@ Content-Type: text/plain
             #endregion
         }
 
-        private class ResponseListener : ISocketEventListener
+        private class ResponseListener: ISocketEventListener
         {
             public string Last = null;
             public AutoResetEvent Event = new AutoResetEvent(false);
+
 
             #region ISocketEventListener Members
 
@@ -149,8 +152,7 @@ Content-Type: text/plain
                 Console.WriteLine("RW: " + ENC.GetString(buf, offset, length));
             }
 
-            public bool OnInvalidCertificate(BaseSocket sock, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain,
-                System.Net.Security.SslPolicyErrors sslPolicyErrors)
+            public bool OnInvalidCertificate(BaseSocket sock, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
             {
                 throw new NotImplementedException("The method or operation is not implemented.");
             }
@@ -174,7 +176,7 @@ Content-Type: text/plain
 
             Uri u = new Uri("http://localhost:7002/");
             byte[] buf = ENC.GetBytes("11111");
-            HttpSocket s = (HttpSocket) sock;
+            HttpSocket s = (HttpSocket)sock;
             s.Execute("GET", u, buf, 0, buf.Length, "text/plain");
             resp.Event.WaitOne();
             Assert.AreEqual("1234567890", resp.Last);

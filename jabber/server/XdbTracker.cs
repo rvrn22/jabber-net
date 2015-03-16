@@ -11,11 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using System.Diagnostics;
 using System.Xml;
+
 using bedrock.util;
 using jabber.protocol.accept;
 
@@ -34,8 +35,8 @@ namespace jabber.server
     {
         // this hash doesn't need concurrency control, i don't think,
         // since no id will be re-used.
-        private Hashtable m_pending = new Hashtable();
-        private JabberService m_comp = null;
+        private Hashtable       m_pending = new Hashtable();
+        private JabberService   m_comp    = null;
 
         /// <summary>
         /// Create a new XDB tracker
@@ -132,11 +133,11 @@ namespace jabber.server
             XdbCB cb, object cbArg)
         {
             Debug.Assert(owner != null);
-            Debug.Assert(ns != null);
-            Xdb xdb = new Xdb(m_comp.Document);
-            xdb.NS = ns;
+            Debug.Assert(ns    != null);
+            Xdb xdb  = new Xdb(m_comp.Document);
+            xdb.NS   = ns;
             xdb.Type = xtype;
-            xdb.To = owner;
+            xdb.To   = owner;
             xdb.From = m_comp.ComponentID;
             if (action != XdbAction.NONE)
                 xdb.Action = action;
@@ -146,7 +147,7 @@ namespace jabber.server
             if (cb != null)
             {
                 TrackerData td = new TrackerData();
-                td.cb = cb;
+                td.cb   = cb;
                 td.data = cbArg;
                 lock (m_pending)
                 {
@@ -158,7 +159,7 @@ namespace jabber.server
 
         private class TrackerData
         {
-            public XdbCB cb;
+            public XdbCB  cb;
             public object data;
         }
     }

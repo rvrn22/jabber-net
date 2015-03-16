@@ -11,11 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Collections;
 using System.Xml;
 using System.Text;
+
 using bedrock.util;
 using jabber.protocol.stream;
 
@@ -36,16 +36,12 @@ namespace jabber.connection.sasl
         ///
         /// </summary>
         /// <param name="message"></param>
-        public SASLException(string message) : base(message)
-        {
-        }
+        public SASLException(string message) : base(message){}
 
         /// <summary>
         ///
         /// </summary>
-        public SASLException() : base()
-        {
-        }
+        public SASLException() : base(){}
     }
 
     /// <summary>
@@ -58,16 +54,14 @@ namespace jabber.connection.sasl
         ///
         /// </summary>
         public AuthenticationFailedException() : base()
-        {
-        }
+        {}
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="message"></param>
         public AuthenticationFailedException(string message) : base(message)
-        {
-        }
+        {}
     }
 
     /// <summary>
@@ -81,8 +75,7 @@ namespace jabber.connection.sasl
         /// </summary>
         /// <param name="message"></param>
         public MissingDirectiveException(string message) : base(message)
-        {
-        }
+        {}
     }
 
     /// <summary>
@@ -96,10 +89,8 @@ namespace jabber.connection.sasl
         /// </summary>
         /// <param name="message"></param>
         public InvalidServerChallengeException(string message) : base(message)
-        {
-        }
+        {}
     }
-
     /// <summary>
     /// Summary description for SASLProcessor.
     /// </summary>
@@ -110,7 +101,6 @@ namespace jabber.connection.sasl
         /// SASL username
         /// </summary>
         public const string USERNAME = "username";
-
         /// <summary>
         /// SASL password
         /// </summary>

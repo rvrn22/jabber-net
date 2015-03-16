@@ -11,9 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -26,7 +27,6 @@ namespace jabber.protocol.iq
      *   </query>
      * </iq>
      */
-
     /// <summary>
     /// IQ packet with an oob query element inside.
     /// </summary>
@@ -55,7 +55,6 @@ namespace jabber.protocol.iq
         public OOB(XmlDocument doc) : base("query", URI.OOB, doc)
         {
         }
-
         /// <summary>
         ///
         /// </summary>

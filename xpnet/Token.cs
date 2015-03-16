@@ -13,7 +13,6 @@
  *
  * xpnet is a deriviative of James Clark's XP.  See copying.txt for more info.
  * --------------------------------------------------------------------------*/
-
 namespace xpnet
 {
     using bedrock.util;
@@ -26,16 +25,16 @@ namespace xpnet
     {
         private int tokenEnd = -1;
         private int nameEnd = -1;
-        private char refChar1 = (char) 0;
-        private char refChar2 = (char) 0;
+        private char refChar1 = (char)0;
+        private char refChar2 = (char)0;
 
         /// <summary>
         /// The end of the current token, in relation to the beginning of the buffer.
         /// </summary>
         public int TokenEnd
         {
-            get { return tokenEnd; }
-            set { tokenEnd = value; }
+            get {return tokenEnd;}
+            set {tokenEnd = value; }
         }
 
         /// <summary>
@@ -43,8 +42,8 @@ namespace xpnet
         /// </summary>
         public int NameEnd
         {
-            get { return nameEnd; }
-            set { nameEnd = value; }
+            get {return nameEnd;}
+            set {nameEnd = value;}
         }
 
         /// <summary>
@@ -52,17 +51,16 @@ namespace xpnet
         /// </summary>
         public char RefChar1
         {
-            get { return refChar1; }
-            set { refChar1 = value; }
+            get {return refChar1;}
+            set {refChar1 = value; }
         }
-
         /// <summary>
         /// The second of two parsed-out characters.  TODO: find example.
         /// </summary>
         public char RefChar2
         {
-            get { return refChar2; }
-            set { refChar2 = value; }
+            get {return refChar2;}
+            set {refChar2 = value; }
         }
 
         /*

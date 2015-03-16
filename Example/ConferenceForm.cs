@@ -11,13 +11,13 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+
 using bedrock.util;
 using jabber;
 using jabber.connection;
@@ -56,12 +56,18 @@ namespace Example
 
         public JID RoomJID
         {
-            get { return new JID(txtRoom.Text, cmbJID.Text, null); }
+            get
+            {
+                return new JID(txtRoom.Text, cmbJID.Text, null);
+            }
         }
 
         public JID RoomAndNick
         {
-            get { return new JID(txtRoom.Text, cmbJID.Text, txtNick.Text); }
+            get
+            {
+                return new JID(txtRoom.Text, cmbJID.Text, txtNick.Text);
+            }
             set
             {
                 if (value == null)
@@ -136,8 +142,8 @@ namespace Example
             //
             // cmbJID
             //
-            this.cmbJID.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                                                                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbJID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbJID.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cmbJID.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbJID.Location = new System.Drawing.Point(118, 5);
@@ -147,8 +153,8 @@ namespace Example
             //
             // txtRoom
             //
-            this.txtRoom.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                                                                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtRoom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRoom.Location = new System.Drawing.Point(118, 32);
             this.txtRoom.Name = "txtRoom";
             this.txtRoom.Size = new System.Drawing.Size(156, 20);
@@ -176,8 +182,8 @@ namespace Example
             //
             // txtNick
             //
-            this.txtNick.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                                                                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNick.Location = new System.Drawing.Point(118, 58);
             this.txtNick.Name = "txtNick";
             this.txtNick.Size = new System.Drawing.Size(156, 20);
@@ -213,9 +219,11 @@ namespace Example
             this.Shown += new System.EventHandler(this.ConferenceForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
+
 
         private void ConferenceForm_Shown(object sender, EventArgs e)
         {

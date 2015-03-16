@@ -11,14 +11,16 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.ComponentModel;
 using System.Collections;
 using System.Diagnostics;
 using System.Xml;
+
 using bedrock.util;
 using bedrock.net;
+
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.client;
@@ -31,17 +33,14 @@ namespace jabber.client
     /// Informs the client that a presence packet has been received.
     /// </summary>
     public delegate void PresenceHandler(Object sender, Presence pres);
-
     /// <summary>
     /// Informst the client that a message has been received.
     /// </summary>
     public delegate void MessageHandler(Object sender, Message msg);
-
     /// <summary>
     /// Informs the client that an IQ has been received.
     /// </summary>
     public delegate void IQHandler(Object sender, IQ iq);
-
     /// <summary>
     /// Need more information for registration.  Return false to cancel.
     /// </summary>
@@ -55,8 +54,7 @@ namespace jabber.client
     [SVN(@"$Id$")]
     public class JabberClient : XmppStream
     {
-        private static readonly object[][] DEFAULTS = new object[][]
-        {
+        private static readonly object[][] DEFAULTS = new object[][] {
             new object[] {Options.RESOURCE, "Jabber.Net"},
             new object[] {Options.PRIORITY, 0},
             new object[] {Options.AUTO_LOGIN, true},
@@ -202,7 +200,7 @@ namespace jabber.client
         [DefaultValue(0)]
         public int Priority
         {
-            get { return (int) this[Options.PRIORITY]; }
+            get { return (int)this[Options.PRIORITY]; }
             set { this[Options.PRIORITY] = value; }
         }
 
@@ -212,9 +210,9 @@ namespace jabber.client
         /// server doesn't support digest and PlaintextAuth is set to true.
         /// </summary>
         [Description("The password to use for connecting.  " +
-                     "This may be sent across the wire plaintext, " +
-                     "if the server doesn't support digest, " +
-                     "and PlaintextAuth is true")]
+             "This may be sent across the wire plaintext, " +
+             "if the server doesn't support digest, " +
+             "and PlaintextAuth is true")]
         [Category("Jabber")]
         [PasswordPropertyText]
         public string Password
@@ -231,7 +229,7 @@ namespace jabber.client
         [Category("Automation")]
         public bool AutoLogin
         {
-            get { return (bool) this[Options.AUTO_LOGIN]; }
+            get { return (bool)this[Options.AUTO_LOGIN]; }
             set { this[Options.AUTO_LOGIN] = value; }
         }
 
@@ -243,7 +241,7 @@ namespace jabber.client
         [Category("Automation")]
         public bool AutoRoster
         {
-            get { return (bool) this[Options.AUTO_ROSTER]; }
+            get { return (bool)this[Options.AUTO_ROSTER]; }
             set { this[Options.AUTO_ROSTER] = value; }
         }
 
@@ -256,7 +254,7 @@ namespace jabber.client
         [Category("Automation")]
         public bool AutoIQErrors
         {
-            get { return (bool) this[Options.AUTO_IQ_ERRORS]; }
+            get { return (bool)this[Options.AUTO_IQ_ERRORS]; }
             set { this[Options.AUTO_IQ_ERRORS] = value; }
         }
 
@@ -269,7 +267,7 @@ namespace jabber.client
         [Category("Automation")]
         public bool AutoPresence
         {
-            get { return (bool) this[Options.AUTO_PRESENCE]; }
+            get { return (bool)this[Options.AUTO_PRESENCE]; }
             set { this[Options.AUTO_PRESENCE] = value; }
         }
 
@@ -278,7 +276,7 @@ namespace jabber.client
         /// Used to identify a unique connection.
         /// </summary>
         [Description("Gets or sets the connecting resource.  " +
-                     "Used to identify a unique connection.")]
+             "Used to identify a unique connection.")]
         [DefaultValue("Jabber.Net")]
         [Category("Jabber")]
         public string Resource
@@ -555,7 +553,7 @@ namespace jabber.client
                 else
                 {
                     if (!info.HasFeature(URI.DISCO_ITEMS))
-                        error = true; // wow.  weird server.
+                        error = true;  // wow.  weird server.
 
                     // TODO: stash away features for this node in discomanager?
                 }
@@ -637,7 +635,7 @@ namespace jabber.client
                 {
                     if (InvokeRequired)
                         // Don't use CheckedInvoke, since we want this to be synchronous
-                        res = (bool) this.InvokeControl.Invoke(OnRegisterInfo, new object[] {this, r});
+                        res = (bool)this.InvokeControl.Invoke(OnRegisterInfo, new object[] { this, r });
                     else
                         res = OnRegisterInfo(this, r);
                     if (xdata != null)
@@ -777,7 +775,7 @@ namespace jabber.client
             if (i != null)
             {
                 if (InvokeRequired)
-                    CheckedInvoke(new IQHandler(FireOnIQ), new object[] {this, i});
+                    CheckedInvoke(new IQHandler(FireOnIQ) , new object[] { this, i });
                 else
                     FireOnIQ(this, i);
                 return;
@@ -793,7 +791,7 @@ namespace jabber.client
             if (AutoIQErrors)
             {
                 if (!iq.Handled &&
-                    iq.HasAttribute("from") && // Belt.  Suspenders.  Don't respond to roster pushes.
+                    iq.HasAttribute("from") &&   // Belt.  Suspenders.  Don't respond to roster pushes.
                     ((iq.Type == IQType.get) || (iq.Type == IQType.set)))
                 {
                     Write(iq.GetErrorResponse(this.Document, Error.FEATURE_NOT_IMPLEMENTED));
@@ -812,7 +810,7 @@ namespace jabber.client
             if (OnAuthError != null)
             {
                 if (InvokeRequired)
-                    CheckedInvoke(OnAuthError, new object[] {this, i});
+                    CheckedInvoke(OnAuthError, new object[] { this, i });
                 else
                     OnAuthError(this, i);
             }
@@ -826,7 +824,7 @@ namespace jabber.client
             }
         }
 
-        private void JabberClient_OnSASLError(object sender, XmlElement rp)
+        void JabberClient_OnSASLError(object sender, XmlElement rp)
         {
             FireAuthError(rp);
         }
@@ -841,7 +839,7 @@ namespace jabber.client
             if (OnLoginRequired != null)
             {
                 if (InvokeRequired)
-                    CheckedInvoke(OnLoginRequired, new object[] {this});
+                    CheckedInvoke(OnLoginRequired, new object[] { this });
                 else
                     OnLoginRequired(this);
             }
@@ -862,14 +860,14 @@ namespace jabber.client
             // HACK: fire OnSASLStart with state of NonSASLAuthState to initiate old-style auth.
             if (s == NonSASLAuthState.Instance)
             {
-                if ((bool) this[Options.AUTO_LOGIN_THISPASS])
+                if ((bool)this[Options.AUTO_LOGIN_THISPASS])
                     Login();
                 else
                     LoginRequired(ManualLoginState.Instance);
             }
             else
             {
-                if ((bool) this[Options.AUTO_LOGIN_THISPASS])
+                if ((bool)this[Options.AUTO_LOGIN_THISPASS])
                 {
                     // TODO: integrate SASL params into XmppStream params
                     proc[SASLProcessor.USERNAME] = User;
@@ -918,6 +916,7 @@ namespace jabber.client
 
         private void GotResource(object sender, IQ iq, object state)
         {
+
             jabber.protocol.stream.Features feat =
                 state as jabber.protocol.stream.Features;
 
@@ -974,6 +973,7 @@ namespace jabber.client
             stream.AddFactory(new jabber.protocol.client.Factory());
             stream.AddFactory(new jabber.protocol.iq.Factory());
             stream.AddFactory(new jabber.protocol.x.Factory());
+
         }
     }
 
@@ -1027,4 +1027,5 @@ namespace jabber.client
         /// </summary>
         public static readonly jabber.connection.BaseState Instance = new ManualSASLLoginState();
     }
+
 }

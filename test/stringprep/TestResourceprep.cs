@@ -11,7 +11,6 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 #if !NO_STRINGPREP
 
 using System;
@@ -36,20 +35,17 @@ namespace test.stringprep
             Assert.AreEqual(expected, output);
         }
 
-        [Test]
-        public void Test_Good()
+        [Test] public void Test_Good()
         {
             TryOne("Test", "Test");
             TryOne("test", "test");
         }
 
-        [ExpectedException(typeof (ProhibitedCharacterException))]
-        [Test]
-        public void Test_Bad()
+        [ExpectedException(typeof(ProhibitedCharacterException))]
+        [Test] public void Test_Bad()
         {
             TryOne("Test\x180E", null);
         }
     }
 }
-
 #endif

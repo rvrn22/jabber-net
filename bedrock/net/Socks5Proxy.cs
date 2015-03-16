@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Diagnostics;
 using System.Text;
 using bedrock.util;
@@ -25,17 +25,7 @@ namespace bedrock.net
     [SVN(@"$Id$")]
     public class Socks5Proxy : ProxySocket
     {
-        private enum States
-        {
-            None,
-            Connecting,
-            GettingMethods,
-            WaitingForAuth,
-            RequestingProxy,
-            Running,
-            Closed
-        }
-
+        private enum States { None, Connecting, GettingMethods, WaitingForAuth, RequestingProxy, Running, Closed }
         private States m_state = States.None;
 
         /// <summary>
@@ -82,22 +72,21 @@ namespace bedrock.net
          *        o  DST.ADDR    desired destination address
          *        o  DST.PORT    desired destination port in network octet order
          */
-
         private void RequestProxyConnection()
         {
             m_state = States.RequestingProxy;
 
             byte[] host = Encoding.ASCII.GetBytes(RemoteAddress.Hostname);
             int n = host.Length;
-            byte[] buffer = new Byte[7 + n];
+            byte [] buffer = new Byte[7 + n];
             buffer[0] = 5; // protocol version.
             buffer[1] = 1; // connect
             buffer[2] = 0; // reserved.
             buffer[3] = 3; // DOMAINNAME
-            buffer[4] = (byte) n;
+            buffer[4] = (byte)n;
             host.CopyTo(buffer, 5);
-            buffer[5 + n] = (byte) (RemoteAddress.Port >> 8);
-            buffer[6 + n] = (byte) RemoteAddress.Port;
+            buffer[5+n] = (byte)(RemoteAddress.Port >> 8);
+            buffer[6+n] = (byte)RemoteAddress.Port;
             Debug.WriteLine("sending request to proxy to " + RemoteAddress);
             Write(buffer);
         }
@@ -127,12 +116,12 @@ namespace bedrock.net
                      * +----+------+----------+------+----------+
                      */
                     m_state = States.WaitingForAuth;
-                    byte[] buffer = new Byte[3 + Username.Length + Password.Length];
+                    byte [] buffer = new Byte[3 + Username.Length + Password.Length];
                     buffer[0] = 1; // version of this subnegotiation.
-                    buffer[1] = (byte) Username.Length;
+                    buffer[1] = (byte)Username.Length;
                     Encoding.ASCII.GetBytes(Username, 0, Username.Length, buffer, 2);
                     int pw_offset = 2 + Username.Length;
-                    buffer[pw_offset] = (byte) Password.Length;
+                    buffer[pw_offset] = (byte)Password.Length;
                     Encoding.ASCII.GetBytes(Password, 0, Password.Length, buffer, pw_offset + 1);
                     Debug.WriteLine("sending plain auth to proxy");
                     Write(buffer);
@@ -186,7 +175,6 @@ namespace bedrock.net
          *              o  X'08' Address type not supported
          *              o  X'09' to X'FF' unassigned
          */
-
         private bool HandleRequestResponse(int ver, int reply)
         {
             if (ver != 5)
@@ -217,7 +205,7 @@ namespace bedrock.net
         {
             if (m_state == States.Connecting)
             {
-                byte[] buffer = new Byte[4];
+                byte [] buffer = new Byte[4];
                 buffer[0] = 5; // protocol version.
                 buffer[1] = 2; // number of methods.
                 buffer[2] = 0; // no auth.
@@ -272,7 +260,6 @@ namespace bedrock.net
                 base.OnWrite(sock, buf, offset, length);
             }
         }
-
         #endregion
     }
 }

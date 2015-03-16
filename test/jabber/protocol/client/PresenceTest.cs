@@ -11,10 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
 using NUnit.Framework;
+
 using bedrock.util;
 using jabber.protocol.client;
 
@@ -27,19 +28,16 @@ namespace test.jabber.protocol.client
     [TestFixture]
     public class PresenceTest
     {
-        private XmlDocument doc = new XmlDocument();
-
-        [Test]
-        public void Test_Create()
+        XmlDocument doc = new XmlDocument();
+        [Test] public void Test_Create()
         {
             Presence p = new Presence(doc);
-            p.Type = PresenceType.available;
+            p.Type   = PresenceType.available;
             p.Status = "foo";
             Assert.AreEqual("<presence><status>foo</status></presence>", p.ToString());
         }
 
-        [Test]
-        public void Test_Available()
+        [Test] public void Test_Available()
         {
             Presence p = new Presence(doc);
             Assert.AreEqual(PresenceType.available, p.Type);

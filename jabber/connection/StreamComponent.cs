@@ -11,11 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Xml;
+
 using bedrock.util;
 using System.Diagnostics;
 using jabber.protocol.client;
@@ -38,7 +38,7 @@ namespace jabber.connection
         /// <returns>Null if none found</returns>
         public static XmppStream GetStreamFromHost(IDesignerHost host)
         {
-            return (XmppStream) GetComponentFromHost(host, typeof (XmppStream));
+            return (XmppStream)GetComponentFromHost(host, typeof(XmppStream));
         }
 
         /// <summary>
@@ -89,14 +89,14 @@ namespace jabber.connection
                 // from the environment.
                 if ((this.m_stream == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
+                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
                     this.Stream = GetStreamFromHost(host);
                 }
                 return m_stream;
             }
             set
             {
-                if ((object) m_stream != (object) value)
+                if ((object)m_stream != (object)value)
                 {
                     m_stream = value;
                     if (OnStreamChanged != null)

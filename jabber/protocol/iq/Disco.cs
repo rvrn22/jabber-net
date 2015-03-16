@@ -11,9 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Xml;
+
 using bedrock.util;
 using jabber.protocol.x;
 using bedrock.collections;
@@ -35,7 +35,6 @@ namespace jabber.protocol.iq
      *         name='Play-Specific Chatrooms'/>
      * </iq>
      */
-
     /// <summary>
     /// IQ packet with a disco#items query element inside.
     /// </summary>
@@ -79,7 +78,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public string Node
         {
-            get { return this.Instruction.Node; }
+            get {return this.Instruction.Node; }
             set { this.Instruction.Node = value; }
         }
     }
@@ -175,12 +174,10 @@ namespace jabber.protocol.iq
         /// None specified
         /// </summary>
         NONE = -1,
-
         /// <summary>
         /// Remove this item
         /// </summary>
         remove,
-
         /// <summary>
         /// Update this item
         /// </summary>
@@ -280,7 +277,6 @@ namespace jabber.protocol.iq
   </query>
 </iq>
 */
-
     /// <summary>
     /// The information associated with a disco node.
     /// </summary>
@@ -516,6 +512,7 @@ namespace jabber.protocol.iq
             get { return GetAttr("type"); }
             set { SetAttr("type", value); }
         }
+
     }
 
     /// <summary>

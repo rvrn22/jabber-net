@@ -11,12 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using NUnit.Framework;
 using bedrock.collections;
 using bedrock.util;
-
 namespace test.bedrock.collections
 {
     /// <summary>
@@ -26,14 +25,13 @@ namespace test.bedrock.collections
     [TestFixture]
     public class TrieNodeTest
     {
-        [Test]
-        public void Test_Main()
+        [Test] public void Test_Main()
         {
             System.Text.Encoding ENC = System.Text.Encoding.Default;
             TrieNode n = new TrieNode(null, 0);
             byte[] key = ENC.GetBytes("test");
             TrieNode current = n;
-            for (int i = 0; i < key.Length; i++)
+            for (int i=0; i<key.Length; i++)
             {
                 byte b = key[i];
                 current = current[b, true];

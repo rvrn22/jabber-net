@@ -11,9 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol.x
@@ -29,20 +30,17 @@ namespace jabber.protocol.x
         /// No event type specified.
         /// </summary>
         NONE = 0,
-
         /// <summary>
         /// Indicates that the message has been stored offline by the server, because the
         /// intended recipient is not available. This event is to be raised by the Jabber server.
         /// </summary>
         offline = 1,
-
         /// <summary>
         /// Indicates that the message has been delivered to the recipient. This signifies
         /// that the message has reached the Jabber client, but does not necessarily mean
         /// that the message has been displayed. This event is to be raised by the Jabber client.
         /// </summary>
         delivered = 2,
-
         /// <summary>
         /// Once the message has been received by the Jabber client, it may be displayed
         /// to the user. This event indicates that the message has been displayed, and is
@@ -50,7 +48,6 @@ namespace jabber.protocol.x
         /// this event should only be raised once.
         /// </summary>
         displayed = 4,
-
         /// <summary>
         /// In threaded chat conversations, this indicates that the recipient is composing
         /// a reply to a message that was just sent. The event is to be raised by the Jabber
@@ -132,7 +129,6 @@ namespace jabber.protocol.x
                     this.RemoveElem("offline");
             }
         }
-
         /// <summary>
         /// Indicates that the message has been delivered to the recipient. This signifies
         /// that the message has reached the Jabber client, but does not necessarily mean
@@ -149,7 +145,6 @@ namespace jabber.protocol.x
                     this.RemoveElem("delivered");
             }
         }
-
         /// <summary>
         /// Once the message has been received by the Jabber client, it may be displayed
         /// to the user. This event indicates that the message has been displayed, and is
@@ -167,7 +162,6 @@ namespace jabber.protocol.x
                     this.RemoveElem("displayed");
             }
         }
-
         /// <summary>
         /// In threaded chat conversations, this indicates that the recipient is composing
         /// a reply to a message that was just sent. The event is to be raised by the Jabber

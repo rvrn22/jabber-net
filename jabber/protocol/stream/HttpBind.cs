@@ -11,9 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Xml;
+
 using bedrock.util;
 using jabber.protocol;
 
@@ -32,43 +32,36 @@ namespace jabber.protocol.stream
         ///  None specified
         /// </summary>
         UNSPECIFIED = -1,
-
         /// <summary>
         /// The target domain specified in the 'to' attribute or the target host or
         /// port specified in the 'route' attribute is no longer serviced by 
         /// the connection manager.
         /// </summary>
         host_gone,
-
         /// <summary>
         /// The target domain specified in the 'to' attribute or the target host
         /// or port specified in the 'route' attribute is unknown to the connection manager.
         /// </summary>
         host_unknown,
-
         /// <summary>
         /// The initialization element lacks a 'to' or 'route' attribute (or the 
         /// attribute has no value) but the connection manager requires one.
         /// </summary>
         improper_addressing,
-
         /// <summary>
         /// The connection manager has experienced an internal error that prevents 
         /// it from servicing the request.
         /// </summary>
         internal_server_error,
-
         /// <summary>
         /// The connection manager was unable to connect to, or unable to 
         /// connect securely to, or has lost its connection to, the server.
         /// </summary>
         remote_connection_failed,
-
         /// <summary>
         /// Encapsulates an error in the protocol being transported.
         /// </summary>
         remote_stream_error,
-
         /// <summary>
         /// The connection manager does not operate at this URI 
         /// (e.g., the connection manager accepts only SSL or TLS connections at 
@@ -76,13 +69,11 @@ namespace jabber.protocol.stream
         /// The client may try POSTing to the URI in the content of the <uri/> child element.
         /// </summary>
         see_other_uri,
-
         /// <summary>
         /// The connection manager is being shut down. All active HTTP sessions are
         /// being terminated. No new sessions can be created.
         /// </summary>
         system_shutdown,
-
         /// <summary>
         /// The error is not one of those defined herein; the connection manager SHOULD 
         /// include application-specific information in the content of the <body/> wrapper.
@@ -99,18 +90,16 @@ namespace jabber.protocol.stream
         /// None specified
         /// </summary>
         UNSPECIFIED = -1,
-
         /// <summary>
         /// Error encapsulated in response
         /// </summary>
         error,
-
         /// <summary>
         /// Terminate the stream
         /// </summary>
         terminate
     };
-
+    
     /// <summary>
     /// An HTTP Binding body element, which encapsulates stanzas.
     /// See XEP-124 and XEP-206 for details.
@@ -236,7 +225,7 @@ namespace jabber.protocol.stream
             get { return GetIntAttr("inactivity"); }
             set { SetIntAttr("inactivity", value); }
         }
-
+        
         /// <summary>
         /// The client MUST set the 'key' attribute of all subsequent requests to the 
         /// value of the next key in the generated sequence (decrementing from K(n-1) 
@@ -247,7 +236,7 @@ namespace jabber.protocol.stream
             get { return GetAttr("key"); }
             set { SetAttr("key", value); }
         }
-
+        
         /// <summary>
         /// If the connection manager supports session pausing (see Inactivity) then it 
         /// SHOULD advertise that to the client by including a 'maxpause' attribute in 
@@ -260,7 +249,7 @@ namespace jabber.protocol.stream
             get { return GetIntAttr("maxpause"); }
             set { SetIntAttr("maxpause", value); }
         }
-
+        
         /// <summary>
         /// The client MUST set the 'newkey' attribute of the first request in the session to the value K(n).
         /// </summary>
@@ -269,7 +258,7 @@ namespace jabber.protocol.stream
             get { return GetAttr("newkey"); }
             set { SetAttr("newkey", value); }
         }
-
+        
         /// <summary>
         /// If a client encounters an exceptional temporary situation during which it 
         /// will be unable to send requests to the connection manager for a period of 
@@ -284,7 +273,7 @@ namespace jabber.protocol.stream
             get { return GetIntAttr("pause"); }
             set { SetIntAttr("pause", value); }
         }
-
+        
         /// <summary>
         /// This attribute specifies the shortest allowable polling interval (in seconds). 
         /// This enables the client to not send empty request elements more often than desired.
@@ -294,7 +283,7 @@ namespace jabber.protocol.stream
             get { return GetIntAttr("polling"); }
             set { SetIntAttr("polling", value); }
         }
-
+        
         /// <summary>
         /// After receiving a request with an 'ack' value less than the 'rid' of the last
         /// request that it has already responded to, the connection manager MAY inform 
@@ -310,7 +299,7 @@ namespace jabber.protocol.stream
             get { return GetIntAttr("report"); }
             set { SetIntAttr("report", value); }
         }
-
+        
         /// <summary>
         /// This attribute enables the connection manager to limit the number of 
         /// simultaneous requests the client makes. The RECOMMENDED values are 
@@ -363,12 +352,12 @@ namespace jabber.protocol.stream
                 string s = GetAttr("secure");
                 switch (s)
                 {
-                    case "true":
-                        return true;
-                    case "1":
-                        return true;
-                    default:
-                        return false;
+                case "true":
+                    return true;
+                case "1":
+                    return true;
+                default:
+                    return false;
                 }
             }
             set
@@ -388,7 +377,7 @@ namespace jabber.protocol.stream
             get { return GetAttr("sid"); }
             set { SetAttr("sid", value); }
         }
-
+        
         /// <summary>
         /// If a connection manager supports the multi-streams feature, it MUST 
         /// include a 'stream' attribute in its Session Creation Response. If a
@@ -405,7 +394,7 @@ namespace jabber.protocol.stream
             get { return GetAttr("stream"); }
             set { SetAttr("stream", value); }
         }
-
+        
         /// <summary>
         /// After receiving a request with an 'ack' value less than the 'rid' 
         /// of the last request that it has already responded to, the connection 
@@ -441,9 +430,9 @@ namespace jabber.protocol.stream
         public BodyType Type
         {
             get { return GetEnumAttr<BodyType>("type"); }
-            set { SetEnumAttr("type", value); }
+            set { SetEnumAttr("type", value); }         
         }
-
+        
         /// <summary>
         /// This attribute specifies the highest version of the BOSH protocol 
         /// that the client supports. The numbering scheme is "major.minor" 
@@ -468,5 +457,5 @@ namespace jabber.protocol.stream
             get { return GetIntAttr("wait"); }
             set { SetIntAttr("wait", value); }
         }
-    }
+   }
 }

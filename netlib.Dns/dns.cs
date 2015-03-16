@@ -16,43 +16,49 @@ namespace netlib.Dns
     /// as returned from the DnsQuery API.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    internal struct DnsRecord
+    struct DnsRecord
     {
         /// <summary>
         /// Gets or sets the next record.
         /// </summary>
-        public IntPtr Next; // 4 bytes
+        public IntPtr Next;// 4 bytes
 
         /// <summary>
         /// Gets or sets the name of the record.
         /// </summary>
-        public string Name; // 4 bytes
+        public string Name;// 4 bytes
 
         /// <summary>
         /// Gets or sets the type.
         /// </summary>
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U2)] public DnsRecordType RecordType; // 2 bytes
+        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U2)]
+        public DnsRecordType    RecordType;// 2 bytes
 
         /// <summary>
         /// Gets or sets the data length.
         /// </summary>
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U2)] public ushort DataLength; // 2 bytes
+        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U2)]
+        public ushort   DataLength;// 2 bytes
 
         /// <summary>
         /// Represents the flags of a <see cref="DnsRecord"/>.
         /// </summary>
-        [StructLayout(LayoutKind.Explicit)] // 4 bytes
-        internal struct DnsRecordFlags
+        [ StructLayout( LayoutKind.Explicit )]// 4 bytes
+            internal struct DnsRecordFlags
         {
             /// <summary>
             /// Reserved.
             /// </summary>
-            [FieldOffset(0)] [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)] public uint DW;
+            [ FieldOffset( 0 )]
+            [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)]
+            public uint DW;
 
             /// <summary>
             /// Reserved.
             /// </summary>
-            [FieldOffset(0)] [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)] public uint S;
+            [ FieldOffset( 0 )]
+            [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)]
+            public uint  S;
         }
 
         /// <summary>
@@ -63,13 +69,14 @@ namespace netlib.Dns
         /// <summary>
         /// Gets or sets the TTL count
         /// </summary>
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)] public uint Ttl; // 4 bytes
+        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)]
+        public uint Ttl;// 4 bytes
 
         /// <summary>
         /// Reserved.
         /// </summary>
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)] public uint Reserved; // 4 bytes
-
+        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)]
+        public uint Reserved;// 4 bytes
         // Can't fill in rest of the structure because if it doesn't line up, c# will complain.
     }
 
@@ -81,12 +88,12 @@ namespace netlib.Dns
     /// options to be given to a DNS server along with a query.
     /// </remarks>
     [Flags]
-    internal enum DnsQueryType : uint
+    enum DnsQueryType: uint
     {
         /// <summary>
         /// Standard
         /// </summary>
-        STANDARD = 0x00000000,
+        STANDARD                  = 0x00000000,
 
         /// <summary>
         /// Accept truncated response
@@ -96,73 +103,76 @@ namespace netlib.Dns
         /// <summary>
         /// Use TCP only
         /// </summary>
-        USE_TCP_ONLY = 0x00000002,
+        USE_TCP_ONLY              = 0x00000002,
 
         /// <summary>
         /// No recursion
         /// </summary>
-        NO_RECURSION = 0x00000004,
+        NO_RECURSION              = 0x00000004,
 
         /// <summary>
         /// Bypass cache
         /// </summary>
-        BYPASS_CACHE = 0x00000008,
+        BYPASS_CACHE              = 0x00000008,
 
         /// <summary>
         /// Cache only
         /// </summary>
-        NO_WIRE_QUERY = 0x00000010,
+        NO_WIRE_QUERY                = 0x00000010,
 
         /// <summary>
         /// Directs DNS to ignore the local name.
         /// </summary>
-        NO_LOCAL_NAME = 0x00000020,
+        NO_LOCAL_NAME      =      0x00000020,
 
         /// <summary>
         /// Prevents the DNS query from consulting the HOSTS file.
         /// </summary>
-        NO_HOSTS_FILE = 0x00000040,
+        NO_HOSTS_FILE      =      0x00000040,
 
         /// <summary>
         /// Prevents the DNS query from using NetBT for resolution.
         /// </summary>
-        NO_NETBT = 0x00000080,
+        NO_NETBT           =      0x00000080,
 
         /// <summary>
         /// Directs DNS to perform a query using the network only,
         /// bypassing local information.
         /// </summary>
-        WIRE_ONLY = 0x00000100,
+        WIRE_ONLY          = 0x00000100,
 
         /// <summary>
         /// Treat as FQDN
         /// </summary>
-        TREAT_AS_FQDN = 0x00001000,
+        TREAT_AS_FQDN             = 0x00001000,
 
         /// <summary>
         /// Allow empty auth response
         /// </summary>
-        [Obsolete] ALLOW_EMPTY_AUTH_RESP = 0x00010000,
+        [Obsolete]
+        ALLOW_EMPTY_AUTH_RESP     = 0x00010000,
 
         /// <summary>
         /// Don't reset TTL values
         /// </summary>
-        DONT_RESET_TTL_VALUES = 0x00100000,
+        DONT_RESET_TTL_VALUES     = 0x00100000,
 
         /// <summary>
         /// Reserved.
         /// </summary>
-        RESERVED = 0xff000000,
+        RESERVED                  = 0xff000000,
 
         /// <summary>
         /// obsolete.
         /// </summary>
-        [Obsolete("use NO_WIRE_QUERY instead")] CACHE_ONLY = NO_WIRE_QUERY,
+        [Obsolete("use NO_WIRE_QUERY instead")]
+        CACHE_ONLY = NO_WIRE_QUERY,
 
         /// <summary>
         /// Directs DNS to return the entire DNS response message.
         /// </summary>
-        RETURN_MESSAGE = 0x00000200
+        RETURN_MESSAGE     =       0x00000200
+
     }
 
     /// <summary>
@@ -174,7 +184,7 @@ namespace netlib.Dns
     /// This enum is used to describe a failed return code by the
     /// DnsQuery API used in the <see cref="DnsRequest"/> class.
     /// </remarks>
-    public enum DnsQueryReturnCode : ulong
+    public enum DnsQueryReturnCode: ulong
     {
         /// <summary>
         /// Successful query
@@ -194,67 +204,67 @@ namespace netlib.Dns
         /// <summary>
         /// DNS server unable to interpret format.
         /// </summary>
-        FORMAT_ERROR = 9001L,
+        FORMAT_ERROR   =   9001L,
 
         /// <summary>
         /// DNS server failure.
         /// </summary>
-        SERVER_FAILURE = 9002L,
+        SERVER_FAILURE =   9002L,
 
         /// <summary>
         /// DNS name does not exist.
         /// </summary>
-        NAME_ERROR = 9003L,
+        NAME_ERROR    =    9003L,
 
         /// <summary>
         /// DNS request not supported by name server.
         /// </summary>
-        NOT_IMPLEMENTED = 9004L,
+        NOT_IMPLEMENTED =  9004L,
 
         /// <summary>
         /// DNS operation refused.
         /// </summary>
-        REFUSED = 9005L,
+        REFUSED       =    9005L,
 
         /// <summary>
         /// DNS name that ought not exist, does exist.
         /// </summary>
-        YXDOMAIN = 9006L,
+        YXDOMAIN     =     9006L,
 
         /// <summary>
         /// DNS RR set that ought not exist, does exist.
         /// </summary>
-        YXRRSET = 9007L,
+        YXRRSET     =      9007L,
 
         /// <summary>
         /// DNS RR set that ought to exist, does not exist.
         /// </summary>
-        NXRRSET = 9008L,
+        NXRRSET      =     9008L,
 
         /// <summary>
         /// DNS server not authoritative for zone.
         /// </summary>
-        NOTAUTH = 9009L,
+        NOTAUTH      =     9009L,
 
         /// <summary>
         /// DNS name in update or prereq is not in zone.
         /// </summary>
-        NOTZONE = 9010L,
+        NOTZONE      =     9010L,
 
         /// <summary>
         /// DNS signature failed to verify.
         /// </summary>
-        BADSIG = 9016L,
+        BADSIG      =      9016L,
 
         /// <summary>
         /// DNS bad key.
         /// </summary>
-        BADKEY = 9017L,
+        BADKEY      =      9017L,
 
         /// <summary>
         /// DNS signature validity expired.
         /// </summary>
-        BADTIME = 9018L,
+        BADTIME     =      9018L,
 
         /// <summary>
         /// Packet format
@@ -264,27 +274,27 @@ namespace netlib.Dns
         /// <summary>
         /// No records found for given DNS query.
         /// </summary>
-        NO_RECORDS = 9501L,
+        NO_RECORDS      =         9501L,
 
         /// <summary>
         /// Bad DNS packet.
         /// </summary>
-        BAD_PACKET = 9502L,
+        BAD_PACKET     =         9502L,
 
         /// <summary>
         /// No DNS packet.
         /// </summary>
-        NO_PACKET = 9503L,
+        NO_PACKET      =         9503L,
 
         /// <summary>
         /// DNS error, check rcode.
         /// </summary>
-        RCODE = 9504L,
+        RCODE          =         9504L,
 
         /// <summary>
         /// Unsecured DNS packet.
         /// </summary>
-        UNSECURE_PACKET = 9505L
+        UNSECURE_PACKET   =      9505L
     }
 
     /// <summary>
@@ -293,7 +303,7 @@ namespace netlib.Dns
     /// <remarks>
     /// This enum is used by the DnsRecordListFree API.
     /// </remarks>
-    internal enum DnsFreeType : uint
+    enum DnsFreeType: uint
     {
         /// <summary>
         /// Reserved.
@@ -335,7 +345,7 @@ namespace netlib.Dns
     /// </para>
     /// </remarks>
     [Serializable]
-    public class DnsException : ApplicationException, ISerializable
+    public class DnsException: ApplicationException, ISerializable
     {
         private readonly uint errcode = (uint) DnsQueryReturnCode.SUCCESS;
 
@@ -347,7 +357,7 @@ namespace netlib.Dns
         /// properties. The message property will return: Unspecified
         /// DNS exception.
         /// </remarks>
-        public DnsException() : base("Unspecified DNS exception")
+        public DnsException(): base("Unspecified DNS exception")
         {
         }
 
@@ -361,7 +371,7 @@ namespace netlib.Dns
         /// property will return 0 or SUCCESS indicating that the DNS API calls
         /// succeeded, regardless of whether they did or did not.
         /// </remarks>
-        public DnsException(string message) : base(message)
+        public DnsException(string message): base(message)
         {
         }
 
@@ -378,7 +388,7 @@ namespace netlib.Dns
         /// the number returned is a value in the <see cref="DnsQueryReturnCode"/>
         /// enum however, if it is not, the error is defined in WinError.h.
         /// </remarks>
-        public DnsException(string message, uint errcode) : base(message)
+        public DnsException(string message, uint errcode): base(message)
         {
             this.errcode = errcode;
         }
@@ -429,7 +439,10 @@ namespace netlib.Dns
         /// </example>
         public uint ErrorCode
         {
-            get { return errcode; }
+            get
+            {
+                return errcode;
+            }
         }
 
         /// <summary>
@@ -445,7 +458,7 @@ namespace netlib.Dns
         /// instead. In this case, the <see cref="ErrorCode"/> property
         /// always returns 0 or SUCCESS and is a useless property.
         /// </remarks>
-        public DnsException(string message, Exception innerException) : base(message, innerException)
+        public DnsException(string message, Exception innerException): base(message, innerException)
         {
         }
 
@@ -463,7 +476,7 @@ namespace netlib.Dns
         /// <remarks>
         /// Used by the <see cref="ISerializable"/> interface.
         /// </remarks>
-        public DnsException(SerializationInfo info, StreamingContext context) : base(info, context)
+        public DnsException(SerializationInfo info, StreamingContext context): base(info, context)
         {
             errcode = info.GetUInt32("errcode");
         }
@@ -477,53 +490,53 @@ namespace netlib.Dns
     /// could be returned by the DnsQuery API.
     /// </remarks>
     [Flags]
-    public enum DnsRecordType : ushort
+    public enum DnsRecordType: ushort
     {
         /// <summary>
         /// Address record
         /// </summary>
-        A = 0x0001, //  1
+        A          = 0x0001,      //  1
 
         /// <summary>
         /// Canonical Name record
         /// </summary>
-        CNAME = 0x0005, //  5
+        CNAME      = 0x0005,      //  5
 
         /// <summary>
         /// Start Of Authority record
         /// </summary>
-        SOA = 0x0006, //  6
+        SOA        = 0x0006,      //  6
 
         /// <summary>
         /// Pointer record
         /// </summary>
-        PTR = 0x000c, //  12
+        PTR        = 0x000c,      //  12
 
         /// <summary>
         /// Mail Exchange record
         /// </summary>
-        MX = 0x000f, //  15
+        MX         = 0x000f,      //  15
 
         /// <summary>
         /// Text record
         /// </summary>
-        TEXT = 0x0010, //  16
+        TEXT       = 0x0010,      //  16
 
         //  RFC 2052    (Service location)
         /// <summary>
         /// Server record
         /// </summary>
-        SRV = 0x0021, //  33
+        SRV        = 0x0021,      //  33
 
         /// <summary>
         /// All records
         /// </summary>
-        ALL = 0x00ff, //  255
+        ALL        = 0x00ff,      //  255
 
         /// <summary>
         /// Any records
         /// </summary>
-        ANY = 0x00ff, //  255
+        ANY        = 0x00ff,      //  255
     }
 
     /// <summary>
@@ -569,7 +582,7 @@ namespace netlib.Dns
     ///     </item>
     /// </list>
     /// </remarks>
-    public struct DnsWrapper : IComparable
+    public struct DnsWrapper: IComparable
     {
         /// <summary>
         /// Gets or sets the type of DNS record contained in the
@@ -608,7 +621,7 @@ namespace netlib.Dns
         /// </remarks>
         public bool Equals(DnsRecordType type)
         {
-            if (RecordType == type)
+            if( RecordType == type)
                 return true;
 
             return false;
@@ -701,7 +714,7 @@ namespace netlib.Dns
         /// </exception>
         public int CompareTo(object obj)
         {
-            if (!(obj is DnsWrapper))
+            if (! (obj is DnsWrapper))
                 throw new ArgumentException();
 
             DnsWrapper dnsw = (DnsWrapper) obj;
@@ -728,7 +741,7 @@ namespace netlib.Dns
     /// <see cref="DnsResponse"/> classes to hold the returned DNS
     /// records for the given domain.
     /// </remarks>
-    public class DnsWrapperCollection : ReadOnlyCollectionBase, IEnumerable
+    public class DnsWrapperCollection: ReadOnlyCollectionBase, IEnumerable
     {
         internal DnsWrapperCollection()
         {
@@ -736,7 +749,7 @@ namespace netlib.Dns
 
         internal bool Contains(DnsWrapper w)
         {
-            foreach (DnsWrapper wrapper in InnerList)
+            foreach(DnsWrapper wrapper in InnerList)
                 if (w.Equals(wrapper))
                     return true;
 
@@ -761,7 +774,10 @@ namespace netlib.Dns
         /// the collection.</value>
         public DnsWrapper this[int i]
         {
-            get { return (DnsWrapper) InnerList[i]; }
+            get
+            {
+                return (DnsWrapper) InnerList[i];
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -769,7 +785,7 @@ namespace netlib.Dns
             return new DnsWrapperCollectionEnumerator(this);
         }
 
-        private class DnsWrapperCollectionEnumerator : IEnumerator
+        class DnsWrapperCollectionEnumerator: IEnumerator
         {
             private int idx = -1;
             private readonly DnsWrapperCollection coll;
@@ -781,7 +797,7 @@ namespace netlib.Dns
 
             void IEnumerator.Reset()
             {
-                idx = -1;
+                idx=-1;
             }
 
             bool IEnumerator.MoveNext()
@@ -793,7 +809,10 @@ namespace netlib.Dns
 
             object IEnumerator.Current
             {
-                get { return coll[idx]; }
+                get
+                {
+                    return coll[idx];
+                }
             }
         }
     }
@@ -1020,22 +1039,32 @@ namespace netlib.Dns
         /// <summary>
         /// http://msdn.microsoft.com/library/en-us/dns/dns/dnsquery.asp
         /// </summary>
-        [DllImport("dnsapi", EntryPoint = "DnsQuery_A")]
+        [DllImport("dnsapi", EntryPoint="DnsQuery_A")]
         private static extern uint DnsQuery(
-            [MarshalAs(UnmanagedType.LPStr)] string Name,
-            [MarshalAs(UnmanagedType.U2)] DnsRecordType Type,
-            [MarshalAs(UnmanagedType.U4)] DnsQueryType Options,
+            [MarshalAs(UnmanagedType.LPStr)]
+            string Name,
+
+            [MarshalAs(UnmanagedType.U2)]
+            DnsRecordType Type,
+
+            [MarshalAs(UnmanagedType.U4)]
+            DnsQueryType Options,
+
             IntPtr Servers,
-            [In, Out] ref IntPtr QueryResultsSet,
+
+            [In, Out]
+            ref IntPtr QueryResultsSet,
+
             IntPtr Reserved
             );
 
         /// <summary>
         /// http://msdn.microsoft.com/library/en-us/dns/dns/dnsrecordlistfree.asp
         /// </summary>
-        [DllImport("dnsapi", EntryPoint = "DnsRecordListFree")]
+        [DllImport("dnsapi", EntryPoint="DnsRecordListFree")]
         private static extern void DnsRecordListFree(
             IntPtr RecordList,
+
             DnsFreeType FreeType
             );
 
@@ -1053,9 +1082,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool UseTCPOnly
         {
-            get { return GetSetting(DnsQueryType.USE_TCP_ONLY); }
+            get
+            {
+                return GetSetting(DnsQueryType.USE_TCP_ONLY);
+            }
 
-            set { SetSetting(DnsQueryType.USE_TCP_ONLY, value); }
+            set
+            {
+                SetSetting(DnsQueryType.USE_TCP_ONLY, value);
+            }
         }
 
         /// <summary>
@@ -1069,9 +1104,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool AcceptTruncatedResponse
         {
-            get { return GetSetting(DnsQueryType.ACCEPT_TRUNCATED_RESPONSE); }
+            get
+            {
+                return GetSetting(DnsQueryType.ACCEPT_TRUNCATED_RESPONSE);
+            }
 
-            set { SetSetting(DnsQueryType.ACCEPT_TRUNCATED_RESPONSE, value); }
+            set
+            {
+                SetSetting(DnsQueryType.ACCEPT_TRUNCATED_RESPONSE, value);
+            }
         }
 
         /// <summary>
@@ -1085,9 +1126,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool NoRecursion
         {
-            get { return GetSetting(DnsQueryType.NO_RECURSION); }
+            get
+            {
+                return GetSetting(DnsQueryType.NO_RECURSION);
+            }
 
-            set { SetSetting(DnsQueryType.NO_RECURSION, value); }
+            set
+            {
+                SetSetting(DnsQueryType.NO_RECURSION, value);
+            }
         }
 
         /// <summary>
@@ -1102,9 +1149,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool BypassCache
         {
-            get { return GetSetting(DnsQueryType.BYPASS_CACHE); }
+            get
+            {
+                return GetSetting(DnsQueryType.BYPASS_CACHE);
+            }
 
-            set { SetSetting(DnsQueryType.BYPASS_CACHE, value); }
+            set
+            {
+                SetSetting(DnsQueryType.BYPASS_CACHE, value);
+            }
         }
 
         /// <summary>
@@ -1121,9 +1174,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool QueryCacheOnly
         {
-            get { return GetSetting(DnsQueryType.NO_WIRE_QUERY); }
+            get
+            {
+                return GetSetting(DnsQueryType.NO_WIRE_QUERY);
+            }
 
-            set { SetSetting(DnsQueryType.NO_WIRE_QUERY, value); }
+            set
+            {
+                SetSetting(DnsQueryType.NO_WIRE_QUERY, value);
+            }
         }
 
         /// <summary>
@@ -1138,9 +1197,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool WireOnly
         {
-            get { return GetSetting(DnsQueryType.WIRE_ONLY); }
+            get
+            {
+                return GetSetting(DnsQueryType.WIRE_ONLY);
+            }
 
-            set { SetSetting(DnsQueryType.WIRE_ONLY, value); }
+            set
+            {
+                SetSetting(DnsQueryType.WIRE_ONLY, value);
+            }
         }
 
 
@@ -1154,9 +1219,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool NoLocalName
         {
-            get { return GetSetting(DnsQueryType.NO_LOCAL_NAME); }
+            get
+            {
+                return GetSetting(DnsQueryType.NO_LOCAL_NAME);
+            }
 
-            set { SetSetting(DnsQueryType.NO_LOCAL_NAME, value); }
+            set
+            {
+                SetSetting(DnsQueryType.NO_LOCAL_NAME, value);
+            }
         }
 
         /// <summary>
@@ -1171,9 +1242,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool NoHostsFile
         {
-            get { return GetSetting(DnsQueryType.NO_HOSTS_FILE); }
+            get
+            {
+                return GetSetting(DnsQueryType.NO_HOSTS_FILE);
+            }
 
-            set { SetSetting(DnsQueryType.NO_HOSTS_FILE, value); }
+            set
+            {
+                SetSetting(DnsQueryType.NO_HOSTS_FILE, value);
+            }
         }
 
         /// <summary>
@@ -1188,9 +1265,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool NoNetbt
         {
-            get { return GetSetting(DnsQueryType.NO_NETBT); }
+            get
+            {
+                return GetSetting(DnsQueryType.NO_NETBT);
+            }
 
-            set { SetSetting(DnsQueryType.NO_NETBT, value); }
+            set
+            {
+                SetSetting(DnsQueryType.NO_NETBT, value);
+            }
         }
 
         /// <summary>
@@ -1205,9 +1288,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool QueryReturnMessage
         {
-            get { return GetSetting(DnsQueryType.RETURN_MESSAGE); }
+            get
+            {
+                return GetSetting(DnsQueryType.RETURN_MESSAGE);
+            }
 
-            set { SetSetting(DnsQueryType.RETURN_MESSAGE, value); }
+            set
+            {
+                SetSetting(DnsQueryType.RETURN_MESSAGE, value);
+            }
         }
 
         /// <summary>
@@ -1223,9 +1312,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool TreatAsFQDN
         {
-            get { return GetSetting(DnsQueryType.TREAT_AS_FQDN); }
+            get
+            {
+                return GetSetting(DnsQueryType.TREAT_AS_FQDN);
+            }
 
-            set { SetSetting(DnsQueryType.TREAT_AS_FQDN, value); }
+            set
+            {
+                SetSetting(DnsQueryType.TREAT_AS_FQDN, value);
+            }
         }
 
         /// <summary>
@@ -1240,9 +1335,15 @@ namespace netlib.Dns
         /// </remarks>
         public bool DontResetTTLValues
         {
-            get { return GetSetting(DnsQueryType.DONT_RESET_TTL_VALUES); }
+            get
+            {
+                return GetSetting(DnsQueryType.DONT_RESET_TTL_VALUES);
+            }
 
-            set { SetSetting(DnsQueryType.DONT_RESET_TTL_VALUES, value); }
+            set
+            {
+                SetSetting(DnsQueryType.DONT_RESET_TTL_VALUES, value);
+            }
         }
 
         private bool GetSetting(DnsQueryType type)
@@ -1280,8 +1381,14 @@ namespace netlib.Dns
         /// IP Address.</value>
         public string _domain
         {
-            get { return _Domain; }
-            set { _Domain = value; }
+            get
+            {
+                return _Domain;
+            }
+            set
+            {
+                _Domain=value;
+            }
         }
 
         /// <summary>
@@ -1318,8 +1425,8 @@ namespace netlib.Dns
 
         private void Initialize(string domain)
         {
-            _domain = domain;
-            QueryType = DnsQueryType.STANDARD | DnsQueryType.TREAT_AS_FQDN;
+            _domain=domain;
+            QueryType = DnsQueryType.STANDARD|DnsQueryType.TREAT_AS_FQDN;
         }
 
         /// <summary>
@@ -1371,9 +1478,9 @@ namespace netlib.Dns
                 do
                 {
                     // Get the DNS_RECORD
-                    DnsRecord dnsrec = (DnsRecord) Marshal.PtrToStructure(
+                    DnsRecord dnsrec = (DnsRecord)Marshal.PtrToStructure(
                         ppQueryResultsSet,
-                        typeof (DnsRecord)
+                        typeof(DnsRecord)
                         );
 
                     // Get the Data part
@@ -1387,18 +1494,18 @@ namespace netlib.Dns
                     // Note: this is *supposed* to return many records of the same type.  Don't check for uniqueness.
                     // Add wrapper to array
                     //if (! resp.RawRecords.Contains(wrapper))
-                    resp.RawRecords.Add(wrapper);
+                    resp.RawRecords.Add( wrapper );
 
                     ppQueryResultsSet = dnsrec.Next;
                 } while (ppQueryResultsSet != IntPtr.Zero);
 
                 return resp;
             }
-            catch (DnsException)
+            catch(DnsException)
             {
                 throw;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 throw new DnsException("unspecified error", ex);
             }
@@ -1413,33 +1520,33 @@ namespace netlib.Dns
 
         private static void GetData(IntPtr ptr, ref DnsRecord dnsrec, ref object Data)
         {
-            int size = ptr.ToInt32() + Marshal.SizeOf(dnsrec);
-            ptr = new IntPtr(size); // Skip over the header portion of the DNS_RECORD to the data portion.
-            switch (dnsrec.RecordType)
+            int size = ptr.ToInt32() + Marshal.SizeOf( dnsrec );
+            ptr = new IntPtr(size);// Skip over the header portion of the DNS_RECORD to the data portion.
+            switch ( dnsrec.RecordType )
             {
                 case DnsRecordType.A:
-                    Data = (ARecord) Marshal.PtrToStructure(ptr, typeof (ARecord));
+                    Data = (ARecord)Marshal.PtrToStructure( ptr, typeof(ARecord) );
                     break;
 
                 case DnsRecordType.CNAME:
                 case DnsRecordType.PTR:
-                    Data = (PTRRecord) Marshal.PtrToStructure(ptr, typeof (PTRRecord));
+                    Data = (PTRRecord)Marshal.PtrToStructure( ptr, typeof(PTRRecord) );
                     break;
 
                 case DnsRecordType.MX:
-                    Data = (MXRecord) Marshal.PtrToStructure(ptr, typeof (MXRecord));
+                    Data = (MXRecord)Marshal.PtrToStructure( ptr, typeof(MXRecord) );
                     break;
 
                 case DnsRecordType.SOA:
-                    Data = (SOARecord) Marshal.PtrToStructure(ptr, typeof (SOARecord));
+                    Data = (SOARecord)Marshal.PtrToStructure( ptr, typeof(SOARecord) );
                     break;
 
                 case DnsRecordType.SRV:
-                    Data = (SRVRecord) Marshal.PtrToStructure(ptr, typeof (SRVRecord));
+                    Data = (SRVRecord)Marshal.PtrToStructure( ptr, typeof(SRVRecord) );
                     break;
 
                 case DnsRecordType.TEXT:
-                    Data = (TXTRecord) Marshal.PtrToStructure(ptr, typeof (TXTRecord));
+                    Data = (TXTRecord)Marshal.PtrToStructure(ptr, typeof(TXTRecord));
                     break;
 
                 default:
@@ -1481,7 +1588,10 @@ namespace netlib.Dns
         /// <value>Gets a collection of <see cref="DnsWrapper"/> objects.</value>
         public DnsWrapperCollection RawRecords
         {
-            get { return rawrecords; }
+            get
+            {
+                return rawrecords;
+            }
         }
 
         /// <summary>
@@ -1545,7 +1655,7 @@ namespace netlib.Dns
         public ArrayList GetRecords(DnsRecordType type)
         {
             ArrayList arr = new ArrayList();
-            foreach (DnsWrapper dnsentry in rawrecords)
+            foreach(DnsWrapper dnsentry in rawrecords)
                 if (dnsentry.Equals(type))
                     arr.Add(dnsentry.RecordData);
 
@@ -1566,7 +1676,7 @@ namespace netlib.Dns
             get
             {
                 ArrayList arr = GetRecords(DnsRecordType.SRV);
-                return (SRVRecord[]) arr.ToArray(typeof (SRVRecord));
+                return (SRVRecord[])arr.ToArray(typeof(SRVRecord));
             }
         }
 
@@ -1584,10 +1694,9 @@ namespace netlib.Dns
             get
             {
                 ArrayList arr = GetRecords(DnsRecordType.TEXT);
-                return (TXTRecord[]) arr.ToArray(typeof (TXTRecord));
+                return (TXTRecord[])arr.ToArray(typeof(TXTRecord));
             }
         }
-
         /// <summary>
         /// Gets all the <see cref="MXRecord"/> for the queried domain.
         /// </summary>
@@ -1602,7 +1711,7 @@ namespace netlib.Dns
             get
             {
                 ArrayList arr = GetRecords(DnsRecordType.MX);
-                return (MXRecord[]) arr.ToArray(typeof (MXRecord));
+                return (MXRecord[]) arr.ToArray(typeof(MXRecord));
             }
         }
     }

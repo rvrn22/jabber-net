@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using NUnit.Framework;
 using bedrock.collections;
 using bedrock.util;
@@ -45,7 +45,7 @@ namespace test.bedrock.collections
             Assert.AreEqual(1, ss.Count);
             Assert.IsFalse(ss["fool"]);
 
-            ss = new StringSet(new string[] {"foo", "bar"});
+            ss = new StringSet(new string[] { "foo", "bar"});
             ss.Add(new StringSet("baz"));
             Assert.AreEqual(3, ss.Count);
         }
@@ -126,19 +126,19 @@ namespace test.bedrock.collections
         }
 
         [Test]
-        [ExpectedException(typeof (ArgumentNullException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void Null()
         {
             StringSet ss = new StringSet();
-            ss.Add((string) null);
+            ss.Add((string)null);
         }
-
+        
         [Test]
         public void Empty()
         {
-            StringSet ss = new StringSet(new string[] {""});
+            StringSet ss = new StringSet(new string[] { "" });
             Assert.AreEqual(1, ss.Count);
-            ss = new StringSet((string[]) null);
+            ss = new StringSet((string[])null);
             Assert.AreEqual(0, ss.Count);
         }
     }

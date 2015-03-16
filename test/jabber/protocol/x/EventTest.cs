@@ -11,10 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
 using NUnit.Framework;
+
 using bedrock.util;
 using jabber.protocol;
 using jabber.protocol.x;
@@ -28,16 +29,13 @@ namespace test.jabber.protocol.x
     [TestFixture]
     public class EventTest
     {
-        private XmlDocument doc = new XmlDocument();
-
+        XmlDocument doc = new XmlDocument();
         [SetUp]
         public void SetUp()
         {
             Element.ResetID();
         }
-
-        [Test]
-        public void Test_Create()
+        [Test] public void Test_Create()
         {
             Event e = new Event(doc);
             Assert.AreEqual("<x xmlns=\"jabber:x:event\" />", e.ToString());

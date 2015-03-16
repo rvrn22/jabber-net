@@ -11,18 +11,19 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.ComponentModel;
 using System.Globalization;
+
 using bedrock.util;
+
 #if !__MonoCS__
 using netlib.Dns;
 using netlib.Dns.Records;
-
 #endif
 
 namespace bedrock.net
@@ -31,7 +32,6 @@ namespace bedrock.net
     /// Callback for async DNS lookups.
     /// </summary>
     public delegate void AddressResolved(Address addr);
-
     /// <summary>
     /// Encapsulation and caching of IP address information.  Very similar to System.Net.IPEndPoint,
     /// but adds async DNS lookups.
@@ -40,10 +40,9 @@ namespace bedrock.net
     [SVN(@"$Id$")]
     public class Address
     {
-        private string m_hostname = null;
-        private int m_port = -1;
-        private IPAddress m_ip = IPAddress.Any;
-
+        private string    m_hostname = null;
+        private int       m_port     = -1;
+        private IPAddress m_ip       = IPAddress.Any;
         /// <summary>
         /// Address for a server, corresponding to IPAddress.Any.
         /// </summary>
@@ -52,7 +51,6 @@ namespace bedrock.net
         {
             m_port = port;
         }
-
         /// <summary>
         /// New connection endpoint.
         /// </summary>
@@ -63,7 +61,6 @@ namespace bedrock.net
             Debug.Assert(hostname != null, "must supply a host name");
             this.Hostname = hostname;
         }
-
         /// <summary>
         /// Create a new connection endpoint, where the IP address is already known.
         /// </summary>
@@ -90,7 +87,7 @@ namespace bedrock.net
             Random rnd = new Random();
             byte[] keys = new byte[srv.Length];
             rnd.NextBytes(keys);
-            Array.Sort(keys, srv); // Permute me, Knuth!  (I wish I had a good anagram for that)
+            Array.Sort(keys, srv);  // Permute me, Knuth!  (I wish I had a good anagram for that)
 
             int minpri = int.MaxValue;
             foreach (SRVRecord rec in srv)
@@ -241,7 +238,6 @@ namespace bedrock.net
                 m_port = value;
             }
         }
-
         /// <summary>
         /// The binary IP address.  Gives IPAddress.Any if resolution hasn't occured, and
         /// null if resolution failed.
@@ -255,7 +251,6 @@ namespace bedrock.net
                 m_hostname = m_ip.ToString();
             }
         }
-
         /// <summary>
         /// Not implemented yet.
         /// </summary>
@@ -264,7 +259,6 @@ namespace bedrock.net
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
-
         /// <summary>
         /// An IPEndPoint for making socket connections with.
         /// </summary>
@@ -282,7 +276,6 @@ namespace bedrock.net
                 Port = value.Port;
             }
         }
-
         /// <summary>
         /// Async DNS lookup.  IP will be null in callback on failure.  Callback will
         /// be called immediately if IP is already known (e.g. dotted-quad).
@@ -305,8 +298,8 @@ namespace bedrock.net
         /// </summary>
         public void Resolve()
         {
-            if ((m_ip != null) &&
-                (m_ip != IPAddress.Any) &&
+            if ((m_ip != null) && 
+                (m_ip != IPAddress.Any) && 
                 (m_ip != IPAddress.IPv6Any))
             {
                 return;
@@ -348,7 +341,6 @@ namespace bedrock.net
             if (callback != null)
                 callback(this);
         }
-
         /// <summary>
         /// Readable representation of the address.
         /// Host (IP):port

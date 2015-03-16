@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
-using bedrock.util;
 
+using bedrock.util;
 namespace bedrock.collections
 {
     /// <summary>
@@ -25,20 +24,18 @@ namespace bedrock.collections
     public class ByteStack
     {
         private const double GROWTH_FACTOR = 1.5d;
-        private const int DEFAULT_SIZE = 16;
-        private const int MIN_SIZE = 2;
+        private const int    DEFAULT_SIZE  = 16;
+        private const int    MIN_SIZE      = 2;
         private static readonly System.Text.Encoding ENCODING = System.Text.Encoding.Default;
-        private int m_count = 0;
-        private int m_capacity = 0;
+        private int    m_count    = 0;
+        private int    m_capacity = 0;
         private byte[] m_buffer;
-
         /// <summary>
         /// Creates an instance with the default initial capacity.
         /// </summary>
         public ByteStack() : this(DEFAULT_SIZE)
         {
         }
-
         /// <summary>
         /// Create an instance with the given initial capacity.
         /// </summary>
@@ -50,9 +47,8 @@ namespace bedrock.collections
                 initialSize = DEFAULT_SIZE;
             }
             m_capacity = initialSize;
-            m_buffer = new byte[m_capacity];
+            m_buffer   = new byte[m_capacity];
         }
-
         /// <summary>
         /// Create an instance with the given initial value.  The initial size
         /// will be grown from the size of the given bytes.  A copy is made of
@@ -61,17 +57,16 @@ namespace bedrock.collections
         /// <param name="start">byte array copied into this ByteStack</param>
         public ByteStack(byte[] start)
         {
-            m_count = m_capacity = start.Length;
+            m_count  = m_capacity = start.Length;
             m_buffer = start;
             IncreaseSize();
         }
-
         /// <summary>
         /// Increase the size of the stack by GROWTH_FACTOR times.
         /// </summary>
         private void IncreaseSize()
         {
-            m_capacity = (int) (m_capacity*GROWTH_FACTOR);
+            m_capacity = (int) (m_capacity * GROWTH_FACTOR);
             // if the size is 1, we'll never get bigger.
             if (m_capacity < MIN_SIZE)
             {
@@ -81,23 +76,26 @@ namespace bedrock.collections
             Buffer.BlockCopy(m_buffer, 0, newBuf, 0, m_count);
             m_buffer = newBuf;
         }
-
         /// <summary>
         /// Gets the number of bytes that are currently in the stack.
         /// </summary>
         public int Count
         {
-            get { return m_count; }
+            get
+            {
+                return m_count;
+            }
         }
-
         /// <summary>
         /// Gets the number of bytes that the stack can hold.
         /// </summary>
         public int Capacity
         {
-            get { return m_capacity; }
+            get
+            {
+                return m_capacity;
+            }
         }
-
         /// <summary>
         /// Push a byte onto the stack.
         /// </summary>
@@ -111,7 +109,6 @@ namespace bedrock.collections
             m_buffer[m_count] = b;
             m_count++;
         }
-
         /// <summary>
         /// Pop a byte off of the stack.
         /// </summary>
@@ -122,10 +119,9 @@ namespace bedrock.collections
                 throw new InvalidOperationException("Empty stack");
             }
             m_count--;
-            byte b = m_buffer[m_count];
+            byte b =  m_buffer[m_count];
             return b;
         }
-
         /// <summary>
         /// Non-destructively read the byte on the top of the stack.
         /// </summary>
@@ -137,7 +133,6 @@ namespace bedrock.collections
             }
             return m_buffer[m_count - 1];
         }
-
         /// <summary>
         /// Converts to byte[] by making a trimmed copy.
         /// </summary>
@@ -153,7 +148,6 @@ namespace bedrock.collections
             Buffer.BlockCopy(bs.m_buffer, 0, newBuf, 0, bs.m_count);
             return newBuf;
         }
-
         /// <summary>
         /// Convert to a string, using the default encoding.  This is probably not
         /// right, but it's really nice for debugging and testing.

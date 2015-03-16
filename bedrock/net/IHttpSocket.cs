@@ -1,9 +1,9 @@
 namespace bedrock.net
 {
-    internal interface IHttpSocket
-    {
-        string URL { get; set; }
-    }
+	interface IHttpSocket
+	{
+	    string URL { get; set; }
+	}
 
     /// <summary>
     /// This socket has special support for writing XML elements.

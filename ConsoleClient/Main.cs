@@ -11,10 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Threading;
 using System.Xml;
+
 using bedrock.util;
 using jabber;
 using jabber.client;
@@ -28,36 +28,47 @@ namespace ConsoleClient
     /// Summary description for Class1.
     /// </summary>
     [SVN(@"$Id$")]
-    internal class Class1
+    class Class1
     {
-        [CommandLine("j", "user@host Jabber ID", true)] public string jid = null;
+        [CommandLine("j", "user@host Jabber ID", true)]
+        public string jid = null;
 
-        [CommandLine("p", "Password", false)] public string pass = null;
+        [CommandLine("p", "Password", false)]
+        public string pass = null;
 
-        [CommandLine("n", "Network Host", false)] public string networkHost = null;
+        [CommandLine("n", "Network Host", false)]
+        public string networkHost = null;
 
-        [CommandLine("o", "Port", false)] public int port = 5222;
+        [CommandLine("o", "Port", false)]
+        public int port = 5222;
 
-        [CommandLine("t", "TLS auto-start", false)] public bool TLS = true;
+        [CommandLine("t", "TLS auto-start", false)]
+        public bool TLS = true;
 
-        [CommandLine("r", "Register user", false)] public bool register = false;
+        [CommandLine("r", "Register user", false)]
+        public bool register = false;
 
-        [CommandLine("c", "Certificate file", false)] public string certificateFile = null;
+        [CommandLine("c", "Certificate file", false)]
+        public string certificateFile = null;
 
-        [CommandLine("w", "Certificate password", false)] public string certificatePass = "";
+        [CommandLine("w", "Certificate password", false)]
+        public string certificatePass = "";
 
-        [CommandLine("u", "Untrusted certificates OK", false)] public bool untrustedOK = false;
+        [CommandLine("u", "Untrusted certificates OK", false)]
+        public bool untrustedOK = false;
 
-        [CommandLine("i", "Do not send initial presence", false)] public bool initialPresence = true;
+        [CommandLine("i", "Do not send initial presence", false)]
+        public bool initialPresence = true;
 
-        [CommandLine("b", "HTTP Binding (BOSH) URL", false)] public string boshURL = null;
+        [CommandLine("b", "HTTP Binding (BOSH) URL", false)]
+        public string boshURL = null;
 
         public Class1(string[] args)
         {
             JabberClient jc = new JabberClient();
             jc.OnReadText += new bedrock.TextHandler(jc_OnReadText);
             jc.OnWriteText += new bedrock.TextHandler(jc_OnWriteText);
-            jc.OnError += new bedrock.ExceptionHandler(jc_OnError);
+            jc.OnError +=new bedrock.ExceptionHandler(jc_OnError);
             jc.OnStreamError += new jabber.protocol.ProtocolHandler(jc_OnStreamError);
 
             jc.AutoReconnect = 3f;
@@ -96,7 +107,7 @@ namespace ConsoleClient
                 jc[Options.POLL_URL] = boshURL;
                 jc[Options.CONNECTION_TYPE] = ConnectionType.HTTP_Binding;
             }
-
+            
             if (register)
             {
                 jc.AutoLogin = false;
@@ -109,7 +120,7 @@ namespace ConsoleClient
             CapsManager cm = new CapsManager();
             cm.Stream = jc;
             cm.Node = "http://cursive.net/clients/ConsoleClient";
-
+            
             Console.WriteLine("Connecting");
             jc.Connect();
             Console.WriteLine("Connected");
@@ -156,8 +167,7 @@ namespace ConsoleClient
             }
         }
 
-        private bool jc_OnInvalidCertificate(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain,
-            System.Net.Security.SslPolicyErrors sslPolicyErrors)
+        bool jc_OnInvalidCertificate(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
         {
             Console.WriteLine("Invalid certificate ({0}):\n{1}", sslPolicyErrors.ToString(), certificate.ToString(true));
             return true;
@@ -167,7 +177,7 @@ namespace ConsoleClient
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main(string[] args)
+        static void Main(string[] args)
         {
             new Class1(args);
         }
@@ -204,7 +214,7 @@ namespace ConsoleClient
         }
 
         private void jc_OnRegistered(object sender,
-            IQ iq)
+                                     IQ iq)
         {
             JabberClient jc = (JabberClient) sender;
             if (iq.Type == IQType.result)

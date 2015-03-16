@@ -11,13 +11,15 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol.iq
 {
+
     /// <summary>
     /// IQ packet with a register query element inside.
     /// </summary>
@@ -270,7 +272,7 @@ namespace jabber.protocol.iq
         public jabber.protocol.x.Data Form
         {
             get { return GetChildElement<jabber.protocol.x.Data>(); }
-            set { ReplaceChild<jabber.protocol.x.Data>(value); }
+            set { ReplaceChild <jabber.protocol.x.Data>(value); }
         }
     }
 }

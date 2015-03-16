@@ -11,11 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using bedrock.util;
-
 namespace bedrock.collections
 {
     /// <summary>
@@ -25,15 +24,13 @@ namespace bedrock.collections
     [SVN(@"$Id$")]
     public class IndexedTrie : Trie
     {
-        private Tree m_indexes = new Tree();
-        private int m_maxResults = 100;
+        private Tree m_indexes    = new Tree();
+        private int  m_maxResults = 100;
 
         /// <summary>
         /// Creates the indexed trie.
         /// </summary>
-        public IndexedTrie()
-        {
-        }
+        public IndexedTrie()  {}
 
         /// <summary>
         /// Creates the indexed trie and sets the maximum number of query results returned.
@@ -49,18 +46,25 @@ namespace bedrock.collections
         /// </summary>
         public int MaxResults
         {
-            get { return m_maxResults; }
-            set { m_maxResults = value; }
+            get
+            {
+                return m_maxResults;
+            }
+            set
+            {
+                m_maxResults = value;
+            }
         }
-
         /// <summary>
         /// Finds the index for the given byte.
         /// </summary>
         protected ArrayList this[byte b]
         {
-            get { return (ArrayList) m_indexes[b]; }
+            get
+            {
+                return (ArrayList) m_indexes[b];
+            }
         }
-
         /// <summary>
         /// Traverse the trie, computing indexes.
         /// </summary>
@@ -70,11 +74,10 @@ namespace bedrock.collections
         {
             if (n.Parent != null)
             {
-                this[n.Byte].Add(new WeakReference(n));
+                 this[n.Byte].Add(new WeakReference(n));
             }
             return true;
         }
-
         /// <summary>
         /// Computes the index.
         /// </summary>
@@ -86,7 +89,6 @@ namespace bedrock.collections
                 al.TrimToSize();
             }
         }
-
         /// <summary>
         /// Copy the keys from the sub-tree into an ArrayList.
         /// </summary>
@@ -106,7 +108,6 @@ namespace bedrock.collections
             }
             return true;
         }
-
         /// <summary>
         /// Return a list of keys that contain the given substring.
         /// </summary>

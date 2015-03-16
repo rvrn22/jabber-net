@@ -20,6 +20,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+
 using bedrock.util;
 
 namespace bedrock.net
@@ -31,7 +32,7 @@ namespace bedrock.net
     /// </summary>
     [SVN(@"$Id$")]
     public class HttpSocket : BaseSocket, ISocketEventListener
-    {
+	{
         private class PendingRequest
         {
             public string Method;
@@ -50,7 +51,7 @@ namespace bedrock.net
             {
                 this.Method = method;
                 this.URI = URL;
-                this.Body = (body == null) ? new byte[] {} : body;
+                this.Body = (body == null) ? new byte[] { } : body;
                 this.Offset = offset;
                 this.Length = len;
                 this.ContentType = contentType;
@@ -94,7 +95,7 @@ namespace bedrock.net
         private int m_maxErrors = 5;
         private int m_errorCount = 0;
         private object m_lock = new Object();
-
+                
         private static readonly byte[] SPACE = ENC.GetBytes(" ");
         private static readonly byte[] CRLF = ENC.GetBytes("\r\n");
         private static readonly byte[] COL_SP = ENC.GetBytes(": ");
@@ -188,7 +189,7 @@ namespace bedrock.net
                     {
                         Connect(req.URI);
 
-                        Monitor.Wait(m_lock, (int) (m_connectRetrySec*1000));
+                        Monitor.Wait(m_lock, (int)(m_connectRetrySec * 1000));
                         if (!m_keepRunning)
                             return;
 
@@ -552,7 +553,7 @@ namespace bedrock.net
             }
             return true;
 
-            ERROR:
+        ERROR:
             m_listener.OnError(null, new ProtocolViolationException("Error parsing HTTP response"));
             Close();
             return false;
@@ -563,8 +564,7 @@ namespace bedrock.net
             m_listener.OnWrite(null, buf, offset, length);
         }
 
-        bool ISocketEventListener.OnInvalidCertificate(BaseSocket sock, System.Security.Cryptography.X509Certificates.X509Certificate certificate,
-            System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+        bool ISocketEventListener.OnInvalidCertificate(BaseSocket sock, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
         {
             // TODO: pass up the chain
             return m_listener.OnInvalidCertificate(null, certificate, chain, sslPolicyErrors);

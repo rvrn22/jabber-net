@@ -11,12 +11,13 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol
@@ -31,16 +32,14 @@ namespace jabber.protocol
         /// Element name
         /// </summary>
         protected internal string Name;
-
         /// <summary>
         /// Element namespace URI
         /// </summary>
         protected internal string NS;
-
         /// <summary>
         /// Type to create for NS/Name pair
         /// </summary>
-        protected internal Type ElementType;
+        protected internal Type  ElementType;
 
         /// <summary>
         /// Create a QnameType
@@ -50,8 +49,8 @@ namespace jabber.protocol
         /// <param name="typ"></param>
         public QnameType(string name, string ns, Type typ)
         {
-            this.Name = name;
-            this.NS = ns;
+            this.Name  = name;
+            this.NS    = ns;
             this.ElementType = typ;
         }
 
@@ -62,7 +61,7 @@ namespace jabber.protocol
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            if (obj == (object) this)
+            if (obj == (object)this)
                 return true;
             QnameType other = obj as QnameType;
             if (other == null)
@@ -109,15 +108,10 @@ namespace jabber.protocol
     public class ElementFactory
     {
         private Hashtable m_types = new Hashtable();
-
         private static readonly Type[] s_constructorTypes =
-            new Type[]
-            {
-                typeof (string),
-                typeof (XmlQualifiedName),
-                typeof (XmlDocument)
-            };
-
+            new Type[] { typeof(string),
+                           typeof(XmlQualifiedName),
+                           typeof(XmlDocument) };
         /// <summary>
         /// Add a type to the packet factory.
         /// </summary>
@@ -126,12 +120,11 @@ namespace jabber.protocol
         /// <param name="t"></param>
         public void AddType(string localName, string ns, Type t)
         {
-            Debug.Assert(t.IsSubclassOf(typeof (Element)));
+            Debug.Assert(t.IsSubclassOf(typeof(Element)));
             ConstructorInfo ci = t.GetConstructor(s_constructorTypes);
             Debug.Assert(ci != null);
             AddType(new XmlQualifiedName(localName, ns), ci);
         }
-
         /// <summary>
         /// Add a type to the packet factory.
         /// </summary>
@@ -139,12 +132,11 @@ namespace jabber.protocol
         /// <param name="t"></param>
         public void AddType(XmlQualifiedName qname, Type t)
         {
-            Debug.Assert(t.IsSubclassOf(typeof (Element)));
+            Debug.Assert(t.IsSubclassOf(typeof(Element)));
             ConstructorInfo ci = t.GetConstructor(s_constructorTypes);
             Debug.Assert(ci != null);
             AddType(qname, ci);
         }
-
         /// <summary>
         /// Add a type to the packet factory.
         /// </summary>
@@ -157,7 +149,6 @@ namespace jabber.protocol
                 Debug.WriteLine("Warning: overriding existing packet factory: " + qname.ToString());
             m_types[qname] = ci;
         }
-
         /// <summary>
         /// Add a type to the packet factory.
         /// </summary>
@@ -169,7 +160,6 @@ namespace jabber.protocol
                 this.AddType(qn.Name, qn.NS, qn.ElementType);
             }
         }
-
         /*
         public void AddType(ElementFactory pf)
         {
@@ -179,7 +169,6 @@ namespace jabber.protocol
             }
         }
 */
-
         /// <summary>
         /// Create an element of the appropriate type, based on the qname of the packet.
         /// </summary>

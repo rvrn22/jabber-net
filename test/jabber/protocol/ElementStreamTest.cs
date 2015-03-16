@@ -11,13 +11,13 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Xml;
 using System;
 using NUnit.Framework;
+
 using bedrock;
 using bedrock.util;
 using jabber.protocol;
@@ -39,9 +39,7 @@ namespace test.jabber.protocol
         /*
          * Try several ways to generate PartialTokenException.
          */
-
-        [Test]
-        public void Test_Partial()
+        [Test] public void Test_Partial()
         {
             fail = false;
             AsynchElementStream es = new AsynchElementStream();
@@ -52,7 +50,7 @@ namespace test.jabber.protocol
             es.Push(ENC.GetBytes("<te"));
 
             are.WaitOne(100, true);
-            Assert.IsTrue(!fail);
+            Assert.IsTrue(! fail);
 
             es.Push(ENC.GetBytes("st/>"));
             es.Push(ENC.GetBytes("<test>"));
@@ -70,15 +68,13 @@ namespace test.jabber.protocol
             es.Push(ENC.GetBytes("'bar'/>"));
             es.Push(ENC.GetBytes("<test foo='"));
             es.Push(ENC.GetBytes("bar'/>"));
-            es.Push(new byte[] {});
+            es.Push(new byte[] {} );
         }
 
         /*
          * What happens if we try to parse more than 4k of data at once?
          */
-
-        [Test]
-        public void Test_Large()
+        [Test] public void Test_Large()
         {
             AsynchElementStream es = new AsynchElementStream();
             // es.OnElement += new ProtocolHandler(jabOnElement);
@@ -86,7 +82,7 @@ namespace test.jabber.protocol
             es.Push(ENC.GetBytes("<stream>"));
             byte[] buf = ENC.GetBytes("<test/>");
             MemoryStream ms = new MemoryStream();
-            for (int i = 0; i < 1024; i++)
+            for (int i=0; i<1024; i++)
             {
                 ms.Write(buf, 0, buf.Length);
             }
@@ -100,8 +96,7 @@ namespace test.jabber.protocol
             AsynchElementStream es = new AsynchElementStream();
             es.OnElement += new ProtocolHandler(es_OnElement);
             es.Push(ENC.GetBytes("<stream>"));
-            string test =
-                "<presence from='xxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxx@myjabber.net' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxx@myjabber.net' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxx@jabber.org/Home' to='xxxxxx@jabber.org/Test'><priority>1</priority><c xmlns='http://jabber.org/protocol/caps' node='http://pidgin.im/caps' ver='2.3.1' ext='moodn nickn tunen avatar'/><x xmlns='vcard-temp:x:update'><photo>d206b82e4c1478ab033dacc55eacb1cfda7706c8</photo></x></presence><presence from='xxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cance";
+            string test = "<presence from='xxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxx@myjabber.net' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxx@myjabber.net' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxx@jabber.org/Home' to='xxxxxx@jabber.org/Test'><priority>1</priority><c xmlns='http://jabber.org/protocol/caps' node='http://pidgin.im/caps' ver='2.3.1' ext='moodn nickn tunen avatar'/><x xmlns='vcard-temp:x:update'><photo>d206b82e4c1478ab033dacc55eacb1cfda7706c8</photo></x></presence><presence from='xxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cancel'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence><presence from='xxxxxxxxx@aim.ijabber.com' to='xxxxxx@jabber.org/Test' type='error'><error code='404' type='cance";
             es.Push(ENC.GetBytes(test));
             test = "l'><remote-server-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/></error></presence>";
             es.Push(ENC.GetBytes(test));
@@ -143,14 +138,13 @@ namespace test.jabber.protocol
             Assert.IsTrue(! fail);
         }
 */
-
-        private void jabOnEnd(object s)
+        void jabOnEnd(object s)
         {
             fail = true;
             are.Set();
         }
 
-        private void jabOnElement(Object sender, System.Xml.XmlElement elem)
+        void jabOnElement(Object sender, System.Xml.XmlElement elem)
         {
             Console.WriteLine(elem.OuterXml);
             Assert.AreEqual("test", elem.Name);

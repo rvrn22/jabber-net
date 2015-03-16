@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using NUnit.Framework;
 using bedrock.collections;
 using bedrock.util;
@@ -27,25 +27,22 @@ namespace test.bedrock.collections
     [TestFixture]
     public class SkipListTest
     {
-        [ExpectedException(typeof (ArgumentNullException))]
-        [Test]
-        public void Test_Null_Key()
+        [ExpectedException(typeof(ArgumentNullException))]
+        [Test] public void Test_Null_Key()
         {
             SkipList sl = new SkipList();
             sl.Add(null, "one");
         }
 
-        [ExpectedException(typeof (ArgumentException))]
-        [Test]
-        public void Test_Key_Twice()
+        [ExpectedException(typeof(ArgumentException))]
+        [Test] public void Test_Key_Twice()
         {
             SkipList sl = new SkipList();
             sl.Add("one", "one");
             sl.Add("one", "one");
         }
 
-        [Test]
-        public void Test_Add()
+        [Test] public void Test_Add()
         {
             SkipList sl = new SkipList();
             Assert.AreEqual(0, sl.Count);
@@ -54,38 +51,32 @@ namespace test.bedrock.collections
             sl.Add("2", "baz");
             Assert.AreEqual(2, sl.Count);
         }
-
-        [Test]
-        public void Test_Get()
+        [Test] public void Test_Get()
         {
             SkipList sl = new SkipList();
             sl.Add("1", "bar");
             Assert.AreEqual("bar", sl["1"]);
         }
-
-        [Test]
-        public void Test_Lots_InOrder()
+        [Test] public void Test_Lots_InOrder()
         {
             SkipList sl = new SkipList();
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 sl[i] = i.ToString();
             }
             Assert.AreEqual(4096, sl.Count);
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 Assert.AreEqual(i.ToString(), sl[i]);
             }
         }
-
-        [Test]
-        public void Test_Lots_Random()
+        [Test] public void Test_Lots_Random()
         {
             SkipList sl = new SkipList();
             Random r = new Random();
             int[] nums = new int[4096];
 
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 nums[i] = r.Next(10000);
                 while (sl.Contains(nums[i]))
@@ -95,17 +86,15 @@ namespace test.bedrock.collections
                 sl[nums[i]] = i.ToString();
             }
             Assert.AreEqual(4096, sl.Count);
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 Assert.AreEqual(i.ToString(), sl[nums[i]]);
             }
         }
-
-        [Test]
-        public void Test_Iteration()
+        [Test] public void Test_Iteration()
         {
             SkipList sl = new SkipList();
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 sl[i] = i.ToString();
             }
@@ -120,11 +109,10 @@ namespace test.bedrock.collections
             Assert.AreEqual(4096, count);
         }
 
-        [Test]
-        public void Test_DictIteration()
+        [Test] public void Test_DictIteration()
         {
             SkipList sl = new SkipList();
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 sl[i] = i.ToString();
             }
@@ -140,8 +128,7 @@ namespace test.bedrock.collections
             Assert.AreEqual(4096, count);
         }
 
-        [Test]
-        public void Test_Remove()
+        [Test] public void Test_Remove()
         {
             SkipList sl = new SkipList();
             sl[0] = 0;
@@ -150,11 +137,10 @@ namespace test.bedrock.collections
             Assert.AreEqual(0, sl.Count);
         }
 
-        [Test]
-        public void Test_Clear()
+        [Test] public void Test_Clear()
         {
             SkipList sl = new SkipList();
-            for (int i = 0; i < 4096; i++)
+            for (int i=0; i<4096; i++)
             {
                 sl[i] = i.ToString();
             }

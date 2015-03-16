@@ -11,9 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol.client
@@ -28,28 +29,23 @@ namespace jabber.protocol.client
         /// Normal message
         /// </summary>
         normal = -1,
-
         /// <summary>
         /// Error message
         /// </summary>
         error,
-
         /// <summary>
         /// Chat (one-to-one) message
         /// </summary>
         chat,
-
         /// <summary>
         /// Groupchat
         /// </summary>
         groupchat,
-
         /// <summary>
         /// Headline
         /// </summary>
         headline
     }
-
     /// <summary>
     /// A client-to-client message.
     /// TODO: Some XHTML is supported by setting the .Html property,
@@ -66,7 +62,6 @@ namespace jabber.protocol.client
         {
             ID = NextID();
         }
-
         /// <summary>
         ///
         /// </summary>
@@ -74,7 +69,7 @@ namespace jabber.protocol.client
         /// <param name="qname"></param>
         /// <param name="doc"></param>
         public Message(string prefix, XmlQualifiedName qname, XmlDocument doc) :
-            base(qname.Name, doc) // Note:  *NOT* base(prefix, qname, doc), so that xpath matches are easier
+            base(qname.Name, doc)  // Note:  *NOT* base(prefix, qname, doc), so that xpath matches are easier
         {
         }
 
@@ -83,7 +78,7 @@ namespace jabber.protocol.client
         /// </summary>
         public MessageType Type
         {
-            get { return (MessageType) GetEnumAttr("type", typeof (MessageType)); }
+            get { return (MessageType) GetEnumAttr("type", typeof(MessageType)); }
             set
             {
                 if (value == MessageType.normal)
@@ -128,7 +123,7 @@ namespace jabber.protocol.client
                 XmlElement body = html["body", URI.XHTML];
                 if (body == null)
                 {
-                    body = this.OwnerDocument.CreateElement(null, "body", URI.XHTML);
+                    body =  this.OwnerDocument.CreateElement(null, "body", URI.XHTML);
                     html.AppendChild(body);
                 }
                 else
@@ -156,7 +151,6 @@ namespace jabber.protocol.client
             get { return GetElem("thread"); }
             set { SetElem("thread", value); }
         }
-
         /// <summary>
         /// The message subject
         /// </summary>
@@ -165,7 +159,6 @@ namespace jabber.protocol.client
             get { return GetElem("subject"); }
             set { SetElem("subject", value); }
         }
-
         /// <summary>
         /// The first x tag, regardless of namespace.
         /// </summary>

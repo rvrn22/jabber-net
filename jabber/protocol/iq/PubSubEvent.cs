@@ -11,9 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Xml;
+
 using bedrock.util;
 using jabber;
 using jabber.protocol;
@@ -133,14 +133,13 @@ namespace jabber.protocol.iq
             get { return GetChildElement<EventAssociate>(); }
             set { ReplaceChild<EventAssociate>(value); }
         }
-
         /// <summary>
         /// The node removed from the collection
         /// </summary>
         public EventDisassociate Disassociate
         {
             get { return GetChildElement<EventDisassociate>(); }
-            set { ReplaceChild<EventDisassociate>(value); }
+            set { ReplaceChild <EventDisassociate>(value); }
         }
     }
 

@@ -11,9 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -87,27 +88,22 @@ namespace jabber.protocol.iq
         /// No subscription state has been specified.
         /// </summary>
         UNSPECIFIED = -1,
-
         /// <summary>
         /// Subscription to this person.  They are a lurkee.
         /// </summary>
         to,
-
         /// <summary>
         /// Subscription from this person.  They are a lurker.
         /// </summary>
         from,
-
         /// <summary>
         /// subscriptions in both ways.
         /// </summary>
         both,
-
         /// <summary>
         /// No subscription yet.  Often an Ask on this item.
         /// </summary>
         none,
-
         /// <summary>
         /// Remove this subscription from the local roster.
         /// </summary>
@@ -124,12 +120,10 @@ namespace jabber.protocol.iq
         /// No Ask specified.
         /// </summary>
         NONE = -1,
-
         /// <summary>
         /// this entity is asking to subscribe to that contact's presence
         /// </summary>
         subscribe,
-
         /// <summary>
         /// this entity is asking unsubscribe from that contact's presence
         /// </summary>

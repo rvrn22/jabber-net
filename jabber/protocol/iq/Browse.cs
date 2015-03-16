@@ -11,11 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -134,7 +135,7 @@ namespace jabber.protocol.iq
         {
             XmlNodeList nl = GetElementsByTagName("ns", URI.BROWSE);
             string[] items = new string[nl.Count];
-            int i = 0;
+            int i=0;
             foreach (XmlNode n in nl)
             {
                 items[i] = n.InnerText;

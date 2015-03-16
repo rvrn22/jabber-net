@@ -11,10 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
 using NUnit.Framework;
+
 using bedrock.util;
 using jabber;
 using jabber.protocol;
@@ -29,23 +30,18 @@ namespace test.jabber.protocol.iq
     [TestFixture]
     public class RegisterTest
     {
-        private XmlDocument doc = new XmlDocument();
-
+        XmlDocument doc = new XmlDocument();
         [SetUp]
         public void SetUp()
         {
             Element.ResetID();
         }
-
-        [Test]
-        public void Test_Create()
+        [Test] public void Test_Create()
         {
             Register r = new Register(doc);
             Assert.AreEqual("<query xmlns=\"jabber:iq:register\" />", r.ToString());
         }
-
-        [Test]
-        public void Test_Registered()
+        [Test] public void Test_Registered()
         {
             Register r = new Register(doc);
             r.Registered = true;

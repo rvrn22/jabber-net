@@ -16,6 +16,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using jabber.connection;
+
 using bedrock.util;
 
 namespace Example
@@ -137,6 +138,7 @@ namespace Example
             this.Name = "PubSubDisplay";
             this.Size = new System.Drawing.Size(359, 170);
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -147,7 +149,7 @@ namespace Example
             if (lbID.SelectedIndex == -1)
                 return;
             // TODO: XML2RTF
-            rtItem.Text = m_node[(string) lbID.SelectedItem].OuterXml;
+            rtItem.Text = m_node[(string)lbID.SelectedItem].OuterXml;
         }
     }
 }

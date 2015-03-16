@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 
 namespace stringprep.unicode
@@ -41,12 +41,10 @@ namespace stringprep.unicode
         private class CharArrayComparer : IComparer
         {
             #region IComparer Members
-
             public int Compare(object x, object y)
             {
-                return ((char[]) x)[0].CompareTo(y);
+                return ((char[])x)[0].CompareTo(y);
             }
-
             #endregion
         }
     }

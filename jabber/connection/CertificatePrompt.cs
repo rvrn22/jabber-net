@@ -12,21 +12,20 @@
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
 
-
 #if !__MonoCS__
-#define UI_OK
+    #define UI_OK
 #endif
 
 namespace jabber.connection
 {
     using System;
     using bedrock.util;
+
 #if UI_OK
     using System.Security.Cryptography.X509Certificates;
     using System.Net.Security;
     using System.Windows.Forms;
     using System.Drawing;
-
 #endif
 
     /// <summary>
@@ -44,7 +43,6 @@ namespace jabber.connection
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
         private Label lblSubject;
         private Label lblBegin;
         private Label lblEnd;
@@ -156,7 +154,7 @@ namespace jabber.connection
             //
             // btnCancel
             //
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(413, 9);
             this.btnCancel.Name = "btnCancel";
@@ -167,7 +165,7 @@ namespace jabber.connection
             //
             // btnAllow
             //
-            this.btnAllow.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAllow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAllow.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnAllow.Location = new System.Drawing.Point(332, 9);
             this.btnAllow.Name = "btnAllow";
@@ -232,10 +230,11 @@ namespace jabber.connection
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
-
 #endif
+
     }
 }

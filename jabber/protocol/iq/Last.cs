@@ -11,9 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -25,7 +26,6 @@ namespace jabber.protocol.iq
      *    </query>
      *  </iq>
      */
-
     /// <summary>
     /// IQ packet with an Last query element inside.
     /// </summary>
@@ -80,7 +80,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public int Seconds
         {
-            get { return GetIntAttr("seconds"); }
+            get { return GetIntAttr("seconds");}
             set { SetAttribute("seconds", value.ToString()); }
         }
     }

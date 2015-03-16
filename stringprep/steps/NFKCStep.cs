@@ -18,7 +18,6 @@
  *
  * Look over here.  Something shiny!
  */
-
 using System;
 using System.Text;
 using stringprep.unicode;
@@ -70,7 +69,7 @@ namespace stringprep.steps
             string ex;
 
             // Decompose
-            for (int i = 0; i < result.Length; i++)
+            for (int i=0; i< result.Length; i++)
             {
                 ex = Decompose.Find(result[i]);
                 if (ex == null)
@@ -80,7 +79,7 @@ namespace stringprep.steps
                 len = ex.Length - 1;
                 if (len > 0)
                 {
-                    result.Insert(i + 1, ex.ToCharArray(1, ex.Length - 1));
+                    result.Insert(i+1, ex.ToCharArray(1, ex.Length-1));
                     i += len;
                 }
             }
@@ -149,7 +148,7 @@ namespace stringprep.steps
             char c;
             int last_start = 0;
 
-            for (int i = 0; i < result.Length; i++)
+            for (int i=0; i<result.Length; i++)
             {
                 cc = Combining.Class(result[i]);
                 if ((i > 0) &&

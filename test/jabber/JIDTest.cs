@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using bedrock.util;
 using NUnit.Framework;
 using je = jabber.JIDFormatException;
@@ -27,8 +27,7 @@ namespace test.jabber
     [TestFixture]
     public class JIDTest
     {
-        [Test]
-        public void Test_Create()
+        [Test] public void Test_Create()
         {
             JID j = new JID("foo", "jabber.com", "there");
             Assert.AreEqual("foo@jabber.com/there", j.ToString());
@@ -39,108 +38,84 @@ namespace test.jabber
             j = new JID(null, "jabber.com", "there");
             Assert.AreEqual("jabber.com/there", j.ToString());
         }
-
-        [Test]
-        public void Test_Parse_1()
+        [Test] public void Test_Parse_1()
         {
             JID j = new JID("foo");
             Assert.AreEqual(null, j.User);
             Assert.AreEqual("foo", j.Server);
             Assert.AreEqual(null, j.Resource);
         }
-
-        [Test]
-        public void Test_Parse_2()
+        [Test] public void Test_Parse_2()
         {
             JID j = new JID("foo/bar");
             Assert.AreEqual(null, j.User);
             Assert.AreEqual("foo", j.Server);
             Assert.AreEqual("bar", j.Resource);
         }
-
-        [Test]
-        public void Test_Parse_3()
+        [Test] public void Test_Parse_3()
         {
             JID j = new JID("boo@foo");
             Assert.AreEqual("boo", j.User);
             Assert.AreEqual("foo", j.Server);
             Assert.AreEqual(null, j.Resource);
         }
-
-        [Test]
-        public void Test_Parse_4()
+        [Test] public void Test_Parse_4()
         {
             JID j = new JID("boo@foo/bar");
             Assert.AreEqual("boo", j.User);
             Assert.AreEqual("foo", j.Server);
             Assert.AreEqual("bar", j.Resource);
         }
-
-        [Test]
-        public void Test_Parse_5()
+        [Test] public void Test_Parse_5()
         {
             JID j = new JID("foo/bar@baz");
             Assert.AreEqual(null, j.User);
             Assert.AreEqual("foo", j.Server);
             Assert.AreEqual("bar@baz", j.Resource);
         }
-
-        [Test]
-        public void Test_Parse_6()
+        [Test] public void Test_Parse_6()
         {
             JID j = new JID("boo@foo/bar@baz");
             Assert.AreEqual("boo", j.User);
             Assert.AreEqual("foo", j.Server);
             Assert.AreEqual("bar@baz", j.Resource);
         }
-
-        [Test]
-        public void Test_Parse_7()
+        [Test] public void Test_Parse_7()
         {
             JID j = new JID("boo@foo/bar/baz");
             Assert.AreEqual("boo", j.User);
             Assert.AreEqual("foo", j.Server);
             Assert.AreEqual("bar/baz", j.Resource);
         }
-
-        [Test]
-        public void Test_Parse_8()
+        [Test] public void Test_Parse_8()
         {
             JID j = new JID("boo/foo@bar@baz");
             Assert.AreEqual(null, j.User);
             Assert.AreEqual("boo", j.Server);
             Assert.AreEqual("foo@bar@baz", j.Resource);
         }
-
-        [Test]
-        public void Test_Parse_9()
+        [Test] public void Test_Parse_9()
         {
             JID j = new JID("boo/foo@bar");
             Assert.AreEqual(null, j.User);
             Assert.AreEqual("boo", j.Server);
             Assert.AreEqual("foo@bar", j.Resource);
         }
-
-        [Test]
-        public void Test_Parse_10()
+        [Test] public void Test_Parse_10()
         {
             JID j = new JID("boo/foo/bar");
             Assert.AreEqual(null, j.User);
             Assert.AreEqual("boo", j.Server);
             Assert.AreEqual("foo/bar", j.Resource);
         }
-
-        [Test]
-        public void Test_Parse_11()
+        [Test] public void Test_Parse_11()
         {
             JID j = new JID("boo//foo");
             Assert.AreEqual(null, j.User);
             Assert.AreEqual("boo", j.Server);
             Assert.AreEqual("/foo", j.Resource);
         }
-
-        [Test]
-        public void Test_EmptyResource()
+        [Test] public void Test_EmptyResource()
         {
             try
             {
@@ -157,9 +132,7 @@ namespace test.jabber
                 Assert.IsTrue(false);
             }
         }
-
-        [Test]
-        public void Test_EmptyResourceUser()
+        [Test] public void Test_EmptyResourceUser()
         {
             try
             {
@@ -177,8 +150,7 @@ namespace test.jabber
             }
         }
 
-        [Test]
-        public void Test_NoHost()
+        [Test] public void Test_NoHost()
         {
             try
             {
@@ -195,9 +167,7 @@ namespace test.jabber
                 Assert.IsTrue(false);
             }
         }
-
-        [Test]
-        public void Test_AtAt()
+        [Test] public void Test_AtAt()
         {
             try
             {
@@ -214,9 +184,7 @@ namespace test.jabber
                 Assert.IsTrue(false);
             }
         }
-
-        [Test]
-        public void Test_TwoAt()
+        [Test] public void Test_TwoAt()
         {
             try
             {
@@ -233,9 +201,7 @@ namespace test.jabber
                 Assert.IsTrue(false);
             }
         }
-
-        [Test]
-        public void Test_Compare_Equal()
+        [Test] public void Test_Compare_Equal()
         {
             JID j = new JID("foo@bar/baz");
             Assert.AreEqual(0, j.CompareTo(j));
@@ -257,9 +223,7 @@ namespace test.jabber
             Assert.AreEqual(true, j >= new JID("foo/bar"));
             Assert.AreEqual(true, j <= new JID("foo/bar"));
         }
-
-        [Test]
-        public void Test_Compare_Less()
+        [Test] public void Test_Compare_Less()
         {
             JID j = new JID("foo@bar/baz");
             Assert.AreEqual(-1, j.CompareTo(new JID("foo@bas/baz")));
@@ -280,9 +244,7 @@ namespace test.jabber
             Assert.AreEqual(true, j < new JID("foo@bar/baz"));
             Assert.AreEqual(true, j <= new JID("foo@bar/baz"));
         }
-
-        [Test]
-        public void Test_Compare_Greater()
+        [Test] public void Test_Compare_Greater()
         {
             JID j = new JID("foo@bar/baz");
             Assert.AreEqual(1, j.CompareTo(new JID("foo@bap/baz")));
@@ -300,9 +262,7 @@ namespace test.jabber
             Assert.AreEqual(true, j >= new JID("foo@bap/baz"));
             // /me runs out of interest.
         }
-
-        [Test]
-        public void Test_BadCompare()
+        [Test] public void Test_BadCompare()
         {
             try
             {
@@ -319,9 +279,7 @@ namespace test.jabber
                 Assert.IsTrue(false);
             }
         }
-
-        [Test]
-        public void Test_Insensitive()
+        [Test] public void Test_Insensitive()
         {
             JID j = new JID("foo@boo/bar");
             Assert.AreEqual(0, j.CompareTo(new JID("foo@BOO/bar")));
@@ -330,8 +288,7 @@ namespace test.jabber
             Assert.AreEqual(-1, j.CompareTo(new JID("FOO@BOO/BAR")));
         }
 
-        [Test]
-        public void Test_Config()
+        [Test] public void Test_Config()
         {
             JID j = new JID("config@-internal");
             Assert.AreEqual("config", j.User);
@@ -339,8 +296,7 @@ namespace test.jabber
             Assert.AreEqual(null, j.Resource);
         }
 
-        [Test]
-        public void Test_Numeric()
+        [Test] public void Test_Numeric()
         {
             JID j = new JID("support", "conference.192.168.32.109", "bob");
             Assert.AreEqual("conference.192.168.32.109", j.Server);

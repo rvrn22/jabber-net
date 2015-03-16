@@ -11,11 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Xml;
+
 using jabber;
 using jabber.protocol;
+
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -27,7 +28,7 @@ namespace jabber.protocol.iq
     /// </summary>
     [SVN(@"$Id$")]
     public class ClosedNode : Element
-    {
+	{
         /// <summary>
         /// Create for outbound.
         /// </summary>
@@ -47,7 +48,7 @@ namespace jabber.protocol.iq
             : base(prefix, qname, doc)
         {
         }
-    }
+	}
 
     /// <summary>
     /// The node must be configured.
@@ -75,7 +76,6 @@ namespace jabber.protocol.iq
         {
         }
     }
-
     /// <summary>
     /// An invalid JID was specified
     /// </summary>
@@ -143,6 +143,7 @@ namespace jabber.protocol.iq
         public InvalidPayload(XmlDocument doc)
             : base("invalid-payload", URI.PUBSUB_ERRORS, doc)
         {
+            
         }
 
         /// <summary>
@@ -347,7 +348,6 @@ namespace jabber.protocol.iq
         {
         }
     }
-
     /// <summary>
     /// Not allowed to subscribe, because you aren't in one of the correct roster
     /// groups of the publisher.
@@ -456,7 +456,6 @@ namespace jabber.protocol.iq
         {
         }
     }
-
     /// <summary>
     /// The subscription is pending.
     /// </summary>
@@ -537,7 +536,7 @@ namespace jabber.protocol.iq
         {
         }
     }
-
+    
     /// <summary>
     /// Supported features
     /// </summary>
@@ -549,207 +548,166 @@ namespace jabber.protocol.iq
         /// None specified
         /// </summary>
         UNSPECIFIED = -1,
-
         /// <summary>
         /// Access authorizations
         /// </summary>
         access_authorize,
-
         /// <summary>
         /// Open Access
         /// </summary>
         access_open,
-
         /// <summary>
         /// Presence-based access control
         /// </summary>
         access_presence,
-
         /// <summary>
         /// Roster-based access control
         /// </summary>
         access_roster,
-
         /// <summary>
         /// Whitelist-based access control
         /// </summary>
         access_whitelist,
-
         /// <summary>
         /// Auto-creation of nodes
         /// </summary>
         auto_create,
-
         /// <summary>
         /// Auto-subscription to nodes
         /// </summary>
         auto_subscribe,
-
         /// <summary>
         /// Collection support
         /// </summary>
         collections,
-
         /// <summary>
         /// Configuration
         /// </summary>
         config_node,
-
         /// <summary>
         /// Create and configure atomically
         /// </summary>
         create_and_configure,
-
         /// <summary>
         /// Node creation
         /// </summary>
         create_nodes,
-
         /// <summary>
         /// Delete items
         /// </summary>
         delete_any,
-
         /// <summary>
         /// Delete nodes
         /// </summary>
         delete_nodes,
-
         /// <summary>
         /// Notify on some criteria, only
         /// </summary>
         filtered_notifications,
-
         /// <summary>
         /// Process pending subscription requests
         /// </summary>
         get_pending,
-
         /// <summary>
         /// The server can create unused node names
         /// </summary>
         instant_nodes,
-
         /// <summary>
         /// Items have IDs
         /// </summary>
         item_ids,
-
         /// <summary>
         /// Geting the last published item
         /// </summary>
         last_published,
-
         /// <summary>
         /// Time-based subscriptions are supported.
         /// </summary>
         leased_subscription,
-
         /// <summary>
         /// Node owners may manage subscriptions
         /// </summary>
         manage_subscriptions,
-
         /// <summary>
         /// The member affiliation is supported
         /// </summary>
         member_affiliation,
-
         /// <summary>
         /// Node meta-data is supported.
         /// </summary>
         meta_data,
-
         /// <summary>
         /// Node owners may modify affiliations.
         /// </summary>
         modify_affiliations,
-
         /// <summary>
         /// A single leaf node may be associated with multiple collections
         /// </summary>
         multi_collection,
-
         /// <summary>
         /// A single entity may subscribe to a node multiple times.
         /// </summary>
         multi_subscribe,
-
         /// <summary>
         /// The outcast affiliation is supported
         /// </summary>
         outcast_affiliation,
-
         /// <summary>
         /// Persistent items are supported.
         /// </summary>
         persistent_items,
-
         /// <summary>
         /// Presence-based delivery of event notifications is supported
         /// </summary>
         presence_notifications,
-
         /// <summary>
         /// Authorized contacts are automatically subscribed to a user's virtual pubsub service.
         /// </summary>
         presence_subscribe,
-
         /// <summary>
         /// Publishing items is supported (note: not valid for collection nodes).
         /// </summary>
         publish,
-
         /// <summary>
         /// Publishing an item with options is supported.
         /// </summary>
         publish_options,
-
         /// <summary>
         /// The publisher affiliation is supported.
         /// </summary>
         publisher_affiliation,
-
         /// <summary>
         /// Purging of nodes is supported.
         /// </summary>
         purge_nodes,
-
         /// <summary>
         /// Item retraction is supported.
         /// </summary>
         retract_items,
-
         /// <summary>
         /// Retrieval of current affiliations is supported.
         /// </summary>
         retrieve_affiliations,
-
         /// <summary>
         /// Retrieval of default node configuration is supported.
         /// </summary>
         retrieve_default,
-
         /// <summary>
         /// Item retrieval is supported.
         /// </summary>
         retrieve_items,
-
         /// <summary>
         /// Retrieval of current subscriptions is supported.
         /// </summary>
         retrieve_subscriptions,
-
         /// <summary>
         /// Subscribing and unsubscribing are supported.
         /// </summary>
         subscribe,
-
         /// <summary>
         /// Configuration of subscription options is supported.
         /// </summary>
         subscription_options,
-
         /// <summary>
         /// Notification of subscription state changes is supported.
         /// </summary>

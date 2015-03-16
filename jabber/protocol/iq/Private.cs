@@ -11,10 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Diagnostics;
 using System.Xml;
+
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -47,7 +47,7 @@ namespace jabber.protocol.iq
         /// Create for outbound
         /// </summary>
         /// <param name="doc"></param>
-        public Private(XmlDocument doc) :
+        public Private(XmlDocument doc) : 
             base("query", URI.PRIVATE, doc)
         {
         }

@@ -11,14 +11,16 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System.Xml;
+
 using bedrock.util;
+
 using jabber;
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Interfaces;
@@ -104,7 +106,7 @@ namespace test.jabber.connection
                 DiscoManager newDm = new DiscoManager();
                 newDm.Stream = stream;
 
-                onAuth.Raise(new object[] {null});
+                onAuth.Raise(new object[] { null });
 
                 if (sentIq != null)
                 {
@@ -207,7 +209,7 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<iq id=\"{0}\" type=\"get\" to=\"{1}\">" +
-                    "<query xmlns=\"{2}\"/>" +
+                      "<query xmlns=\"{2}\"/>" +
                     "</iq>",
                     id, jid, URI.DISCO_INFO);
         }
@@ -217,7 +219,7 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<iq id=\"{0}\" type=\"get\" to=\"{1}\">" +
-                    "<query xmlns=\"{2}\"/>" +
+                      "<query xmlns=\"{2}\"/>" +
                     "</iq>",
                     id, jid, URI.DISCO_ITEMS);
         }
@@ -227,7 +229,7 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<iq id=\"{0}\" type=\"get\" to=\"{1}\">" +
-                    "<query node=\"{2}\" xmlns=\"{3}\" />" +
+                      "<query node=\"{2}\" xmlns=\"{3}\" />" +
                     "</iq>",
                     id, jid, NODE, URI.DISCO_INFO);
         }
@@ -237,13 +239,12 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<iq id=\"{0}\" type=\"get\" to=\"{1}\">" +
-                    "<query node=\"{2}\" xmlns=\"{3}\"/>" +
+                      "<query node=\"{2}\" xmlns=\"{3}\"/>" +
                     "</iq>",
                     id, jid, NODE, URI.DISCO_ITEMS);
         }
 
         private delegate T Func<A0, A1, A2, T>(A0 arg0, A1 arg1, A2 arg2);
-
         private void SetupTrackerBeginIq(Func<IQ, IqCB, object, bool> func)
         {
             Expect.Call(stream.Tracker).Return(tracker);

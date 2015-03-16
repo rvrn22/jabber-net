@@ -11,7 +11,6 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -20,7 +19,6 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-
 [assembly: AssemblyTitle("ConsoleClient")]
 [assembly: AssemblyDescription("Jabber-net console client example")]
 [assembly: AssemblyConfiguration("")]
@@ -68,7 +66,6 @@ using System.Runtime.CompilerServices;
 //   (*) Delay Signing is an advanced option - see the Microsoft .NET Framework
 //       documentation for more information on this.
 //
-
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]

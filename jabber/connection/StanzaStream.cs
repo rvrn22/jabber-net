@@ -11,11 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
 using System.Diagnostics;
 using System.Text;
 using System.Xml;
+
 using bedrock.net;
 using bedrock.util;
 using jabber.protocol;
@@ -32,12 +32,10 @@ namespace jabber.connection
         /// Uses "Normal" XMPP socket
         /// </summary>
         Socket,
-
         /// <summary>
         /// Uses HTTP Polling, as in http://www.xmpp.org/extensions/xep-0025.html
         /// </summary>
         HTTP_Polling,
-
         /// <summary>
         /// Uses HTTP Binding, as in http://www.xmpp.org/extensions/xep-0124.html
         /// </summary>
@@ -55,7 +53,11 @@ namespace jabber.connection
         /// </summary>
         /// <param name="prop">Property name.  Look at the Options class for some ideas.</param>
         /// <returns></returns>
-        object this[string prop] { get; set; }
+        object this[string prop]
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Notifies the user that one of the properties has changed.
@@ -171,14 +173,14 @@ namespace jabber.connection
         {
             switch (kind)
             {
-                case ConnectionType.Socket:
-                    return new SocketStanzaStream(listener);
-                case ConnectionType.HTTP_Polling:
-                    return new PollingStanzaStream(listener);
-                case ConnectionType.HTTP_Binding:
-                    return new BindingStanzaStream(listener);
-                default:
-                    throw new NotImplementedException("Proxy type not implemented yet: " + kind.ToString());
+            case ConnectionType.Socket:
+                return new SocketStanzaStream(listener);
+            case ConnectionType.HTTP_Polling:
+                return new PollingStanzaStream(listener);
+            case ConnectionType.HTTP_Binding:
+                return new BindingStanzaStream(listener);
+            default:
+                throw new NotImplementedException("Proxy type not implemented yet: " + kind.ToString());
             }
         }
 
@@ -195,12 +197,12 @@ namespace jabber.connection
         /// <summary>
         /// Starts the outbound connection to the XMPP server.
         /// </summary>
-        public abstract void Connect();
+        abstract public void Connect();
 
         /// <summary>
         /// Listens for an inbound connection.  Only implemented by socket types for now.
         /// </summary>
-        public virtual void Accept()
+        virtual public void Accept()
         {
             throw new NotImplementedException("Accept not implemented on this stream type");
         }
@@ -208,7 +210,7 @@ namespace jabber.connection
         /// <summary>
         /// Determines whether or not the client can call the Accept() method.
         /// </summary>
-        public virtual bool Acceptable
+        virtual public bool Acceptable
         {
             get { return false; }
         }
@@ -216,7 +218,7 @@ namespace jabber.connection
         /// <summary>
         /// Starts the TLS handshake.
         /// </summary>
-        public virtual void StartTLS()
+        virtual public void StartTLS()
         {
             throw new NotImplementedException("Start-TLS not implemented on this stream type");
         }
@@ -224,7 +226,7 @@ namespace jabber.connection
         /// <summary>
         /// Starts the compression on the connection.
         /// </summary>
-        public virtual void StartCompression()
+        virtual public void StartCompression()
         {
             throw new NotImplementedException("Start-TLS not implemented on this stream type");
         }
@@ -232,7 +234,7 @@ namespace jabber.connection
         /// <summary>
         /// Initializes a new stream:stream.
         /// </summary>
-        public virtual void InitializeStream()
+        virtual public void InitializeStream()
         {
         }
 
@@ -242,35 +244,38 @@ namespace jabber.connection
         /// but may pull out pertinent data.
         /// </summary>
         /// <param name="stream">Stream containing the start tag.</param>
-        public abstract void WriteStartTag(jabber.protocol.stream.Stream stream);
+        abstract public void WriteStartTag(jabber.protocol.stream.Stream stream);
 
         /// <summary>
         /// Writes an entire XML element.
         /// </summary>
         /// <param name="elem">XML element to write out.</param>
-        public abstract void Write(XmlElement elem);
+        abstract public void Write(XmlElement elem);
 
         /// <summary>
         /// Writes a raw string.
         /// </summary>
         /// <param name="str">String to write out.</param>
-        public abstract void Write(string str);
+        abstract public void Write(string str);
 
         /// <summary>
         /// Closes the session with the XMPP server.
         /// </summary>
         /// <param name="clean">If true, send the stream:stream close packet.</param>
-        public abstract void Close(bool clean);
+        abstract public void Close(bool clean);
 
         /// <summary>
         /// Determines whether or not the client is connected to the XMPP server.
         /// </summary>
-        public abstract bool Connected { get; }
+        abstract public bool Connected
+        {
+            get;
+        }
 
         /// <summary>
         /// Determines whether or not Jabber-Net supports TLS.
         /// </summary>
-        public virtual bool SupportsTLS
+        virtual public bool SupportsTLS
         {
             get { return false; }
         }
@@ -278,7 +283,7 @@ namespace jabber.connection
         /// <summary>
         /// Determines whether or not this stream supports compression (XEP-0138).
         /// </summary>
-        public virtual bool SupportsCompression
+        virtual public bool SupportsCompression
         {
             get { return false; }
         }

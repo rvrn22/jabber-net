@@ -11,10 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System;
+
 using System.Collections;
 using System.Diagnostics;
+
 using bedrock.util;
 
 namespace bedrock.collections
@@ -46,12 +47,12 @@ namespace bedrock.collections
         /// </summary>
         private const int DEFAULT_MAX_LEVEL = 6;
 
-        private float m_probability;
-        private int m_max_level = DEFAULT_MAX_LEVEL;
+        private float        m_probability;
+        private int          m_max_level = DEFAULT_MAX_LEVEL;
         private SkipListNode m_header;
-        private Random m_rand = new Random();
-        private IComparer m_comparator = System.Collections.Comparer.Default;
-        private int m_count = 0;
+        private Random       m_rand = new Random();
+        private IComparer    m_comparator = System.Collections.Comparer.Default;
+        private int          m_count = 0;
 
         /// <summary>
         /// Creates a skiplist with the default probability (0.25).
@@ -105,7 +106,7 @@ namespace bedrock.collections
             SkipListNode n = m_header;
             SkipListNode next;
 
-            for (int i = m_header.Level - 1; i >= 0; i--)
+            for (int i=m_header.Level-1; i>=0; i--)
             {
                 next = n[i];
                 while ((next != null) &&
@@ -119,14 +120,12 @@ namespace bedrock.collections
             if ((n.Level > 0) &&
                 (n[0] != null) &&
                 (m_comparator.Compare(n[0].Key, key) == 0))
-            {
-                // already here
+            { // already here
                 //n.Value = val;
                 throw new ArgumentException("Can't add the same key twice", "key");
             }
             else
-            {
-                // need to insert
+            { // need to insert
                 int level = RandomLevel();
                 int s = m_header.Level;
                 if (level > s)
@@ -134,14 +133,14 @@ namespace bedrock.collections
                     // this shouldn't happen any more.
                     //Debug.Assert(false);
                     m_header.Level = level;
-                    for (int i = s; i < level; i++)
+                    for (int i=s; i<level; i++)
                     {
                         update[i] = m_header;
                     }
                 }
 
                 n = new SkipListNode(level, key, val);
-                for (int i = 0; i < level; i++)
+                for (int i=0; i<level; i++)
                 {
                     n[i] = update[i][i];
                     update[i][i] = n;
@@ -172,7 +171,10 @@ namespace bedrock.collections
                     return null;
                 return n.Value;
             }
-            set { Add(key, value); }
+            set
+            {
+                Add(key, value);
+            }
         }
 
         /// <summary>
@@ -197,7 +199,7 @@ namespace bedrock.collections
             SkipListNode n = m_header;
             SkipListNode next;
 
-            for (int i = m_header.Level - 1; i >= 0; i--)
+            for (int i=m_header.Level-1; i>=0; i--)
             {
                 next = n[i];
                 while ((next != null) &&
@@ -214,12 +216,11 @@ namespace bedrock.collections
             n = n[0];
             if ((n == null) ||
                 (m_comparator.Compare(n.Key, key) != 0))
-            {
-                // not found
-                return; // or assert
+            { // not found
+                return;  // or assert
             }
 
-            for (int i = 0; i < m_header.Level; i++)
+            for (int i=0; i<m_header.Level; i++)
             {
                 if (update[i][i] != n)
                     break;
@@ -234,7 +235,10 @@ namespace bedrock.collections
         /// </summary>
         public bool IsFixedSize
         {
-            get { return false; }
+            get
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -242,7 +246,10 @@ namespace bedrock.collections
         /// </summary>
         public bool IsReadOnly
         {
-            get { return false; }
+            get
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -285,7 +292,6 @@ namespace bedrock.collections
         }
 
         #region IEnumerable
-
         /// <summary>
         /// Iterate over the list
         /// </summary>
@@ -294,7 +300,6 @@ namespace bedrock.collections
         {
             return new SkipListEnumerator(this);
         }
-
         #endregion
 
         /// <summary>
@@ -327,7 +332,10 @@ namespace bedrock.collections
         /// </summary>
         public bool IsSynchronized
         {
-            get { return false; }
+            get
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -336,7 +344,10 @@ namespace bedrock.collections
         /// <exception cref="NotImplementedException">Currently this Property is not implemented.</exception>
         public object SyncRoot
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private SkipListNode GetNode(object key)
@@ -350,11 +361,11 @@ namespace bedrock.collections
             SkipListNode n = m_header;
             SkipListNode next;
 
-            for (int i = m_header.Level - 1; i >= 0; i--)
+            for(int i=m_header.Level-1; i>=0; i--)
             {
                 next = n[i];
-                while ((next != null) &&
-                       (m_comparator.Compare(next.Key, key) < 0))
+                while((next != null) &&
+                    (m_comparator.Compare(next.Key, key) < 0))
                 {
                     n = next;
                     next = n[i];
@@ -364,7 +375,7 @@ namespace bedrock.collections
             // n should always be level > 0, now.
             n = n[0];
 
-            if ((n != null) && (m_comparator.Compare(n.Key, key) == 0))
+            if( (n != null) && (m_comparator.Compare(n.Key, key) == 0))
                 return n;
             else
                 return null;
@@ -373,7 +384,7 @@ namespace bedrock.collections
         private int RandomLevel()
         {
             int level = 1;
-            while ((level < m_max_level - 1) && (m_rand.NextDouble() < m_probability))
+            while ((level < m_max_level-1) && (m_rand.NextDouble() < m_probability))
             {
                 level++;
             }
@@ -393,10 +404,10 @@ namespace bedrock.collections
 
             public SkipListNode(int level, object key, object val)
             {
-                m_next = new SkipListNode[level];
-                for (int i = 0; i < level; i++)
+                m_next  = new SkipListNode[level];
+                for (int i=0; i<level; i++)
                     m_next[i] = null;
-                m_key = key;
+                m_key   = key;
                 m_value = val;
             }
 
@@ -414,7 +425,7 @@ namespace bedrock.collections
                     Debug.Assert(value > m_next.Length);
                     SkipListNode[] n = new SkipListNode[value];
                     Array.Copy(m_next, 0, n, 0, m_next.Length);
-                    for (int i = m_next.Length; i < value; i++)
+                    for (int i=m_next.Length; i<value; i++)
                     {
                         n[i] = null;
                     }
@@ -448,7 +459,7 @@ namespace bedrock.collections
 
         private class SkipListEnumerator : IDictionaryEnumerator
         {
-            private SkipList m_list;
+            private SkipList     m_list;
             private SkipListNode m_node;
 
             public SkipListEnumerator(SkipList list)
@@ -482,17 +493,26 @@ namespace bedrock.collections
 
             public System.Collections.DictionaryEntry Entry
             {
-                get { return new System.Collections.DictionaryEntry(m_node.Key, m_node.Value); }
+                get
+                {
+                    return new System.Collections.DictionaryEntry(m_node.Key, m_node.Value);
+                }
             }
 
             public object Key
             {
-                get { return m_node.Key; }
+                get
+                {
+                    return m_node.Key;
+                }
             }
 
             public object Value
             {
-                get { return m_node.Value; }
+                get
+                {
+                    return m_node.Value;
+                }
             }
         }
     }

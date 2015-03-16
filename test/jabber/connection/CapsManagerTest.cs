@@ -11,9 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-
 using System.Xml;
+
 using bedrock.util;
+
 using jabber;
 using jabber.client;
 using jabber.connection;
@@ -21,6 +22,7 @@ using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
 using jabber.protocol.x;
+
 using NUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Interfaces;
@@ -38,9 +40,9 @@ namespace test.jabber.connection
 
         private readonly JID TO_JID = new JID("user1@test.com");
         private readonly JID FROM_JID = new JID("user2@test.com");
-
+        
         private const string TEST_ID = "TEST_ID";
-
+        
         private const string NODE = "http://jm.jabber.com/caps";
         private const int PRIORITY = 2;
         private const string STATUS = "Ready to Chat";
@@ -72,7 +74,7 @@ namespace test.jabber.connection
                 cm.Node = NODE;
 
                 Presence packet = CreatePresencePacket();
-                presHandler.Raise(new object[] {null, packet});
+                presHandler.Raise(new object[] { null, packet });
 
                 string original = packet.OuterXml.Replace(" ", "");
                 string comparison = GetPresenceWithCaps(cm.Ver).Replace(" ", "");
@@ -94,14 +96,14 @@ namespace test.jabber.connection
                 iqEvent = LastCall.IgnoreArguments().GetEventRaiser();
 
                 Expect.Call(stream.Document).Return(doc);
-                stream.Write((XmlElement) null);
+                stream.Write((XmlElement)null);
                 LastCall.Callback((Func<XmlElement, bool>)
                     delegate(XmlElement arg0)
-                    {
-                        string original = arg0.OuterXml.Replace(" ", "");
-                        string comparison = GetIQResponse(nodever).Replace(" ", "");
-                        return original == comparison;
-                    });
+                        {
+                            string original = arg0.OuterXml.Replace(" ", "");
+                            string comparison = GetIQResponse(nodever).Replace(" ", "");
+                            return original == comparison;
+                        });
             }
 
             using (mocks.Playback())
@@ -112,7 +114,7 @@ namespace test.jabber.connection
 
                 nodever = cm.NodeVer;
 
-                iqEvent.Raise(new object[] {null, CreateIqRequest()});
+                iqEvent.Raise(new object[] { null, CreateIqRequest() });
             }
         }
 
@@ -121,7 +123,7 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<iq id=\"{0}\" type=\"result\" from=\"{1}\" to=\"{2}\">" +
-                    "<query xmlns=\"{3}\" node=\"{4}\"/>" +
+                      "<query xmlns=\"{3}\" node=\"{4}\"/>" +
                     "</iq>",
                     TEST_ID, TO_JID, FROM_JID, URI.DISCO_INFO, nodever);
         }
@@ -146,12 +148,12 @@ namespace test.jabber.connection
             return
                 string.Format(
                     "<presence>" +
-                    "<priority>{0}</priority>" +
-                    "<status>{1}</status>" +
-                    "<c ver=\"{2}\"" +
-                    "node=\"{3}\"" +
-                    "hash=\"sha-1\"" +
-                    "xmlns=\"{4}\"/>" +
+                      "<priority>{0}</priority>" +
+                      "<status>{1}</status>" +
+                      "<c ver=\"{2}\"" +
+                         "node=\"{3}\"" +
+                         "hash=\"sha-1\"" +
+                         "xmlns=\"{4}\"/>" +
                     "</presence>",
                     PRIORITY, STATUS, ver, NODE, URI.CAPS, URI.CLIENT);
         }
@@ -186,6 +188,7 @@ namespace test.jabber.connection
         [Test]
         public void ComplexGenerationExample()
         {
+
             XmlDocument doc = new XmlDocument();
             doc.LoadXml("<book xml:lang='en'/>");
             XmlElement book = doc.DocumentElement;
@@ -204,7 +207,7 @@ namespace test.jabber.connection
             info.AddIdentity("client", "pc", "\u03a8 0.9.1", "el");
             Data x = info.CreateExtension();
             x.FormType = "urn:xmpp:dataforms:softwareinfo";
-            x.AddField("ip_version").Vals = new string[] {"ipv4", "ipv6"};
+            x.AddField("ip_version").Vals = new string[] { "ipv4", "ipv6" };
             x.AddField("os").Val = "Mac";
             x.AddField("os_version").Val = "10.5.1";
             x.AddField("software").Val = "Psi";
