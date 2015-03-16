@@ -11,11 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Text;
 using System.Diagnostics;
-
 using bedrock.util;
 using System.Text.RegularExpressions;
 
@@ -58,7 +57,7 @@ namespace jabber
         /// <param name="ctx">The contextual information about the source or destination.</param>
         protected JIDFormatException(System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext ctx) :
-            base(info, ctx)
+                base(info, ctx)
         {
         }
     }
@@ -67,19 +66,19 @@ namespace jabber
     /// Provides simple JID management.
     /// </summary>
     [SVN(@"$Id$")]
-    [System.ComponentModel.TypeConverter(typeof(JIDTypeConverter))]
+    [System.ComponentModel.TypeConverter(typeof (JIDTypeConverter))]
     public class JID : IComparable
     {
 #if !NO_STRINGPREP
-        private static readonly stringprep.Profile s_nodeprep     = new stringprep.XmppNode();
-        private static readonly stringprep.Profile s_nameprep     = new stringprep.Nameprep();
+        private static readonly stringprep.Profile s_nodeprep = new stringprep.XmppNode();
+        private static readonly stringprep.Profile s_nameprep = new stringprep.Nameprep();
         private static readonly stringprep.Profile s_resourceprep = new stringprep.XmppResource();
 #endif
 
-        private string m_user     = null;
-        private string m_server   = null;
+        private string m_user = null;
+        private string m_server = null;
         private string m_resource = null;
-        private string m_JID      = null;
+        private string m_JID = null;
 
         /// <summary>
         /// Creates a JID from a string.
@@ -105,16 +104,15 @@ namespace jabber
             Debug.Assert(server != null, "server must be non-null");
 
 #if !NO_STRINGPREP
-            m_user     = (user == null) ? null : s_nodeprep.Prepare(user);
-            m_server   = s_nameprep.Prepare(server);
+            m_user = (user == null) ? null : s_nodeprep.Prepare(user);
+            m_server = s_nameprep.Prepare(server);
             m_resource = (resource == null) ? null : s_resourceprep.Prepare(resource);
 #else
             m_user     = (user == null) ? null : user.ToLower();
             m_server   = server.ToLower();
             m_resource = resource;
 #endif
-            m_JID      = build(m_user, m_server, m_resource);
-
+            m_JID = build(m_user, m_server, m_resource);
         }
 
         /// <summary>
@@ -173,7 +171,7 @@ namespace jabber
                 else
                 {
                     server = m_JID.Substring(0, slash);
-                    resource = m_JID.Substring(slash+1);
+                    resource = m_JID.Substring(slash + 1);
                 }
             }
             else
@@ -186,16 +184,18 @@ namespace jabber
                 else
                 {
                     if (at < slash)
-                    { // normal case
+                    {
+                        // normal case
                         user = m_JID.Substring(0, at);
-                        server = m_JID.Substring(at+1, slash-at-1);
-                        resource = m_JID.Substring(slash+1);
+                        server = m_JID.Substring(at + 1, slash - at - 1);
+                        resource = m_JID.Substring(slash + 1);
                     }
                     else
-                    { // @ in a resource, with no user.  bastards.
+                    {
+                        // @ in a resource, with no user.  bastards.
                         user = null;
                         server = m_JID.Substring(0, slash);
-                        resource = m_JID.Substring(slash+1);
+                        resource = m_JID.Substring(slash + 1);
                     }
                 }
             }
@@ -253,10 +253,10 @@ namespace jabber
                 return false;
             if (other is string)
                 return m_JID.Equals(other);
-            if (! (other is JID))
+            if (!(other is JID))
                 return false;
 
-            return m_JID.Equals(((JID)other).m_JID);
+            return m_JID.Equals(((JID) other).m_JID);
         }
 
         /// <summary>
@@ -265,10 +265,10 @@ namespace jabber
         /// <param name="one">A JID to compare.</param>
         /// <param name="two">Another JID to compare to the first one.</param>
         /// <returns>True if everything (user, host and resource) are the same; otherwise false.</returns>
-        public static bool operator==(JID one, JID two)
+        public static bool operator ==(JID one, JID two)
         {
-            if ((object)one == null)
-                return ((object)two == null);
+            if ((object) one == null)
+                return ((object) two == null);
             return one.Equals(two);
         }
 
@@ -278,10 +278,10 @@ namespace jabber
         /// <param name="one">This string is converted to a JID than compared to the second parameter.</param>
         /// <param name="two">JID to compare to the first one.</param>
         /// <returns>True if everything (user, host and resource) are the same; otherwise false.</returns>
-        public static bool operator==(string one, JID two)
+        public static bool operator ==(string one, JID two)
         {
-            if ((object)two == null)
-                return ((object)one == null);
+            if ((object) two == null)
+                return ((object) one == null);
             return two.Equals(one);
         }
 
@@ -291,10 +291,10 @@ namespace jabber
         /// <param name="one">This string is converted to a JID than compared to the second parameter.</param>
         /// <param name="two">JID to compare to the first one.</param>
         /// <returns>True if one thing (user, host or resource) is different; otherwise false.</returns>
-        public static bool operator!=(string one, JID two)
+        public static bool operator !=(string one, JID two)
         {
-            if ((object)two == null)
-                return ((object)one != null);
+            if ((object) two == null)
+                return ((object) one != null);
             return !two.Equals(one);
         }
 
@@ -304,10 +304,10 @@ namespace jabber
         /// <param name="one">A JID to compare.</param>
         /// <param name="two">Another JID to compare to the first one.</param>
         /// <returns>True if one thing (user, host and resource) is different; otherwise false.</returns>
-        public static bool operator!=(JID one, JID two)
+        public static bool operator !=(JID one, JID two)
         {
-            if ((object)one == null)
-                return ((object)two != null);
+            if ((object) one == null)
+                return ((object) two != null);
             return !one.Equals(two);
         }
 
@@ -341,7 +341,7 @@ namespace jabber
         /// <param name="left">First JID.</param>
         /// <param name="right">Second JID.</param>
         /// <returns>True if the first JID is less to the second; otherwise false.</returns>
-        public static bool operator<(JID left, JID right)
+        public static bool operator <(JID left, JID right)
         {
             return left.CompareTo(right) == -1;
         }
@@ -352,7 +352,7 @@ namespace jabber
         /// <param name="left">First JID.</param>
         /// <param name="right">Second JID.</param>
         /// <returns>True if the first JID is greater than the second; otherwise false.</returns>
-        public static bool operator>(JID left, JID right)
+        public static bool operator >(JID left, JID right)
         {
             return left.CompareTo(right) == 1;
         }
@@ -363,7 +363,7 @@ namespace jabber
         /// <param name="left">First JID.</param>
         /// <param name="right">Second JID.</param>
         /// <returns>True if the first JID is less than or equal to the second; otherwise false.</returns>
-        public static bool operator<=(JID left, JID right)
+        public static bool operator <=(JID left, JID right)
         {
             return left.CompareTo(right) != 1;
         }
@@ -374,7 +374,7 @@ namespace jabber
         /// <param name="left">First JID.</param>
         /// <param name="right">Second JID.</param>
         /// <returns>True if the first JID is greater than or equal to the second; otherwise false.</returns>
-        public static bool operator>=(JID left, JID right)
+        public static bool operator >=(JID left, JID right)
         {
             return left.CompareTo(right) != -1;
         }
@@ -454,12 +454,12 @@ namespace jabber
         /// </summary>
         public JID BareJID
         {
-            get 
+            get
             {
                 parse();
                 if (m_resource == null)
                     return this; // already bare
-                return new JID(m_user, m_server, null, build(m_user, m_server, null)); 
+                return new JID(m_user, m_server, null, build(m_user, m_server, null));
             }
         }
 
@@ -515,7 +515,7 @@ namespace jabber
                 count++;
             }
             string u = sb.ToString();
-            return new JID(u, server, resource); 
+            return new JID(u, server, resource);
         }
 
         /// <summary>
@@ -557,6 +557,7 @@ namespace jabber
         }
 
         #region Implementation of IComparable
+
         /// <summary>
         /// Compares the current instance with another object of the same type.
         /// </summary>
@@ -570,7 +571,7 @@ namespace jabber
         {
             if (obj == null)
                 return 1;
-            if (obj == (object)this)
+            if (obj == (object) this)
                 return 0;
 
             JID oj = obj as JID;
@@ -606,6 +607,7 @@ namespace jabber
             }
             return this.m_resource.CompareTo(oj.m_resource);
         }
+
         #endregion
     }
 
@@ -627,8 +629,8 @@ namespace jabber
             {
                 throw new ArgumentNullException("sourceType");
             }
-            return ((sourceType == typeof(string)) || 
-                    (typeof(JID).IsAssignableFrom(sourceType) || 
+            return ((sourceType == typeof (string)) ||
+                    (typeof (JID).IsAssignableFrom(sourceType) ||
                      base.CanConvertFrom(context, sourceType)));
         }
 
@@ -640,9 +642,9 @@ namespace jabber
         /// <returns></returns>
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, Type destinationType)
         {
-             return ((destinationType == typeof(string)) || 
-                     ((destinationType == typeof(JID)) || 
-                    base.CanConvertTo(context, destinationType)));
+            return ((destinationType == typeof (string)) ||
+                    ((destinationType == typeof (JID)) ||
+                     base.CanConvertTo(context, destinationType)));
         }
 
         /// <summary>
@@ -713,9 +715,9 @@ namespace jabber
         {
             if (value == null)
                 return null;
-            if (destinationType == typeof(string))
+            if (destinationType == typeof (string))
                 return value.ToString();
-            if (destinationType == typeof(JID))
+            if (destinationType == typeof (JID))
                 return value;
             return base.ConvertTo(context, culture, value, destinationType);
         }

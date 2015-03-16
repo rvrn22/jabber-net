@@ -13,6 +13,7 @@
  *
  * xpnet is a deriviative of James Clark's XP.  See copying.txt for more info.
  * --------------------------------------------------------------------------*/
+
 namespace xpnet
 {
     using bedrock.util;
@@ -63,7 +64,7 @@ namespace xpnet
 
         static UTF8Encoding()
         {
-            System.Array.Copy(asciiTypeTable,  0, utf8TypeTable,   0, 128);
+            System.Array.Copy(asciiTypeTable, 0, utf8TypeTable, 0, 128);
             System.Array.Copy(utf8HiTypeTable, 0, utf8TypeTable, 128, 128);
         }
 
@@ -93,7 +94,7 @@ namespace xpnet
         /// <returns></returns>
         protected override char byteToAscii(byte[] buf, int off)
         {
-            return (char)buf[off];
+            return (char) buf[off];
         }
 
         /// <summary>
@@ -105,7 +106,7 @@ namespace xpnet
         /// <returns></returns>
         protected override bool charMatches(byte[] buf, int off, char c)
         {
-            return ((char)buf[off]) == c;
+            return ((char) buf[off]) == c;
         }
 
         /// <summary>
@@ -141,7 +142,7 @@ namespace xpnet
             {
                 byte b = sourceBuf[sourceStart++];
                 if (b >= 0)
-                    targetBuf[targetStart++] = (char)b;
+                    targetBuf[targetStart++] = (char) b;
                 else
                 {
                     switch (utf8TypeTable[b & 0xFF])
@@ -149,14 +150,14 @@ namespace xpnet
                         case BT_LEAD2:
                             /* 5, 6 */
                             targetBuf[targetStart++]
-                                = (char)(((b & 0x1F) << 6) | (sourceBuf[sourceStart++] & 0x3F));
+                                = (char) (((b & 0x1F) << 6) | (sourceBuf[sourceStart++] & 0x3F));
                             break;
                         case BT_LEAD3:
                             /* 4, 6, 6 */
                             c = (b & 0xF) << 12;
                             c |= (sourceBuf[sourceStart++] & 0x3F) << 6;
                             c |= (sourceBuf[sourceStart++] & 0x3F);
-                            targetBuf[targetStart++] = (char)c;
+                            targetBuf[targetStart++] = (char) c;
                             break;
                         case BT_LEAD4:
                             /* 3, 6, 6, 6 */
@@ -165,8 +166,8 @@ namespace xpnet
                             c |= (sourceBuf[sourceStart++] & 0x3F) << 6;
                             c |= (sourceBuf[sourceStart++] & 0x3F);
                             c -= 0x10000;
-                            targetBuf[targetStart++] = (char)((c >> 10) | 0xD800);
-                            targetBuf[targetStart++] = (char)((c & ((1 << 10) - 1)) | 0xDC00);
+                            targetBuf[targetStart++] = (char) ((c >> 10) | 0xD800);
+                            targetBuf[targetStart++] = (char) ((c & ((1 << 10) - 1)) | 0xDC00);
                             break;
                     }
                 }
@@ -194,11 +195,11 @@ namespace xpnet
                     ++off;
                     switch (b)
                     {
-                        case (byte)'\n':
+                        case (byte) '\n':
                             lineNumber += 1;
                             colDiff = off;
                             break;
-                        case (byte)'\r':
+                        case (byte) '\r':
                             lineNumber += 1;
                             if (off != end && buf[off] == '\n')
                                 off++;

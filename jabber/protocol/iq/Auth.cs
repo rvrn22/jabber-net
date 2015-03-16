@@ -11,12 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -79,6 +78,7 @@ namespace jabber.protocol.iq
             this.Username = username;
             this.Digest = ShaHash(StreamID, password);
         }
+
         /// <summary>
         /// Set the authentication information, for plaintext auth.
         /// </summary>
@@ -102,7 +102,7 @@ namespace jabber.protocol.iq
         public void SetZeroK(string username,
             string password,
             string token,
-            int    sequence)
+            int sequence)
         {
             Debug.Assert(username != null);
             this.Username = username;

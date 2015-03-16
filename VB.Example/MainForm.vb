@@ -32,7 +32,6 @@ Public Class MainForm
         InitializeComponent()
 
         'Add any initialization after the InitializeComponent() call
-
     End Sub
 
     'Form overrides dispose to clean up the component list.
@@ -72,9 +71,11 @@ Public Class MainForm
     Friend WithEvents roster As muzzle.RosterTree
     Friend WithEvents debug As muzzle.BottomScrollRichText
 
-    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
+        Dim resources As System.ComponentModel.ComponentResourceManager =
+                New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.sb = New System.Windows.Forms.StatusBar
         Me.pnlCon = New System.Windows.Forms.StatusBarPanel
         Me.pnlPresence = New System.Windows.Forms.StatusBarPanel
@@ -142,14 +143,16 @@ Public Class MainForm
         '
         'ilPresence
         '
-        Me.ilPresence.ImageStream = CType(resources.GetObject("ilPresence.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ilPresence.ImageStream = CType(resources.GetObject("ilPresence.ImageStream"),
+                                          System.Windows.Forms.ImageListStreamer)
         Me.ilPresence.TransparentColor = System.Drawing.Color.Transparent
         Me.ilPresence.Images.SetKeyName(0, "")
         Me.ilPresence.Images.SetKeyName(1, "")
         '
         'mnuPresence
         '
-        Me.mnuPresence.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.mnuAvailable, Me.mnuAway, Me.MenuItem3, Me.mnuOffline})
+        Me.mnuPresence.MenuItems.AddRange(New System.Windows.Forms.MenuItem() _
+                                             {Me.mnuAvailable, Me.mnuAway, Me.MenuItem3, Me.mnuOffline})
         '
         'mnuAvailable
         '
@@ -245,7 +248,6 @@ Public Class MainForm
         Me.tpRoster.ResumeLayout(False)
         Me.tpDebug.ResumeLayout(False)
         Me.ResumeLayout(False)
-
     End Sub
 
 #End Region
@@ -260,7 +262,8 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub sb_PanelClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.StatusBarPanelClickEventArgs) Handles sb.PanelClick
+    Private Sub sb_PanelClick(ByVal sender As System.Object,
+                              ByVal e As System.Windows.Forms.StatusBarPanelClickEventArgs) Handles sb.PanelClick
         If Not e.StatusBarPanel Is pnlPresence Then Return
 
         mnuPresence.Show(sb, New Point(e.X, e.Y))
@@ -281,7 +284,8 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub mnuAvailable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuAvailable.Click
+    Private Sub mnuAvailable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+        Handles mnuAvailable.Click
         If jc.IsAuthenticated Then
             jc.Presence(PresenceType.available, "Available", Nothing, 0)
             pnlPresence.Text = "Available"
@@ -290,7 +294,8 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub jc_OnConnect(ByVal sender As Object, ByVal stream As jabber.connection.StanzaStream) Handles jc.OnConnect
+    Private Sub jc_OnConnect(ByVal sender As Object, ByVal stream As jabber.connection.StanzaStream) _
+        Handles jc.OnConnect
         m_err = False
         debug.AppendMaybeScroll("Connected to: " & stream.ToString() & vbCrLf)
     End Sub
@@ -339,8 +344,8 @@ Public Class MainForm
     End Sub
 
     Private Sub jc_OnAuthError(ByVal sender As Object, ByVal iq As XmlElement) Handles jc.OnAuthError
-        If (MessageBox.Show(Me, "Create new account?", _
-            "Authentication error", MessageBoxButtons.OKCancel) = Windows.Forms.DialogResult.OK) Then
+        If (MessageBox.Show(Me, "Create new account?",
+                            "Authentication error", MessageBoxButtons.OKCancel) = Windows.Forms.DialogResult.OK) Then
             jc.Register(New JID(jc.User, jc.Server, Nothing))
         Else
             jc.Close()
@@ -348,7 +353,8 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Function jc_OnRegisterInfo(ByVal sender As System.Object, ByVal register As jabber.protocol.iq.Register) As System.Boolean Handles jc.OnRegisterInfo
+    Private Function jc_OnRegisterInfo(ByVal sender As System.Object, ByVal register As jabber.protocol.iq.Register) _
+        As System.Boolean Handles jc.OnRegisterInfo
         Dim data As jabber.protocol.x.Data = register.Form
         If (data Is Nothing) Then Return True
 
@@ -406,12 +412,12 @@ Public Class MainForm
         pnlCon.Text = "Stream error: " + rp.InnerText
     End Sub
 
-    Private Sub jc_OnStreamInit(ByVal sender As Object, ByVal stream As jabber.protocol.ElementStream) Handles jc.OnStreamInit
+    Private Sub jc_OnStreamInit(ByVal sender As Object, ByVal stream As jabber.protocol.ElementStream) _
+        Handles jc.OnStreamInit
         stream.AddFactory(New FooFactory)
     End Sub
 
     Private Sub mnuPresence_Popup(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuPresence.Popup
-
     End Sub
 End Class
 
@@ -467,8 +473,8 @@ End Class
 Public Class FooFactory
     Implements jabber.protocol.IPacketTypes
 
-    Private Shared ReadOnly s_qnames As jabber.protocol.QnameType() = _
-        {New jabber.protocol.QnameType("query", Foo.NS, GetType(Foo))}
+    Private Shared ReadOnly s_qnames As jabber.protocol.QnameType() =
+                                {New jabber.protocol.QnameType("query", Foo.NS, GetType(Foo))}
 
     Public ReadOnly Property Types() As jabber.protocol.QnameType() Implements jabber.protocol.IPacketTypes.Types
         Get

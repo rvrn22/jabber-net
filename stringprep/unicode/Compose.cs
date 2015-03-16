@@ -11,6 +11,7 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 
 
@@ -47,7 +48,6 @@ namespace stringprep.unicode
         /// <returns>True if combination occurred</returns>
         public static bool Combine(char a, char b, out char result)
         {
-
             // FIRST_START..FIRST_SINGLE_START:
             // FIRST_SINGLE_START..SECOND_START: look up a to see if b matches
             // SECOND_START..SECOND_SINGLE_START:
@@ -76,7 +76,7 @@ namespace stringprep.unicode
             if (index_b >= ComposeData.SECOND_SINGLE_START)
             {
                 int offset = index_b - ComposeData.SECOND_SINGLE_START;
-                if (a == ComposeData.SecondSingle[offset,0])
+                if (a == ComposeData.SecondSingle[offset, 0])
                 {
                     result = ComposeData.SecondSingle[offset, 1];
                     return true;

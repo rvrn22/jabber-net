@@ -11,12 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Reflection;
 using System.Diagnostics;
-
 using bedrock.util;
 
 namespace jabber.protocol
@@ -55,8 +55,8 @@ namespace jabber.protocol
     /// </summary>
     [SVN(@"$Id$")]
     public class EnumParser
-	{
-        private static Dictionary<Type, Dictionary<string, object>> s_vals = 
+    {
+        private static Dictionary<Type, Dictionary<string, object>> s_vals =
             new Dictionary<Type, Dictionary<string, object>>();
 
         private static Dictionary<Type, Dictionary<object, string>> s_strings =
@@ -64,7 +64,7 @@ namespace jabber.protocol
 
         private static bool IsDash(Type t)
         {
-            object[] da = t.GetCustomAttributes(typeof(DashAttribute), false);
+            object[] da = t.GetCustomAttributes(typeof (DashAttribute), false);
             return (da.Length > 0);
         }
 
@@ -79,11 +79,11 @@ namespace jabber.protocol
                 FieldInfo[] fields = t.GetFields(BindingFlags.Public | BindingFlags.Static);
                 foreach (FieldInfo fi in fields)
                 {
-                    object[] attrs = fi.GetCustomAttributes(typeof(XMLAttribute), false);
+                    object[] attrs = fi.GetCustomAttributes(typeof (XMLAttribute), false);
                     object val = fi.GetValue(null);
                     if (attrs.Length > 0)
                     {
-                        string name = ((XMLAttribute)attrs[0]).Name;
+                        string name = ((XMLAttribute) attrs[0]).Name;
                         map[name] = val;
                     }
                     if (dash)
@@ -109,10 +109,10 @@ namespace jabber.protocol
                 FieldInfo[] fields = t.GetFields(BindingFlags.Public | BindingFlags.Static);
                 foreach (FieldInfo fi in fields)
                 {
-                    object[] attrs = fi.GetCustomAttributes(typeof(XMLAttribute), false);
+                    object[] attrs = fi.GetCustomAttributes(typeof (XMLAttribute), false);
                     object val = fi.GetValue(null);
                     if (attrs.Length > 0)
-                        name = ((XMLAttribute)attrs[0]).Name;
+                        name = ((XMLAttribute) attrs[0]).Name;
                     else
                     {
                         if (dash)
@@ -135,14 +135,14 @@ namespace jabber.protocol
         /// <returns></returns>
         public static T Parse<T>(string value)
         {
-            if (!typeof(T).IsEnum)
+            if (!typeof (T).IsEnum)
                 throw new ArgumentException("Type must be enum");
 
-            Dictionary<string, object> map = GetValHash(typeof(T));
+            Dictionary<string, object> map = GetValHash(typeof (T));
             object val = null;
             if (!map.TryGetValue(value, out val))
-                return (T)(object)(-1);
-            return (T)val;
+                return (T) (object) (-1);
+            return (T) val;
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace jabber.protocol
             Dictionary<string, object> map = GetValHash(t);
             object val = null;
             if (!map.TryGetValue(value, out val))
-                return (object)(-1);
+                return (object) (-1);
             return val;
         }
 
@@ -176,7 +176,7 @@ namespace jabber.protocol
             if (!t.IsEnum)
                 throw new ArgumentException("Type must be enum");
 
-            if ((int)value == -1)
+            if ((int) value == -1)
                 return null;
 
             Dictionary<object, string> map = GetStringHash(t);
@@ -185,5 +185,5 @@ namespace jabber.protocol
             Debug.Assert(found, "Tried to convert an unknown enum value to string");
             return val;
         }
-	}
+    }
 }

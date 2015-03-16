@@ -26,7 +26,7 @@ namespace stringprep.unicode
         /// could be direct rather than a binary search.  That would add several hundred K to the
         /// library size, though, or time at startup to initialize an array from this.
         /// </summary>
-        public static readonly char[][] Offsets =  new char[][]
+        public static readonly char[][] Offsets = new char[][]
         {
             new char[] {'\x00A0', '\x0000'},
             new char[] {'\x00A8', '\x0001'},
@@ -6467,4 +6467,3 @@ namespace stringprep.unicode
         };
     }
 }
-

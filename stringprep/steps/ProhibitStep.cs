@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Collections;
 using System.Text;
 
@@ -64,7 +64,7 @@ namespace stringprep.steps
         /// </summary>
         /// <param name="table"></param>
         /// <param name="name"></param>
-        public ProhibitStep(char[][] table, string name): base(name)
+        public ProhibitStep(char[][] table, string name) : base(name)
         {
             m_table = table;
         }
@@ -87,7 +87,7 @@ namespace stringprep.steps
         /// If all are allowed, returns -1.</returns>
         public int FindStringInTable(StringBuilder s)
         {
-            for (int j=0; j<s.Length; j++)
+            for (int j = 0; j < s.Length; j++)
             {
                 if (Contains(s[j]))
                 {
@@ -131,8 +131,5 @@ namespace stringprep.steps
 
             #endregion
         }
-
     }
-
-
 }

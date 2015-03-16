@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.accept
@@ -29,18 +28,22 @@ namespace jabber.protocol.accept
         /// None specified
         /// </summary>
         NONE = -1,
+
         /// <summary>
         /// type='warn'
         /// </summary>
         warn,
+
         /// <summary>
         /// type='info'
         /// </summary>
         info,
+
         /// <summary>
         /// type='verbose'
         /// </summary>
         verbose,
+
         /// <summary>
         /// type='debug'
         /// </summary>
@@ -116,6 +119,5 @@ namespace jabber.protocol.accept
             get { return JabberDate(GetAttribute("timestamp")); }
             set { SetAttribute("timestamp", JabberDate(value)); }
         }
-
     }
 }

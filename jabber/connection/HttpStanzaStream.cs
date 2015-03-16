@@ -87,20 +87,20 @@ namespace jabber.connection
         /// </summary>
         public override void Connect()
         {
-            int port = (int)m_listener[Options.PORT];
+            int port = (int) m_listener[Options.PORT];
             Debug.Assert(port > 0);
 
             m_sock = CreateSocket();
 
 
-            string to = (string)m_listener[Options.TO];
+            string to = (string) m_listener[Options.TO];
             Debug.Assert(to != null);
 
-            string host = (string)m_listener[Options.NETWORK_HOST];
+            string host = (string) m_listener[Options.NETWORK_HOST];
             if ((host == null) || (host == ""))
                 host = to;
 
-            string url = (string)m_listener[Options.POLL_URL];
+            string url = (string) m_listener[Options.POLL_URL];
             if ((url == null) || (url == ""))
             {
 #if !__MonoCS__
@@ -109,10 +109,10 @@ namespace jabber.connection
 #endif
                     throw new ArgumentNullException("URL not found in DNS, and not specified", "URL");
             }
-            ((IHttpSocket)m_sock).URL = url;
+            ((IHttpSocket) m_sock).URL = url;
 
             //Address addr = new Address(host, port);
-            m_sock.Connect(null, (string)m_listener[Options.SERVER_ID]);
+            m_sock.Connect(null, (string) m_listener[Options.SERVER_ID]);
         }
 
         /// <summary>
@@ -126,12 +126,12 @@ namespace jabber.connection
         /// </summary>
         public override void Accept()
         {
-            AsyncSocket s = new AsyncSocket(null, this, (bool)m_listener[Options.SSL], false);
+            AsyncSocket s = new AsyncSocket(null, this, (bool) m_listener[Options.SSL], false);
             s.LocalCertificate = m_listener[Options.LOCAL_CERTIFICATE] as
                 System.Security.Cryptography.X509Certificates.X509Certificate2;
 
             m_sock = s;
-            m_sock.Accept(new Address((int)m_listener[Options.PORT]));
+            m_sock.Accept(new Address((int) m_listener[Options.PORT]));
             m_sock.RequestAccept();
         }
 
@@ -163,7 +163,7 @@ namespace jabber.connection
         public override void Write(XmlElement elem)
         {
             if (m_sock is IElementSocket)
-                ((IElementSocket)m_sock).Write(elem);
+                ((IElementSocket) m_sock).Write(elem);
             else
                 Write(elem.OuterXml);
         }
@@ -195,6 +195,7 @@ namespace jabber.connection
 #endif
 
         #region ElementStream handlers
+
         private void m_elements_OnDocumentStart(object sender, XmlElement rp)
         {
             m_listener.DocumentStarted(rp);
@@ -215,6 +216,7 @@ namespace jabber.connection
             // XML parse error.
             m_listener.Errored(ex);
         }
+
         #endregion
 
         #region ISocketEventListener Members
@@ -243,7 +245,7 @@ namespace jabber.connection
         void ISocketEventListener.OnConnect(BaseSocket sock)
         {
 #if !NO_SSL
-            if ((bool)m_listener[Options.SSL])
+            if ((bool) m_listener[Options.SSL])
             {
                 XEP25Socket s = sock as XEP25Socket;
 
@@ -296,7 +298,7 @@ namespace jabber.connection
         {
             return m_listener.OnInvalidCertificate(sock, certificate, chain, sslPolicyErrors);
         }
+
         #endregion
     }
 }
-

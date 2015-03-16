@@ -11,65 +11,64 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-
 using bedrock.util;
 using System.Diagnostics;
 
 namespace muzzle
 {
-
     /// <summary>
     /// Summary description for BottomScrollRichText.
     /// </summary>
     [SVN(@"$Id$")]
     public class BottomScrollRichText : System.Windows.Forms.RichTextBox
     {
-        private const int SB_HORZ             = 0;
-        private const int SB_VERT             = 1;
-        private const int SB_CTL              = 2;
-        private const int SB_BOTH             = 3;
+        private const int SB_HORZ = 0;
+        private const int SB_VERT = 1;
+        private const int SB_CTL = 2;
+        private const int SB_BOTH = 3;
 
-        private const int SB_LINEUP           = 0;
-        private const int SB_LINELEFT         = 0;
-        private const int SB_LINEDOWN         = 1;
-        private const int SB_LINERIGHT        = 1;
-        private const int SB_PAGEUP           = 2;
-        private const int SB_PAGELEFT         = 2;
-        private const int SB_PAGEDOWN         = 3;
-        private const int SB_PAGERIGHT        = 3;
-        private const int SB_THUMBPOSITION    = 4;
-        private const int SB_THUMBTRACK       = 5;
-        private const int SB_TOP              = 6;
-        private const int SB_LEFT             = 6;
-        private const int SB_BOTTOM           = 7;
-        private const int SB_RIGHT            = 7;
-        private const int SB_ENDSCROLL        = 8;
+        private const int SB_LINEUP = 0;
+        private const int SB_LINELEFT = 0;
+        private const int SB_LINEDOWN = 1;
+        private const int SB_LINERIGHT = 1;
+        private const int SB_PAGEUP = 2;
+        private const int SB_PAGELEFT = 2;
+        private const int SB_PAGEDOWN = 3;
+        private const int SB_PAGERIGHT = 3;
+        private const int SB_THUMBPOSITION = 4;
+        private const int SB_THUMBTRACK = 5;
+        private const int SB_TOP = 6;
+        private const int SB_LEFT = 6;
+        private const int SB_BOTTOM = 7;
+        private const int SB_RIGHT = 7;
+        private const int SB_ENDSCROLL = 8;
 
-        private const int SIF_RANGE           = 0x0001;
-        private const int SIF_PAGE            = 0x0002;
-        private const int SIF_POS             = 0x0004;
+        private const int SIF_RANGE = 0x0001;
+        private const int SIF_PAGE = 0x0002;
+        private const int SIF_POS = 0x0004;
         private const int SIF_DISABLENOSCROLL = 0x0008;
-        private const int SIF_TRACKPOS        = 0x0010;
-        private const int SIF_ALL             = (SIF_RANGE | SIF_PAGE | SIF_POS | SIF_TRACKPOS);
+        private const int SIF_TRACKPOS = 0x0010;
+        private const int SIF_ALL = (SIF_RANGE | SIF_PAGE | SIF_POS | SIF_TRACKPOS);
 
-        private const int WM_HSCROLL          = 0x0114;
-        private const int WM_VSCROLL          = 0x0115;
+        private const int WM_HSCROLL = 0x0114;
+        private const int WM_VSCROLL = 0x0115;
 
         private const int EM_SETSCROLLPOS = 0x0400 + 222;
 
         private const int CCHILDREN_SCROLLBAR = 5;
-        private const int STATE_SYSTEM_INVISIBLE   = 0x00008000;
-        private const int STATE_SYSTEM_OFFSCREEN   = 0x00010000;
-        private const int STATE_SYSTEM_PRESSED     = 0x00000008;
+        private const int STATE_SYSTEM_INVISIBLE = 0x00008000;
+        private const int STATE_SYSTEM_OFFSCREEN = 0x00010000;
+        private const int STATE_SYSTEM_PRESSED = 0x00000008;
         private const int STATE_SYSTEM_UNAVAILABLE = 0x00000001;
 
-        private const uint OBJID_CLIENT  = 0xFFFFFFFC;
+        private const uint OBJID_CLIENT = 0xFFFFFFFC;
         private const uint OBJID_VSCROLL = 0xFFFFFFFB;
         private const uint OBJID_HSCROLL = 0xFFFFFFFA;
 
@@ -89,13 +88,13 @@ namespace muzzle
         [StructLayout(LayoutKind.Sequential)]
         private struct SCROLLINFO
         {
-            public int  cbSize;
+            public int cbSize;
             public uint fMask;
-            public int  nMin;
-            public int  nMax;
+            public int nMin;
+            public int nMax;
             public uint nPage;
-            public int  nPos;
-            public int  nTrackPos;
+            public int nPos;
+            public int nTrackPos;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -116,8 +115,7 @@ namespace muzzle
             public int xyThumbTop;
             public int xyThumbBottom;
             public int reserved;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst=CCHILDREN_SCROLLBAR+1)]
-            public int[] rgstate;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = CCHILDREN_SCROLLBAR + 1)] public int[] rgstate;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -137,19 +135,19 @@ namespace muzzle
             }
         }
 
-        [DllImport("user32", CharSet=CharSet.Auto)]
+        [DllImport("user32", CharSet = CharSet.Auto)]
         private static extern bool GetScrollRange(IntPtr hWnd, int nBar, out int lpMinPos, out int lpMaxPos);
 
-        [DllImport("user32", CharSet=CharSet.Auto)]
+        [DllImport("user32", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, POINT lParam);
 
-        [DllImport("user32", CharSet=CharSet.Auto)]
+        [DllImport("user32", CharSet = CharSet.Auto)]
         private static extern bool GetScrollInfo(IntPtr hWnd, int nBar, ref SCROLLINFO lpsi);
 
-        [DllImport("user32", CharSet=CharSet.Auto)]
+        [DllImport("user32", CharSet = CharSet.Auto)]
         private static extern int SetScrollInfo(IntPtr hWnd, int fnBar, ref SCROLLINFO lpsi, bool fRedraw);
 
-        [DllImport("user32", SetLastError=true, EntryPoint="GetScrollBarInfo")]
+        [DllImport("user32", SetLastError = true, EntryPoint = "GetScrollBarInfo")]
         private static extern int GetScrollBarInfo(IntPtr hWnd, uint idObject, ref SCROLLBARINFO psbi);
 
         /// <summary>
@@ -177,19 +175,20 @@ namespace muzzle
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
+            if (disposing)
             {
-                if(components != null)
+                if (components != null)
                 {
                     components.Dispose();
                 }
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
         #region Component Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -198,6 +197,7 @@ namespace muzzle
         {
             components = new System.ComponentModel.Container();
         }
+
         #endregion
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace muzzle
             if (sbi.rgstate[0] == 0)
             {
                 SCROLLINFO si = GetScroll();
-                SendMessage(this.Handle, EM_SETSCROLLPOS, 0, new POINT(0, si.nMax - (int)si.nPage + 5));
+                SendMessage(this.Handle, EM_SETSCROLLPOS, 0, new POINT(0, si.nMax - (int) si.nPage + 5));
             }
         }
 
@@ -286,7 +286,7 @@ namespace muzzle
                     if (c > 127)
                     {
                         sb.Append(@"\u");
-                        sb.Append((int)c);
+                        sb.Append((int) c);
                         sb.Append('?');
                     }
                     else
@@ -334,7 +334,7 @@ namespace muzzle
             this.SelectionLength = 0;
             this.SelectionStart = this.TextLength;
             string rtf = "{\\rtf1\\ansi{{\\colortbl ;" + RTFColor(c) +
-                               "}\\cf1 " + EscapeRTF(text) + "}";
+                         "}\\cf1 " + EscapeRTF(text) + "}";
             this.SelectedRtf = rtf;
         }
 

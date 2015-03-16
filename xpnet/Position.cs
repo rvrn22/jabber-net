@@ -13,6 +13,7 @@
  *
  * xpnet is a deriviative of James Clark's XP.  See copying.txt for more info.
  * --------------------------------------------------------------------------*/
+
 namespace xpnet
 {
     using bedrock.util;
@@ -23,6 +24,7 @@ namespace xpnet
      * @see Encoding#movePosition
      * @version $Revision$ $Date$
      */
+
     ///<summary>
     /// Position of an entry in a table.
     ///</summary>
@@ -36,6 +38,7 @@ namespace xpnet
          * Creates a position for the start of an entity: the line number is
          * 1 and the column number is 0.
          */
+
         public Position()
         {
             lineNumber = 1;
@@ -46,10 +49,11 @@ namespace xpnet
          * Returns the line number.
          * The first line number is 1.
          */
+
         public int LineNumber
         {
-            get {return lineNumber;}
-            set {lineNumber = value;}
+            get { return lineNumber; }
+            set { lineNumber = value; }
         }
 
         /**
@@ -57,6 +61,7 @@ namespace xpnet
          * The first column number is 0.
          * A tab character is not treated specially.
          */
+
         public int ColumnNumber
         {
             get { return columnNumber; }
@@ -66,6 +71,7 @@ namespace xpnet
         /**
          * Returns a copy of this position.
          */
+
         public object Clone()
         {
             throw new System.NotImplementedException();

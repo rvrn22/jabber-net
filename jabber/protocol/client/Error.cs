@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.client
@@ -110,22 +109,27 @@ namespace jabber.protocol.client
         /// None specified (protocol error)
         /// </summary>
         NONE = -1,
+
         /// <summary>
         /// do not retry (the error is unrecoverable)
         /// </summary>
         cancel,
+
         /// <summary>
         /// proceed (the condition was only a warning)
         /// </summary>
         @continue,
+
         /// <summary>
         /// retry after changing the data sent
         /// </summary>
         modify,
+
         /// <summary>
         /// retry after providing credentials
         /// </summary>
         auth,
+
         /// <summary>
         /// retry after waiting (the error is temporary)
         /// </summary>
@@ -162,96 +166,119 @@ namespace jabber.protocol.client
         /// modify      400
         /// </summary>
         public const string BAD_REQUEST = "bad-request";
+
         /// <summary>
         /// cancel      409
         /// </summary>
         public const string CONFLICT = "conflict";
+
         /// <summary>
         /// cancel  501
         /// </summary>
         public const string FEATURE_NOT_IMPLEMENTED = "feature-not-implemented";
+
         /// <summary>
         /// auth    403
         /// </summary>
         public const string FORBIDDEN = "forbidden";
+
         /// <summary>
         ///     modify  302 (permanent)
         /// </summary>
         public const string GONE = "gone";
+
         /// <summary>
         ///     wait    500
         /// </summary>
         public const string INTERNAL_SERVER_ERROR = "internal-server-error";
+
         /// <summary>
         ///     cancel  404
         /// </summary>
         public const string ITEM_NOT_FOUND = "item-not-found";
+
         /// <summary>
         ///     modify  400
         /// </summary>
         public const string JID_MALFORMED = "jid-malformed";
+
         /// <summary>
         ///     modify  406
         /// </summary>
         public const string NOT_ACCEPTABLE = "not-acceptable";
+
         /// <summary>
         ///     cancel  405
         /// </summary>
         public const string NOT_ALLOWED = "not-allowed";
+
         /// <summary>
         ///     auth    401
         /// </summary>
         public const string NOT_AUTHORIZED = "not-authorized";
+
         /// <summary>
         ///     auth    402
         /// </summary>
         public const string PAYMENT_REQUIRED = "payment-required";
+
         /// <summary>
         ///     wait    404
         /// </summary>
         public const string RECIPIENT_UNAVAILABLE = "recipient-unavailable";
+
         /// <summary>
         ///     modify  302 (temporary)
         /// </summary>
         public const string REDIRECT = "redirect";
+
         /// <summary>
         ///     auth    407
         /// </summary>
         public const string REGISTRATION_REQUIRED = "registration-required";
+
         /// <summary>
         ///     cancel  404
         /// </summary>
         public const string REMOTE_SERVER_NOT_FOUND = "remote-server-not-found";
+
         /// <summary>
         ///     wait    504
         /// </summary>
         public const string REMOTE_SERVER_TIMEOUT = "remote-server-timeout";
+
         /// <summary>
         ///     wait    500
         /// </summary>
         public const string RESOURCE_CONSTRAINT = "resource-constraint";
+
         /// <summary>
         ///     cancel  503
         /// </summary>
         public const string SERVICE_UNAVAILABLE = "service-unavailable";
+
         /// <summary>
         ///     auth    407
         /// </summary>
         public const string SUBSCRIPTION_REQUIRED = "subscription-required";
+
         /// <summary>
         ///     [any]   500
         /// </summary>
         public const string UNDEFINED_CONDITION = "undefined-condition";
+
         /// <summary>
         ///     wait    400
         /// </summary>
         public const string UNEXPECTED_REQUEST = "unexpected-request";
 
         private static System.Collections.Hashtable s_errors = new System.Collections.Hashtable();
+
         private struct CodeType
         {
             public int Code;
             public ErrorType Type;
+
             public CodeType(int code, ErrorType type)
             {
                 Code = code;
@@ -392,28 +419,49 @@ namespace jabber.protocol.client
                 // uh-oh.  Old-school error.  See section 3 of XEP-86.
                 switch (this.Code)
                 {
-                case 302: return REDIRECT;
-                case 400: return BAD_REQUEST;
-                case 401: return NOT_AUTHORIZED;
-                case 402: return PAYMENT_REQUIRED;
-                case 403: return FORBIDDEN;
-                case 404: return ITEM_NOT_FOUND;
-                case 405: return NOT_ALLOWED;
-                case 406: return NOT_ACCEPTABLE;
-                case 407: return REGISTRATION_REQUIRED;
-                case 408: return REMOTE_SERVER_TIMEOUT;
-                case 409: return CONFLICT;
-                case 500: return INTERNAL_SERVER_ERROR;
-                case 501: return FEATURE_NOT_IMPLEMENTED;
-                case 502: return SERVICE_UNAVAILABLE;
-                case 503: return SERVICE_UNAVAILABLE;
-                case 504: return REMOTE_SERVER_TIMEOUT;
-                case 510: return SERVICE_UNAVAILABLE;
+                    case 302:
+                        return REDIRECT;
+                    case 400:
+                        return BAD_REQUEST;
+                    case 401:
+                        return NOT_AUTHORIZED;
+                    case 402:
+                        return PAYMENT_REQUIRED;
+                    case 403:
+                        return FORBIDDEN;
+                    case 404:
+                        return ITEM_NOT_FOUND;
+                    case 405:
+                        return NOT_ALLOWED;
+                    case 406:
+                        return NOT_ACCEPTABLE;
+                    case 407:
+                        return REGISTRATION_REQUIRED;
+                    case 408:
+                        return REMOTE_SERVER_TIMEOUT;
+                    case 409:
+                        return CONFLICT;
+                    case 500:
+                        return INTERNAL_SERVER_ERROR;
+                    case 501:
+                        return FEATURE_NOT_IMPLEMENTED;
+                    case 502:
+                        return SERVICE_UNAVAILABLE;
+                    case 503:
+                        return SERVICE_UNAVAILABLE;
+                    case 504:
+                        return REMOTE_SERVER_TIMEOUT;
+                    case 510:
+                        return SERVICE_UNAVAILABLE;
                 }
                 // best we can do.
                 return UNDEFINED_CONDITION;
             }
-            set { this.InnerXml = ""; this.AddChild(GetStanzaError(this.OwnerDocument, value)); }
+            set
+            {
+                this.InnerXml = "";
+                this.AddChild(GetStanzaError(this.OwnerDocument, value));
+            }
         }
 
         /// <summary>

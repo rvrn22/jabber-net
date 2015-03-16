@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.accept
@@ -29,18 +28,22 @@ namespace jabber.protocol.accept
         /// None specified
         /// </summary>
         NONE = -1,
+
         /// <summary>
         /// type='get'
         /// </summary>
         get,
+
         /// <summary>
         /// type='set'
         /// </summary>
         set,
+
         /// <summary>
         /// type='result'
         /// </summary>
         result,
+
         /// <summary>
         /// type='error'
         /// </summary>
@@ -57,10 +60,12 @@ namespace jabber.protocol.accept
         /// None specified
         /// </summary>
         NONE = -1,
+
         /// <summary>
         /// action='check'
         /// </summary>
         check,
+
         /// <summary>
         /// action='insert'
         /// </summary>

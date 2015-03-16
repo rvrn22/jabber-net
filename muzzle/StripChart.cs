@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
@@ -21,7 +21,6 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Threading;
-
 using bedrock.util;
 
 namespace muzzle
@@ -35,10 +34,12 @@ namespace muzzle
         /// Bar char
         /// </summary>
         Bar,
+
         /// <summary>
         /// Lines
         /// </summary>
         Line,
+
         /// <summary>
         /// Points
         /// </summary>
@@ -53,30 +54,31 @@ namespace muzzle
     [SVN(@"$Id$")]
     public class StripChart : System.Windows.Forms.UserControl
     {
-        private bool       m_first     = true;
-        private float      m_min       = 0F;
-        private float      m_max       = 100F;
-        private float      m_last      = 0F;
-        private double     m_mean      = 0F;
-        private double     m_var_s     = 0F;
-        private long       m_count     = 0;
+        private bool m_first = true;
+        private float m_min = 0F;
+        private float m_max = 100F;
+        private float m_last = 0F;
+        private double m_mean = 0F;
+        private double m_var_s = 0F;
+        private long m_count = 0;
 
-        private int        m_hist      = 100;
-        private int        m_pointSize = 5;
-        private bool       m_auto      = true;
-        private bool       m_label     = true;
-        private bool       m_zero      = true;
-        private bool       m_showLast  = false;
-        private bool       m_showStats = false;
-        private string     m_title     = null;
-        private Queue      m_list      = new Queue(100);
-        private ChartStyle m_style     = ChartStyle.Bar;
-        private Color      m_textColor = Color.Red;
-        private Color      m_zeroColor = Color.Black;
-        private Color      m_statsColor = Color.Wheat;
+        private int m_hist = 100;
+        private int m_pointSize = 5;
+        private bool m_auto = true;
+        private bool m_label = true;
+        private bool m_zero = true;
+        private bool m_showLast = false;
+        private bool m_showStats = false;
+        private string m_title = null;
+        private Queue m_list = new Queue(100);
+        private ChartStyle m_style = ChartStyle.Bar;
+        private Color m_textColor = Color.Red;
+        private Color m_zeroColor = Color.Black;
+        private Color m_statsColor = Color.Wheat;
         private System.Windows.Forms.PictureBox pictureBox1;
 
-        private static float[] s_sampleData = new float[] {
+        private static float[] s_sampleData = new float[]
+        {
             .9800F,
             .7572F,
             .8259F,
@@ -86,7 +88,8 @@ namespace muzzle
             .7810F,
             .7958F,
             .4636F,
-            .0264F };
+            .0264F
+        };
 
         /// <summary>
         /// Required designer variable.
@@ -105,14 +108,14 @@ namespace muzzle
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
+            if (disposing)
             {
-                if( components != null )
+                if (components != null)
                     components.Dispose();
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
         /// <summary>
@@ -180,10 +183,7 @@ namespace muzzle
         [Category("Chart")]
         public int PointSize
         {
-            get
-            {
-                return m_pointSize;
-            }
+            get { return m_pointSize; }
             set
             {
                 if (m_pointSize != value)
@@ -202,10 +202,7 @@ namespace muzzle
         [Category("Chart")]
         public ChartStyle Style
         {
-            get
-            {
-                return m_style;
-            }
+            get { return m_style; }
             set
             {
                 if (m_style != value)
@@ -224,10 +221,7 @@ namespace muzzle
         [Category("Chart")]
         public float Min
         {
-            get
-            {
-                return m_min;
-            }
+            get { return m_min; }
             set
             {
                 if (m_min != value)
@@ -237,6 +231,7 @@ namespace muzzle
                 }
             }
         }
+
         /// <summary>
         /// Initial maximum value shown
         /// </summary>
@@ -245,10 +240,7 @@ namespace muzzle
         [Category("Chart")]
         public float Max
         {
-            get
-            {
-                return m_max;
-            }
+            get { return m_max; }
             set
             {
                 if (m_max != value)
@@ -258,24 +250,19 @@ namespace muzzle
                 }
             }
         }
+
         /// <summary>
         /// Reset min and max as necessary to show all points.
         /// This must be set before adding any points.
         /// </summary>
         [Description("Reset min and max as necessary to show all points.  " +
-             "This must be set before adding any points.")]
+                     "This must be set before adding any points.")]
         [DefaultValue(true)]
         [Category("Chart")]
         public bool AutoScale
         {
-            get
-            {
-                return m_auto;
-            }
-            set
-            {
-                m_auto = value;
-            }
+            get { return m_auto; }
+            set { m_auto = value; }
         }
 
         /// <summary>
@@ -286,10 +273,7 @@ namespace muzzle
         [Category("Chart")]
         public bool Labels
         {
-            get
-            {
-                return m_label;
-            }
+            get { return m_label; }
             set
             {
                 if (m_label != value)
@@ -308,10 +292,7 @@ namespace muzzle
         [Category("Chart")]
         public bool ZeroLine
         {
-            get
-            {
-                return m_zero;
-            }
+            get { return m_zero; }
             set
             {
                 if (m_zero != value)
@@ -330,10 +311,7 @@ namespace muzzle
         [Category("Chart")]
         public int History
         {
-            get
-            {
-                return m_hist;
-            }
+            get { return m_hist; }
             set
             {
                 if (m_hist != value)
@@ -357,10 +335,7 @@ namespace muzzle
         [Category("Appearance")]
         public Color TextColor
         {
-            get
-            {
-                return m_textColor;
-            }
+            get { return m_textColor; }
             set
             {
                 if (m_textColor != value)
@@ -379,10 +354,7 @@ namespace muzzle
         [Category("Appearance")]
         public Color ZeroColor
         {
-            get
-            {
-                return m_zeroColor;
-            }
+            get { return m_zeroColor; }
             set
             {
                 if (m_zeroColor != value)
@@ -401,10 +373,7 @@ namespace muzzle
         [Category("Appearance")]
         public Color StatsColor
         {
-            get
-            {
-                return m_statsColor;
-            }
+            get { return m_statsColor; }
             set
             {
                 if (m_statsColor != value)
@@ -421,10 +390,7 @@ namespace muzzle
         /// </summary>
         public override Color ForeColor
         {
-            get
-            {
-                return base.ForeColor;
-            }
+            get { return base.ForeColor; }
             set
             {
                 if (base.ForeColor != value)
@@ -440,10 +406,7 @@ namespace muzzle
         /// </summary>
         public override Color BackColor
         {
-            get
-            {
-                return base.BackColor;
-            }
+            get { return base.BackColor; }
             set
             {
                 if (base.BackColor != value)
@@ -482,8 +445,8 @@ namespace muzzle
                 // See:  http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Algorithm_III
                 m_count++;
                 double delta = val - m_mean;
-                m_mean += delta / (double)m_count;
-                m_var_s += delta * (val - m_mean);
+                m_mean += delta/(double) m_count;
+                m_var_s += delta*(val - m_mean);
             }
             if (!DesignMode)
                 ReDraw();
@@ -503,7 +466,7 @@ namespace muzzle
         /// </summary>
         public void Clear()
         {
-            lock(m_list)
+            lock (m_list)
                 m_list.Clear();
             ReDraw();
         }
@@ -531,7 +494,7 @@ namespace muzzle
                 {
                     cleanup = true;
                     foreach (float x in s_sampleData)
-                        AddPoint(m_min + (x * (m_max - m_min)));
+                        AddPoint(m_min + (x*(m_max - m_min)));
                 }
                 ExecReDraw();
                 if (cleanup)
@@ -569,27 +532,27 @@ namespace muzzle
 
             if ((this.Width == 0) || (this.Height == 0)) return null;
 
-            float    h  = this.Height - (2*fh);
-            float    w  = this.Width;
-            float    s  = m_max - m_min;
+            float h = this.Height - (2*fh);
+            float w = this.Width;
+            float s = m_max - m_min;
             if (s <= float.Epsilon)
                 return null;
 
             if ((this.Height <= 0) || (this.Width <= 0))
                 return null;
 
-            Bitmap   bm = new Bitmap(this.Width, this.Height);
-            Graphics g  = Graphics.FromImage(bm);
-            g.SmoothingMode     = SmoothingMode.AntiAlias;
+            Bitmap bm = new Bitmap(this.Width, this.Height);
+            Graphics g = Graphics.FromImage(bm);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             g.Clear(BackColor);
             lock (m_list)
             {
                 if (m_list.Count > 0)
                 {
-                    float stripw = w / ((float)m_hist - 1F);
+                    float stripw = w/((float) m_hist - 1F);
                     Debug.Assert(s != 0);
-                    float y   = 0F;
+                    float y = 0F;
                     int count = 0;
 
                     // this is kinda ugly, because of the repeated code.
@@ -597,39 +560,39 @@ namespace muzzle
                     // every time through the loop.
                     switch (m_style)
                     {
-                    case ChartStyle.Bar:
-                        RectangleF[] rects = new RectangleF[m_list.Count];
-                        foreach (float val in m_list)
-                        {
-                            y = h * (1 - (val - m_min) / s) + fh;
-                            rects[count] = new RectangleF(count * stripw, y, stripw, h - y);
-                            count++;
-                        }
-                        g.FillRectangles(new SolidBrush(ForeColor), rects);
-                        break;
-                    case ChartStyle.Point:
-                        Brush brush = new SolidBrush(ForeColor);
-                        float p2 = fh - (m_pointSize / 2F);
-                        foreach (float val in m_list)
-                        {
-                            y = h * (1 - (val - m_min) / s) + p2;
-                            g.FillEllipse(brush, count * stripw, y, m_pointSize, m_pointSize);
-                            count++;
-                        }
-                        break;
-                    case ChartStyle.Line:
-                        if (m_list.Count > 1)
-                        {
-                            PointF[] points = new PointF[m_list.Count];
+                        case ChartStyle.Bar:
+                            RectangleF[] rects = new RectangleF[m_list.Count];
                             foreach (float val in m_list)
                             {
-                                y = h * (1 - (val - m_min) / s) + fh;
-                                points[count] = new PointF(count * stripw, y);
+                                y = h*(1 - (val - m_min)/s) + fh;
+                                rects[count] = new RectangleF(count*stripw, y, stripw, h - y);
                                 count++;
                             }
-                            g.DrawLines(new Pen(ForeColor), points);
-                        }
-                        break;
+                            g.FillRectangles(new SolidBrush(ForeColor), rects);
+                            break;
+                        case ChartStyle.Point:
+                            Brush brush = new SolidBrush(ForeColor);
+                            float p2 = fh - (m_pointSize/2F);
+                            foreach (float val in m_list)
+                            {
+                                y = h*(1 - (val - m_min)/s) + p2;
+                                g.FillEllipse(brush, count*stripw, y, m_pointSize, m_pointSize);
+                                count++;
+                            }
+                            break;
+                        case ChartStyle.Line:
+                            if (m_list.Count > 1)
+                            {
+                                PointF[] points = new PointF[m_list.Count];
+                                foreach (float val in m_list)
+                                {
+                                    y = h*(1 - (val - m_min)/s) + fh;
+                                    points[count] = new PointF(count*stripw, y);
+                                    count++;
+                                }
+                                g.DrawLines(new Pen(ForeColor), points);
+                            }
+                            break;
                     }
                 }
             }
@@ -637,12 +600,12 @@ namespace muzzle
 
             if (m_zero)
             {
-                float y = h * (1 + m_min / s) + fh;
+                float y = h*(1 + m_min/s) + fh;
                 g.DrawLine(new Pen(m_zeroColor, 1F), 0, y, w, y);
             }
             if (m_showStats)
             {
-                float y = (float)(h * (1 - (m_mean - m_min) / s) + fh);
+                float y = (float) (h*(1 - (m_mean - m_min)/s) + fh);
                 Color stats_color = Color.FromArgb(120, m_zeroColor);
                 Pen stats_pen = new Pen(stats_color, 1.0F);
                 stats_pen.DashStyle = DashStyle.Dash;
@@ -650,14 +613,14 @@ namespace muzzle
                 if (m_count > 1)
                 {
                     stats_pen.DashStyle = DashStyle.Dot;
-                    double stddev = Math.Sqrt(m_var_s / (m_count - 1));
-                    y = (float)(h * (1 - (m_mean + stddev - m_min) / s) + fh);
+                    double stddev = Math.Sqrt(m_var_s/(m_count - 1));
+                    y = (float) (h*(1 - (m_mean + stddev - m_min)/s) + fh);
                     g.DrawLine(stats_pen, 0, y, w, y);
-                    y = (float)(h * (1 - (m_mean - stddev - m_min) / s) + fh);
+                    y = (float) (h*(1 - (m_mean - stddev - m_min)/s) + fh);
                     g.DrawLine(stats_pen, 0, y, w, y);
 
                     Brush b = new SolidBrush(Color.FromArgb(120, m_statsColor));
-                    float std = (float)(2.0F * h * (stddev / s));
+                    float std = (float) (2.0F*h*(stddev/s));
                     g.FillRectangle(b, 0, y - std, w, std);
                 }
             }
@@ -689,13 +652,14 @@ namespace muzzle
             if (this.IsHandleCreated)
             {
                 if (this.InvokeRequired)
-                    Invoke(new BMCB(BitBlt), new object[] { bm });
+                    Invoke(new BMCB(BitBlt), new object[] {bm});
                 else
                     BitBlt(bm);
             }
         }
 
         #region Component Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -703,7 +667,7 @@ namespace muzzle
         private void InitializeComponent()
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             //
             // pictureBox1
@@ -720,10 +684,10 @@ namespace muzzle
             //
             this.Controls.Add(this.pictureBox1);
             this.Name = "StripChart";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-
         }
+
         #endregion
 
         /// <summary>
@@ -735,6 +699,7 @@ namespace muzzle
             base.OnResize(e);
             ReDraw();
         }
+
         /// <summary>
         /// Control has been loaded.  Redraw.
         /// </summary>

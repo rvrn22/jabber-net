@@ -11,6 +11,7 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -19,7 +20,6 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-
 using bedrock.util;
 using jabber.connection;
 
@@ -42,10 +42,12 @@ namespace muzzle
         /// ToolTips.
         /// </summary>
         protected ToolTip tip;
+
         /// <summary>
         /// Error notifications.
         /// </summary>
         protected ErrorProvider error;
+
         private IContainer components;
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace muzzle
         protected OptionForm()
         {
             InitializeComponent();
-			this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
         }
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace muzzle
                 // If we are running in the designer, let's try to auto-hook a JabberClient
                 if ((m_xmpp == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
+                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
                     if (host == null)
                         return null;
                     m_xmpp = StreamComponent.GetStreamFromHost(host);
@@ -97,7 +99,7 @@ namespace muzzle
         {
             if (parent.Tag != null)
             {
-                stream[(string)parent.Tag] = GetControlValue(parent);
+                stream[(string) parent.Tag] = GetControlValue(parent);
             }
             if (parent.HasChildren)
             {
@@ -130,7 +132,7 @@ namespace muzzle
         {
             if (c.Tag != null)
             {
-                root.AppendChild(root.OwnerDocument.CreateElement((string)c.Tag)).InnerText =
+                root.AppendChild(root.OwnerDocument.CreateElement((string) c.Tag)).InnerText =
                     GetControlValue(c).ToString();
             }
             if (c.HasChildren)
@@ -153,14 +155,14 @@ namespace muzzle
             string name = "JabberClient";
             if (m_xmpp != null)
                 name = m_xmpp.GetType().Name;
-            XmlElement root = (XmlElement)doc.CreateElement(name);
+            XmlElement root = (XmlElement) doc.CreateElement(name);
             doc.AppendChild(root);
 
             WriteElem(root, this);
 
             foreach (DictionaryEntry ent in m_extra)
             {
-                root.AppendChild(doc.CreateElement((string)ent.Key)).InnerText = ent.Value.ToString();
+                root.AppendChild(doc.CreateElement((string) ent.Key)).InnerText = ent.Value.ToString();
             }
 
             XmlTextWriter xw = new XmlTextWriter(file, System.Text.Encoding.UTF8);
@@ -177,7 +179,7 @@ namespace muzzle
                 return;
 
             if (parent.Tag != null)
-                SetControlValue(parent, m_xmpp[(string)parent.Tag]);
+                SetControlValue(parent, m_xmpp[(string) parent.Tag]);
             if (parent.HasChildren)
             {
                 foreach (Control child in parent.Controls)
@@ -260,7 +262,7 @@ namespace muzzle
 
         private Control FindComponentByTag(Control parent, string tag)
         {
-            if ((string)parent.Tag == tag)
+            if ((string) parent.Tag == tag)
                 return parent;
             if (parent.HasChildren)
             {
@@ -289,7 +291,7 @@ namespace muzzle
                 return cmb.SelectedItem;
             NumericUpDown num = c as NumericUpDown;
             if (num != null)
-                return (int)num.Value;
+                return (int) num.Value;
             throw new ArgumentException("Control with no tag", c.Name);
         }
 
@@ -299,15 +301,15 @@ namespace muzzle
             if (chk != null)
             {
                 if (val is bool)
-                    chk.Checked = (bool)val;
+                    chk.Checked = (bool) val;
                 else if (val is string)
-                    chk.Checked = bool.Parse((string)val);
+                    chk.Checked = bool.Parse((string) val);
                 return;
             }
             TextBox txt = c as TextBox;
             if (txt != null)
             {
-                txt.Text = (string)val;
+                txt.Text = (string) val;
                 return;
             }
             ComboBox cmb = c as ComboBox;
@@ -317,7 +319,7 @@ namespace muzzle
                     cmb.SelectedItem = val;
                 else if (val is string)
                 {
-                    cmb.SelectedItem = Enum.Parse(cmb.SelectedItem.GetType(), (string)val);
+                    cmb.SelectedItem = Enum.Parse(cmb.SelectedItem.GetType(), (string) val);
                 }
                 return;
             }
@@ -325,10 +327,10 @@ namespace muzzle
             if (num != null)
             {
                 if (val is int)
-                    num.Value = (int)val;
+                    num.Value = (int) val;
                 else if (val is string)
                 {
-                    num.Value = int.Parse((string)val);
+                    num.Value = int.Parse((string) val);
                 }
 
                 return;
@@ -398,7 +400,7 @@ namespace muzzle
             //
             // btnCancel
             //
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.CausesValidation = false;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(228, 8);
@@ -410,7 +412,7 @@ namespace muzzle
             //
             // btnOK
             //
-            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Location = new System.Drawing.Point(172, 8);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(48, 23);
@@ -444,8 +446,8 @@ namespace muzzle
             this.Load += new System.EventHandler(this.OptionForm_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
+
         #endregion
 
         /// <summary>
@@ -455,7 +457,7 @@ namespace muzzle
         /// <param name="e"></param>
         protected void Required(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            TextBox box = (TextBox)sender;
+            TextBox box = (TextBox) sender;
             if (!box.Enabled)
                 return;
             if ((box.Text == null) || (box.Text == ""))
@@ -472,7 +474,7 @@ namespace muzzle
         /// <param name="e"></param>
         public void ClearError(object sender, System.EventArgs e)
         {
-            error.SetError((Control)sender, "");
+            error.SetError((Control) sender, "");
         }
 
         private void btnOK_Click(object sender, EventArgs e)

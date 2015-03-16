@@ -11,6 +11,7 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections;
 using System.Diagnostics;
@@ -19,7 +20,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol
@@ -55,9 +55,9 @@ namespace jabber.protocol
         /// jabber:client and jabber:component:accept are removed from the root element,
         /// and empty namespace declarations are removed throughout.
         /// </summary>
-        private static readonly Regex s_RemoveNS = 
+        private static readonly Regex s_RemoveNS =
             new Regex("(?:(?<=^[^>]*)( xmlns=\"(?:jabber:client|jabber:component:accept)\")| xmlns=\"\")",
-                      RegexOptions.Compiled);
+                RegexOptions.Compiled);
 
         /// <summary>
         ///
@@ -69,6 +69,7 @@ namespace jabber.protocol
             base(prefix, qname.Name, qname.Namespace, doc)
         {
         }
+
         /// <summary>
         ///
         /// </summary>
@@ -78,6 +79,7 @@ namespace jabber.protocol
             base("", localName, "", doc)
         {
         }
+
         /// <summary>
         ///
         /// </summary>
@@ -104,7 +106,7 @@ namespace jabber.protocol
             for (XmlNode node = this.FirstChild; node != null; node = node.NextSibling)
             {
                 if (node is T)
-                    return (T)node;
+                    return (T) node;
             }
             return null;
         }
@@ -155,10 +157,7 @@ namespace jabber.protocol
         /// </summary>
         public override string OuterXml
         {
-            get
-            {
-                return s_RemoveNS.Replace(base.OuterXml, "");
-            }
+            get { return s_RemoveNS.Replace(base.OuterXml, ""); }
         }
 
         /// <summary>
@@ -291,9 +290,9 @@ namespace jabber.protocol
         {
             // Note: It would be cool to just do new T(OwnerDocument), but you can only call
             // parameter-less constructors in generic-land.
-            ConstructorInfo constructor = typeof(T).GetConstructor(new Type[] { typeof(XmlDocument) });
-            Debug.Assert(constructor != null, "Type " + typeof(T).ToString() + " does not have a constructor taking an XmlDocument");
-            T c = (T)constructor.Invoke(new object[] { this.OwnerDocument });
+            ConstructorInfo constructor = typeof (T).GetConstructor(new Type[] {typeof (XmlDocument)});
+            Debug.Assert(constructor != null, "Type " + typeof (T).ToString() + " does not have a constructor taking an XmlDocument");
+            T c = (T) constructor.Invoke(new object[] {this.OwnerDocument});
             AppendChild(c);
             return c;
         }
@@ -333,7 +332,7 @@ namespace jabber.protocol
         /// <returns></returns>
         protected XmlElement GetOrCreateElement(string name, string xmlns, Type typeToCreate)
         {
-            string ns = (xmlns!=null) ? xmlns : NamespaceURI;
+            string ns = (xmlns != null) ? xmlns : NamespaceURI;
             XmlElement child = this[name, ns];
             if (child != null)
                 return child;
@@ -342,11 +341,11 @@ namespace jabber.protocol
                 child = this.OwnerDocument.CreateElement(name, ns);
             else
             {
-                Debug.Assert(typeToCreate.IsSubclassOf(typeof(XmlElement)));
+                Debug.Assert(typeToCreate.IsSubclassOf(typeof (XmlElement)));
 
-                ConstructorInfo constructor = typeToCreate.GetConstructor(new Type[] { typeof(XmlDocument) });
+                ConstructorInfo constructor = typeToCreate.GetConstructor(new Type[] {typeof (XmlDocument)});
                 Debug.Assert(constructor != null);
-                child = constructor.Invoke(new object[] { this.OwnerDocument }) as XmlElement;
+                child = constructor.Invoke(new object[] {this.OwnerDocument}) as XmlElement;
                 Debug.Assert(child != null);
             }
 
@@ -442,6 +441,7 @@ namespace jabber.protocol
                     this.RemoveChild(n);
             }
         }
+
         /// <summary>
         /// Removes all of the matching elements from this element.
         /// </summary>
@@ -520,7 +520,7 @@ namespace jabber.protocol
         /// <param name="value"></param>
         protected void SetEnumAttr(string name, object value)
         {
-            if ((value == null) || ((int)value == -1))
+            if ((value == null) || ((int) value == -1))
             {
                 RemoveAttribute(name);
                 return;
@@ -552,6 +552,7 @@ namespace jabber.protocol
                 return -1;
             }
         }
+
         /// <summary>
         /// Set the value of a given attribute, as an integer.  Use -1
         /// to remove the attribute.
@@ -592,6 +593,7 @@ namespace jabber.protocol
                 return -1L;
             }
         }
+
         /// <summary>
         /// Set the value of a given attribute, as a long  Use -1L
         /// to remove the attribute.
@@ -607,7 +609,7 @@ namespace jabber.protocol
             else
                 SetAttribute(name, val.ToString());
         }
-        
+
         /// <summary>
         /// Get an attribute cast to DateTime, using the DateTime profile
         /// of XEP-82.
@@ -653,6 +655,7 @@ namespace jabber.protocol
             }
             return sb.ToString();
         }
+
         /// <summary>
         /// Convert the given array of bytes into a string, having two characters
         /// for each byte, corresponding to the hex representation of that byte.
@@ -665,7 +668,7 @@ namespace jabber.protocol
         {
             // it seems like there ought to be a better way to do this.
             StringBuilder sb = new StringBuilder();
-            for (int i=offset; i < length; i++)
+            for (int i = offset; i < length; i++)
             {
                 sb.Append(buf[i].ToString("x2"));
             }
@@ -720,17 +723,18 @@ namespace jabber.protocol
             try
             {
                 return new DateTime(int.Parse(dt.Substring(0, 4)),
-                                    int.Parse(dt.Substring(4, 2)),
-                                    int.Parse(dt.Substring(6, 2)),
-                                    int.Parse(dt.Substring(9,2)),
-                                    int.Parse(dt.Substring(12,2)),
-                                    int.Parse(dt.Substring(15,2)));
+                    int.Parse(dt.Substring(4, 2)),
+                    int.Parse(dt.Substring(6, 2)),
+                    int.Parse(dt.Substring(9, 2)),
+                    int.Parse(dt.Substring(12, 2)),
+                    int.Parse(dt.Substring(15, 2)));
             }
             catch
             {
                 return DateTime.MinValue;
             }
         }
+
         /// <summary>
         /// Get a jabber-formated date for the DateTime.   Example date: 20020504T20:39:42
         /// </summary>
@@ -834,9 +838,9 @@ namespace jabber.protocol
         private static readonly Type[] s_constructor_parms =
             new Type[]
             {
-                typeof(string),
-                typeof(XmlQualifiedName),
-                typeof(XmlDocument)
+                typeof (string),
+                typeof (XmlQualifiedName),
+                typeof (XmlDocument)
             };
 
         /// <summary>
@@ -864,7 +868,7 @@ namespace jabber.protocol
             {
                 Debug.WriteLine("Bad type: " + ci.DeclaringType.ToString());
             }
-            XmlElement el = (Element)ci.Invoke(new object[] { this.Prefix, new XmlQualifiedName(this.LocalName, this.NamespaceURI), doc });
+            XmlElement el = (Element) ci.Invoke(new object[] {this.Prefix, new XmlQualifiedName(this.LocalName, this.NamespaceURI), doc});
             if (el.GetType() != this.GetType())
             {
                 Debug.Assert(el.GetType() == this.GetType());
@@ -877,7 +881,7 @@ namespace jabber.protocol
             if (this.HasAttributes)
             {
                 foreach (XmlAttribute attr in this.Attributes)
-                    el.Attributes.Append((XmlAttribute)doc.ImportNode(attr, true));
+                    el.Attributes.Append((XmlAttribute) doc.ImportNode(attr, true));
             }
 
             if (deep)
@@ -886,7 +890,7 @@ namespace jabber.protocol
                 {
                     if (n is Element)
                     {
-                        el.AppendChild(((Element)n).CloneNode(deep, doc));
+                        el.AppendChild(((Element) n).CloneNode(deep, doc));
                     }
                     else
                     {
@@ -907,7 +911,7 @@ namespace jabber.protocol
         public static Element AddTypes(XmlElement source, ElementFactory factory)
         {
             if (source is Element)
-                return (Element)source; // assume all kids are converted already.
+                return (Element) source; // assume all kids are converted already.
 
             XmlDocument doc = source.OwnerDocument;
             XmlQualifiedName qn = new XmlQualifiedName(source.Name, source.NamespaceURI);
@@ -918,13 +922,13 @@ namespace jabber.protocol
             if (source.HasAttributes)
             {
                 foreach (XmlAttribute attr in source.Attributes)
-                    el.Attributes.Append((XmlAttribute)attr.CloneNode(true));
+                    el.Attributes.Append((XmlAttribute) attr.CloneNode(true));
             }
 
             foreach (XmlNode n in source.ChildNodes)
             {
                 if (n is XmlElement)
-                    el.AppendChild(AddTypes((XmlElement)n, factory));
+                    el.AppendChild(AddTypes((XmlElement) n, factory));
                 else
                     el.AppendChild(n.CloneNode(true));
             }
@@ -935,7 +939,8 @@ namespace jabber.protocol
         /// <summary>
         /// System-wide one-up counter, for numbering packets.
         /// </summary>
-        static int s_counter = 0;
+        private static int s_counter = 0;
+
         /// <summary>
         /// Reset the packet ID counter.  This is ONLY to be used for test cases!   No locking!
         /// </summary>

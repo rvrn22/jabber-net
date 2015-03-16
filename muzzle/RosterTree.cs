@@ -11,15 +11,14 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
 using System.Diagnostics;
 using System.Windows.Forms;
-
 using bedrock.collections;
 using bedrock.util;
 using jabber;
@@ -38,23 +37,23 @@ namespace muzzle
     public class RosterTree : System.Windows.Forms.TreeView
     {
         // image list offsets
-        private const int OFFLINE    = 0;
-        private const int ONLINE     = 1;
-        private const int AWAY       = 2;
-        private const int XA         = 3;
-        private const int DND        = 4;
-        private const int CHATTY     = 5;
-        private const int EXPANDED   = 6;
-        private const int COLLAPSED  = 7;
+        private const int OFFLINE = 0;
+        private const int ONLINE = 1;
+        private const int AWAY = 2;
+        private const int XA = 3;
+        private const int DND = 4;
+        private const int CHATTY = 5;
+        private const int EXPANDED = 6;
+        private const int COLLAPSED = 7;
 
         private const string UNFILED = "Unfiled";
 
-        private RosterManager   m_roster = null;
-        private PresenceManager m_pres   = null;
-        private JabberClient    m_client = null;
+        private RosterManager m_roster = null;
+        private PresenceManager m_pres = null;
+        private JabberClient m_client = null;
 
         private IDictionary m_groups = new SkipList();
-        private IDictionary m_items  = new SkipList();
+        private IDictionary m_items = new SkipList();
 
         private System.Windows.Forms.ImageList il;
         private System.Windows.Forms.ToolTip tt;
@@ -91,7 +90,7 @@ namespace muzzle
 
         private void DrawGroup(DrawTreeNodeEventArgs e)
         {
-            GroupNode node = (GroupNode)e.Node;
+            GroupNode node = (GroupNode) e.Node;
             string counts = String.Format("({0}/{1})", node.Current, node.Total);
 
             if (node.IsSelected)
@@ -116,7 +115,7 @@ namespace muzzle
 
         private void DrawItem(DrawTreeNodeEventArgs e)
         {
-            ItemNode node = (ItemNode)e.Node;
+            ItemNode node = (ItemNode) e.Node;
             if (node.IsSelected)
             {
                 e.DrawDefault = true;
@@ -148,7 +147,7 @@ namespace muzzle
 
         private GroupNode GetDropGroup(DragEventArgs e)
         {
-            if (!e.Data.GetDataPresent(typeof(ItemNode)))
+            if (!e.Data.GetDataPresent(typeof (ItemNode)))
                 return null;
 
             Point pt = this.PointToClient(new Point(e.X, e.Y));
@@ -160,10 +159,10 @@ namespace muzzle
             if (node == null)
                 return null;
 
-            ItemNode item = e.Data.GetData(typeof(ItemNode)) as ItemNode;
+            ItemNode item = e.Data.GetData(typeof (ItemNode)) as ItemNode;
             if (item.Parent == node)
                 return null;
-            return (GroupNode)node;
+            return (GroupNode) node;
         }
 
         private void RosterTree_DragDrop(object sender, DragEventArgs e)
@@ -171,9 +170,9 @@ namespace muzzle
             GroupNode group = GetDropGroup(e);
             if (group == null)
                 return;
-            ItemNode item = e.Data.GetData(typeof(ItemNode)) as ItemNode;
-            GroupNode parent = (GroupNode)item.Parent;
-            Item i = (Item)item.Item.CloneNode(true, m_client.Document);
+            ItemNode item = e.Data.GetData(typeof (ItemNode)) as ItemNode;
+            GroupNode parent = (GroupNode) item.Parent;
+            Item i = (Item) item.Item.CloneNode(true, m_client.Document);
             i.RemoveGroup(parent.GroupName);
             i.AddGroup(group.GroupName);
             m_roster.Modify(i);
@@ -191,7 +190,7 @@ namespace muzzle
 
         private void RosterTree_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(ItemNode)))
+            if (e.Data.GetDataPresent(typeof (ItemNode)))
                 e.Effect = DragDropEffects.Move;
             else
                 e.Effect = DragDropEffects.None;
@@ -206,19 +205,20 @@ namespace muzzle
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
+            if (disposing)
             {
-                if(components != null)
+                if (components != null)
                 {
                     components.Dispose();
                 }
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
         #region Component Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -226,14 +226,14 @@ namespace muzzle
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RosterTree));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof (RosterTree));
             this.il = new System.Windows.Forms.ImageList(this.components);
             this.tt = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             //
             // il
             //
-            this.il.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("il.ImageStream")));
+            this.il.ImageStream = ((System.Windows.Forms.ImageListStreamer) (resources.GetObject("il.ImageStream")));
             this.il.TransparentColor = System.Drawing.Color.Magenta;
             this.il.Images.SetKeyName(0, "");
             this.il.Images.SetKeyName(1, "");
@@ -245,8 +245,8 @@ namespace muzzle
             this.il.Images.SetKeyName(7, "");
             this.il.Images.SetKeyName(8, "blank");
             this.ResumeLayout(false);
-
         }
+
         #endregion
 
         /// <summary>
@@ -260,14 +260,14 @@ namespace muzzle
                 // If we are running in the designer, let's try to auto-hook a RosterManager
                 if ((m_roster == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
-                    this.RosterManager = (RosterManager)jabber.connection.StreamComponent.GetComponentFromHost(host, typeof(RosterManager));
+                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
+                    this.RosterManager = (RosterManager) jabber.connection.StreamComponent.GetComponentFromHost(host, typeof (RosterManager));
                 }
                 return m_roster;
             }
             set
             {
-                if ((object)m_roster == (object)value)
+                if ((object) m_roster == (object) value)
                     return;
                 m_roster = value;
                 if (m_roster != null)
@@ -290,14 +290,14 @@ namespace muzzle
                 // If we are running in the designer, let's try to auto-hook a PresenceManager
                 if ((m_pres == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost) base.GetService(typeof(IDesignerHost));
-                    this.PresenceManager = (PresenceManager)jabber.connection.StreamComponent.GetComponentFromHost(host, typeof(PresenceManager));
+                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
+                    this.PresenceManager = (PresenceManager) jabber.connection.StreamComponent.GetComponentFromHost(host, typeof (PresenceManager));
                 }
                 return m_pres;
             }
             set
             {
-                if ((object)m_pres == (object)value)
+                if ((object) m_pres == (object) value)
                     return;
                 m_pres = value;
                 if (m_pres != null)
@@ -316,14 +316,14 @@ namespace muzzle
                 // If we are running in the designer, let's try to auto-hook a JabberClient
                 if ((m_client == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost) base.GetService(typeof(IDesignerHost));
-                    this.Client = (JabberClient)jabber.connection.StreamComponent.GetComponentFromHost(host, typeof(JabberClient));
+                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
+                    this.Client = (JabberClient) jabber.connection.StreamComponent.GetComponentFromHost(host, typeof (JabberClient));
                 }
                 return m_client;
             }
             set
             {
-                if ((object)m_client == (object)value)
+                if ((object) m_client == (object) value)
                     return;
                 m_client = value;
                 if (m_client != null)
@@ -348,10 +348,7 @@ namespace muzzle
         [DefaultValue(true)]
         public bool DrawStatus
         {
-            get
-            {
-                return (this.DrawMode == TreeViewDrawMode.OwnerDrawText);
-            }
+            get { return (this.DrawMode == TreeViewDrawMode.OwnerDrawText); }
             set
             {
                 if (value)
@@ -404,7 +401,7 @@ namespace muzzle
             e.Node.ImageIndex = EXPANDED;
             e.Node.SelectedImageIndex = EXPANDED;
 
-            base.OnAfterExpand (e);
+            base.OnAfterExpand(e);
         }
 
         /// <summary>
@@ -416,7 +413,7 @@ namespace muzzle
             e.Node.ImageIndex = COLLAPSED;
             e.Node.SelectedImageIndex = COLLAPSED;
 
-            base.OnAfterCollapse (e);
+            base.OnAfterCollapse(e);
         }
 
         /// <summary>
@@ -428,7 +425,8 @@ namespace muzzle
             base.OnMouseMove(e);
             ItemNode node = this.GetNodeAt(e.X, e.Y) as ItemNode;
             if (node == null)
-            { // none selected, or a group
+            {
+                // none selected, or a group
                 tt.SetToolTip(this, "");
                 return;
             }
@@ -440,7 +438,7 @@ namespace muzzle
 
         private GroupNode AddGroupNode(Group g)
         {
-            GroupNode gn = (GroupNode)m_groups[g.GroupName];
+            GroupNode gn = (GroupNode) m_groups[g.GroupName];
             if (gn == null)
             {
                 gn = new GroupNode(g);
@@ -454,7 +452,7 @@ namespace muzzle
         {
             bool remove = (ri.Subscription == Subscription.remove);
 
-            LinkedList nodelist = (LinkedList)m_items[ri.JID.ToString()];
+            LinkedList nodelist = (LinkedList) m_items[ri.JID.ToString()];
             if (nodelist == null)
             {
                 // First time through.
@@ -488,7 +486,7 @@ namespace muzzle
             // add the new ones back
             Hashtable ghash = new Hashtable();
             Group[] groups = ri.GetGroups();
-            for (int i=groups.Length-1; i>=0; i--)
+            for (int i = groups.Length - 1; i >= 0; i--)
             {
                 if (groups[i].GroupName == "")
                     groups[i].GroupName = UNFILED;
@@ -496,7 +494,7 @@ namespace muzzle
 
             if (groups.Length == 0)
             {
-                groups = new Group[] { new Group(ri.OwnerDocument) };
+                groups = new Group[] {new Group(ri.OwnerDocument)};
                 groups[0].GroupName = UNFILED;
             }
 
@@ -694,6 +692,5 @@ namespace muzzle
                 return OFFLINE;
             }
         }
-
     }
 }

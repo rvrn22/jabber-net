@@ -11,12 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-
 using bedrock.util;
 using jabber;
 
@@ -25,7 +25,6 @@ namespace Example
     [SVN(@"$Id$")]
     public class AddContact : Form
     {
-
         private Label label1;
         private TextBox txtJID;
         private Label label2;
@@ -67,26 +66,14 @@ namespace Example
         /// </summary>
         public JID JID
         {
-            get
-            {
-                return new JID(txtJID.Text);
-            }
-            set
-            {
-                txtJID.Text = value.ToString();
-            }
+            get { return new JID(txtJID.Text); }
+            set { txtJID.Text = value.ToString(); }
         }
 
         public string Nickname
         {
-            get
-            {
-                return txtNickname.Text;
-            }
-            set
-            {
-                txtNickname.Text = value;
-            }
+            get { return txtNickname.Text; }
+            set { txtNickname.Text = value; }
         }
 
         /// <summary>
@@ -124,11 +111,11 @@ namespace Example
             {
                 lbGroups.BeginUpdate();
                 lbGroups.ClearSelected();
-                for (int i=0; i<lbGroups.Items.Count; i++ )
+                for (int i = 0; i < lbGroups.Items.Count; i++)
                 {
-                    for (int j=0; j<value.Length; j++)
+                    for (int j = 0; j < value.Length; j++)
                     {
-                        if (((string)lbGroups.Items[i]) == value[j])
+                        if (((string) lbGroups.Items[i]) == value[j])
                         {
                             lbGroups.SetItemChecked(i, true);
                         }
@@ -178,8 +165,8 @@ namespace Example
             //
             // txtJID
             //
-            this.txtJID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtJID.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtJID.Location = new System.Drawing.Point(86, 6);
             this.txtJID.Name = "txtJID";
             this.txtJID.Size = new System.Drawing.Size(269, 20);
@@ -197,8 +184,8 @@ namespace Example
             //
             // txtNickname
             //
-            this.txtNickname.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNickname.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNickname.Location = new System.Drawing.Point(86, 32);
             this.txtNickname.Name = "txtNickname";
             this.txtNickname.Size = new System.Drawing.Size(269, 20);
@@ -215,9 +202,9 @@ namespace Example
             //
             // lbGroups
             //
-            this.lbGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbGroups.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                                                                           | System.Windows.Forms.AnchorStyles.Left)
+                                                                          | System.Windows.Forms.AnchorStyles.Right)));
             this.lbGroups.Location = new System.Drawing.Point(86, 58);
             this.lbGroups.Name = "lbGroups";
             this.lbGroups.Size = new System.Drawing.Size(269, 124);
@@ -226,7 +213,7 @@ namespace Example
             //
             // btnOK
             //
-            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new System.Drawing.Point(199, 215);
             this.btnOK.Name = "btnOK";
@@ -236,7 +223,7 @@ namespace Example
             //
             // btnCancel
             //
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(280, 216);
             this.btnCancel.Name = "btnCancel";
@@ -280,7 +267,6 @@ namespace Example
             this.Text = "Add Contact";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -320,6 +306,5 @@ namespace Example
                 txtNickname.Text = jid.User;
             }
         }
-
     }
 }

@@ -11,12 +11,13 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Threading;
 using NUnit.Framework;
 using bedrock.net;
 using bedrock.util;
+
 namespace test.bedrock.net
 {
     /// <summary>
@@ -35,7 +36,8 @@ namespace test.bedrock.net
         private bool succeeded = true;
         private string errorMessage;
 
-        [Test] public void Test_Write()
+        [Test]
+        public void Test_Write()
         {
             SocketWatcher w = new SocketWatcher(20);
             Address a = new Address("127.0.0.1", 7001);
@@ -95,7 +97,7 @@ namespace test.bedrock.net
             Assert.IsTrue(one != two);
             Assert.IsTrue(two != one);
 
-            int c = ((IComparable)one).CompareTo(two);
+            int c = ((IComparable) one).CompareTo(two);
             Assert.IsTrue(c != 0);
             if (c == -1)
             {
@@ -120,8 +122,11 @@ namespace test.bedrock.net
             one.Close();
             two.Close();
         }
+
 // #pragma warning restore
+
         #region Implementation of ISocketEventListener
+
         public bool OnAccept(BaseSocket newsocket)
         {
             newsocket.RequestRead();
@@ -132,7 +137,7 @@ namespace test.bedrock.net
         {
             success = ENC.GetString(buf, offset, length);
             sock.Close();
-            lock(done)
+            lock (done)
             {
                 Monitor.Pulse(done);
             }
@@ -162,12 +167,10 @@ namespace test.bedrock.net
 
         public void OnClose(BaseSocket sock)
         {
-
         }
 
         public void OnInit(BaseSocket new_sock)
         {
-
         }
 
         public ISocketEventListener GetListener(BaseSocket new_sock)

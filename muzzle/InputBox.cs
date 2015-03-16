@@ -11,16 +11,15 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-
 using bedrock.util;
 
 namespace muzzle
 {
-
     /// <summary>
     /// A generic input getter dialog.
     /// </summary>
@@ -114,8 +113,8 @@ namespace muzzle
             //
             // panel1
             //
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(12, 10);
@@ -136,7 +135,6 @@ namespace muzzle
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

@@ -11,9 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.IO;
-
 using bedrock.util;
 
 namespace bedrock.io
@@ -23,7 +23,8 @@ namespace bedrock.io
     /// </summary>
     [SVN(@"$Id$")]
     public class BufferAggregate
-    { // RingBuffer of the Nieblung
+    {
+        // RingBuffer of the Nieblung
         private class BufNode
         {
             public byte[] buf;

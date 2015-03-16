@@ -13,6 +13,7 @@
  *
  * xpnet is a deriviative of James Clark's XP.  See copying.txt for more info.
  * --------------------------------------------------------------------------*/
+
 namespace xpnet
 {
     using bedrock.util;
@@ -41,6 +42,7 @@ namespace xpnet
     public class EndOfPrologException : TokenException
     {
     }
+
     /**
      * Thrown to indicate that the byte subarray being tokenized is a legal XML
      * token, but that subsequent bytes in the same entity could be part of
@@ -48,6 +50,7 @@ namespace xpnet
      * would throw this if the byte subarray consists of a legal XML name.
      * @version $Revision$ $Date$
      */
+
     [SVN(@"$Id$")]
     public class ExtensibleTokenException : TokenException
     {
@@ -65,6 +68,7 @@ namespace xpnet
         /**
          * Returns the type of token in the byte subarrary.
          */
+
         public TOK TokenType
         {
             get { return tokType; }
@@ -84,10 +88,12 @@ namespace xpnet
         /// An illegal character
         /// </summary>
         public const byte ILLEGAL_CHAR = 0;
+
         /// <summary>
         /// Doc prefix wasn't XML
         /// </summary>
         public const byte XML_TARGET = 1;
+
         /// <summary>
         /// More than one attribute with the same name on the same element
         /// </summary>
@@ -136,7 +142,7 @@ namespace xpnet
         /// <returns></returns>
         public override string ToString()
         {
-            return "OFFSET: " + this.offset.ToString() + "\r\nTYPE: " + this.type.ToString() + "\r\n" +  base.ToString();
+            return "OFFSET: " + this.offset.ToString() + "\r\nTYPE: " + this.type.ToString() + "\r\n" + base.ToString();
         }
     }
 
@@ -146,6 +152,7 @@ namespace xpnet
      * more bytes were added.
      * @version $Revision$ $Date$
      */
+
     [SVN(@"$Id$")]
     public class PartialCharException : PartialTokenException
     {
@@ -164,6 +171,7 @@ namespace xpnet
          * Returns the index of the first byte that is not part of the complete
          * encoding of a character.
          */
+
         public int LeadByteIndex
         {
             get { return leadByteIndex; }

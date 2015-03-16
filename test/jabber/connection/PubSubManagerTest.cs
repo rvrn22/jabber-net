@@ -11,17 +11,15 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System.Collections;
 using System.Reflection;
 using System.Xml;
-
 using bedrock.util;
-
 using jabber;
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.client;
-
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -71,12 +69,12 @@ namespace test.jabber.connection
             {
                 Expect.Call(stream.Document).Return(doc);
                 SetupTrackerBeginIq(delegate(IQ iq, IqCB cb, object cbArg)
-                    {
-                        string id = iq.GetAttribute("id");
-                        string original = iq.OuterXml.Replace(" ", "");
-                        string comparison = GetCreateNodeIQ(id).Replace(" ", "");
-                        return original == comparison;
-                    });
+                {
+                    string id = iq.GetAttribute("id");
+                    string original = iq.OuterXml.Replace(" ", "");
+                    string comparison = GetCreateNodeIQ(id).Replace(" ", "");
+                    return original == comparison;
+                });
             }
 
             using (mocks.Playback())
@@ -94,12 +92,12 @@ namespace test.jabber.connection
             {
                 Expect.Call(stream.Document).Return(doc);
                 SetupTrackerBeginIq(delegate(IQ iq, IqCB cb, object cbArg)
-                    {
-                        string id = iq.GetAttribute("id");
-                        string original = iq.OuterXml.Replace(" ", "");
-                        string comparison = GetRemoveNodeIq(id).Replace(" ", "");
-                        return original == comparison;
-                    });
+                {
+                    string id = iq.GetAttribute("id");
+                    string original = iq.OuterXml.Replace(" ", "");
+                    string comparison = GetRemoveNodeIq(id).Replace(" ", "");
+                    return original == comparison;
+                });
             }
 
             using (mocks.Playback())
@@ -115,10 +113,7 @@ namespace test.jabber.connection
             using (mocks.Record())
             {
                 Expect.Call(stream.Document).Return(doc);
-                SetupTrackerBeginIq(delegate
-                {
-                    return true;
-                });
+                SetupTrackerBeginIq(delegate { return true; });
             }
 
             using (mocks.Playback())
@@ -128,7 +123,7 @@ namespace test.jabber.connection
 
                 FieldInfo fieldInfo = mgr.GetType().GetField("m_nodes",
                     BindingFlags.Instance | BindingFlags.NonPublic);
-                IDictionary nodes = (IDictionary)fieldInfo.GetValue(mgr);
+                IDictionary nodes = (IDictionary) fieldInfo.GetValue(mgr);
                 if (nodes == null || nodes.Count != 1)
                     Assert.Fail("The GetNode function failed");
 
@@ -144,11 +139,11 @@ namespace test.jabber.connection
             {
                 Expect.Call(stream.Document).Return(doc);
                 SetupTrackerBeginIq(delegate(IQ iq, IqCB cb, object cbArg)
-                    {
-                        string id = iq.GetAttribute("id");
-                        string original = iq.OuterXml;
-                        return original.Replace(" ", "") == GetRemoveNodeIq(id).Replace(" ", "");
-                    });
+                {
+                    string id = iq.GetAttribute("id");
+                    string original = iq.OuterXml;
+                    return original.Replace(" ", "") == GetRemoveNodeIq(id).Replace(" ", "");
+                });
             }
 
             using (mocks.Playback())
@@ -171,12 +166,12 @@ namespace test.jabber.connection
                 Expect.Call(stream.Document).Return(doc);
                 Expect.Call(stream.Document).Return(doc);
                 SetupTrackerBeginIq(delegate(IQ iq, IqCB cb, object cbArg)
-                    {
-                        string id = iq.GetAttribute("id");
-                        string original = iq.OuterXml.Replace(" ", "");
-                        string comparison = GetPublishItemIq(id).Replace(" ", "");
-                        return original == comparison;
-                    });
+                {
+                    string id = iq.GetAttribute("id");
+                    string original = iq.OuterXml.Replace(" ", "");
+                    string comparison = GetPublishItemIq(id).Replace(" ", "");
+                    return original == comparison;
+                });
             }
 
             using (mocks.Playback())
@@ -201,12 +196,12 @@ namespace test.jabber.connection
             {
                 Expect.Call(stream.Document).Return(doc);
                 SetupTrackerBeginIq(delegate(IQ iq, IqCB cb, object cbArg)
-                    {
-                        string id = iq.GetAttribute("id");
-                        string original = iq.OuterXml.Replace(" ", "");
-                        string comparison = GetDeleteItemString(id).Replace(" ", "");
-                        return original == comparison;
-                    });
+                {
+                    string id = iq.GetAttribute("id");
+                    string original = iq.OuterXml.Replace(" ", "");
+                    string comparison = GetDeleteItemString(id).Replace(" ", "");
+                    return original == comparison;
+                });
             }
 
             using (mocks.Playback())
@@ -219,12 +214,12 @@ namespace test.jabber.connection
         private string GetDeleteItemString(string id)
         {
             return string.Format(
-                "<iq id=\"{0}\" type=\"set\" to=\"{1}\">"+
-                    "<pubsub xmlns=\"{2}\">"+
-                        "<retract node=\"{3}\">"+
-                            "<item id=\"{4}\"/>"+
-                        "</retract>"+
-                    "</pubsub>"+
+                "<iq id=\"{0}\" type=\"set\" to=\"{1}\">" +
+                "<pubsub xmlns=\"{2}\">" +
+                "<retract node=\"{3}\">" +
+                "<item id=\"{4}\"/>" +
+                "</retract>" +
+                "</pubsub>" +
                 "</iq>",
                 id, jid, PUB_SUB_XMLNS, NODE, PUB_SUB_ID);
         }
@@ -233,13 +228,13 @@ namespace test.jabber.connection
         {
             return string.Format(
                 "<iq id=\"{0}\" type=\"set\" to=\"{1}\">" +
-                    "<pubsub xmlns=\"{2}\">"+
-                        "<publish node=\"{3}\">"+
-                            "<item>"+
-                                "<{4} xmlns=\"{5}\"/>"+
-                            "</item>"+
-                        "</publish>"+
-                    "</pubsub>"+
+                "<pubsub xmlns=\"{2}\">" +
+                "<publish node=\"{3}\">" +
+                "<item>" +
+                "<{4} xmlns=\"{5}\"/>" +
+                "</item>" +
+                "</publish>" +
+                "</pubsub>" +
                 "</iq>",
                 id, jid, PUB_SUB_XMLNS, NODE, PUB_SUB_ITEM, PUB_SUB_ITEM_XMLNS);
         }
@@ -254,10 +249,10 @@ namespace test.jabber.connection
         private string GetRemoveNodeIq(string id)
         {
             return string.Format(
-                "<iq id=\"{0}\" type=\"set\" to=\"{1}\">"+
-                    "<pubsub xmlns=\"{2}\">"+
-                        "<delete node=\"{3}\"/>"+
-                    "</pubsub>"+
+                "<iq id=\"{0}\" type=\"set\" to=\"{1}\">" +
+                "<pubsub xmlns=\"{2}\">" +
+                "<delete node=\"{3}\"/>" +
+                "</pubsub>" +
                 "</iq>",
                 id, jid, URI.PUBSUB_OWNER, NODE);
         }
@@ -266,11 +261,11 @@ namespace test.jabber.connection
         {
             return
                 string.Format(
-                    "<iq id=\"{0}\" type=\"set\" to=\"{1}\">"+
-                        "<pubsub xmlns=\"{2}\">"+
-                            "<create node=\"{3}\"/>"+
-                            "<configure/>"+
-                        "</pubsub>"+
+                    "<iq id=\"{0}\" type=\"set\" to=\"{1}\">" +
+                    "<pubsub xmlns=\"{2}\">" +
+                    "<create node=\"{3}\"/>" +
+                    "<configure/>" +
+                    "</pubsub>" +
                     "</iq>",
                     id, jid, PUB_SUB_XMLNS, NODE);
         }

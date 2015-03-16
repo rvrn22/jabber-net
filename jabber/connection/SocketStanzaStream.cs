@@ -11,11 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Xml;
-
 using bedrock.net;
 using bedrock.util;
 using jabber.protocol;
@@ -32,14 +32,17 @@ namespace jabber.connection
         /// no proxy
         /// </summary>
         None,
+
         /// <summary>
         /// SOCKS4 as in http://archive.socks.permeo.com/protocol/socks4.protocol
         /// </summary>
         Socks4,
+
         /// <summary>
         /// SOCKS5 as in http://archive.socks.permeo.com/rfc/rfc1928.txt
         /// </summary>
         Socks5,
+
         /// <summary>
         /// HTTP CONNECT
         /// </summary>
@@ -54,9 +57,9 @@ namespace jabber.connection
     public class SocketStanzaStream : StanzaStream, ISocketEventListener
     {
         private AsynchElementStream m_elements = null;
-        private BaseSocket          m_sock     = null;
-        private BaseSocket          m_accept   = null;
-        private Timer               m_timer    = null;
+        private BaseSocket m_sock = null;
+        private BaseSocket m_accept = null;
+        private Timer m_timer = null;
 
         /// <summary>
         /// Create a new one.
@@ -72,7 +75,7 @@ namespace jabber.connection
         /// </summary>
         public override bool Connected
         {
-            get { return ASock.Connected;  }
+            get { return ASock.Connected; }
         }
 
         /// <summary>
@@ -114,7 +117,7 @@ namespace jabber.connection
             get
             {
                 if (m_sock is ProxySocket)
-                    return ((ProxySocket)m_sock).Socket as AsyncSocket;
+                    return ((ProxySocket) m_sock).Socket as AsyncSocket;
                 else
                     return m_sock as AsyncSocket;
             }
@@ -137,7 +140,6 @@ namespace jabber.connection
             Debug.Assert(this.Connected);
             if (first)
                 m_sock.RequestRead();
-
         }
 
         /// <summary>
@@ -146,25 +148,25 @@ namespace jabber.connection
         public override void Connect()
         {
             m_elements = null;
-            int port = (int)m_listener[Options.PORT];
+            int port = (int) m_listener[Options.PORT];
             Debug.Assert(port > 0);
             //m_sslOn = m_ssl;
 
             ProxySocket proxy = null;
-            ProxyType pt = (ProxyType)m_listener[Options.PROXY_TYPE];
+            ProxyType pt = (ProxyType) m_listener[Options.PROXY_TYPE];
             switch (pt)
             {
-            case ProxyType.Socks4:
-                proxy = new Socks4Proxy(this);
-                break;
+                case ProxyType.Socks4:
+                    proxy = new Socks4Proxy(this);
+                    break;
 
-            case ProxyType.Socks5:
-                proxy = new Socks5Proxy(this);
-                break;
+                case ProxyType.Socks5:
+                    proxy = new Socks5Proxy(this);
+                    break;
 
-            case ProxyType.HTTP:
-                proxy = new ShttpProxy(this);
-                break;
+                case ProxyType.HTTP:
+                    proxy = new ShttpProxy(this);
+                    break;
 
                 /*
             case ProxyType.HTTP_Polling:
@@ -183,36 +185,36 @@ namespace jabber.connection
                 m_sock = j25s;
                 break;
                 */
-            case ProxyType.None:
-                m_sock = new AsyncSocket(null, this, (bool)m_listener[Options.SSL], false);
+                case ProxyType.None:
+                    m_sock = new AsyncSocket(null, this, (bool) m_listener[Options.SSL], false);
 
-                ((AsyncSocket)m_sock).LocalCertificate = m_listener[Options.LOCAL_CERTIFICATE] as
-                    System.Security.Cryptography.X509Certificates.X509Certificate2;
+                    ((AsyncSocket) m_sock).LocalCertificate = m_listener[Options.LOCAL_CERTIFICATE] as
+                        System.Security.Cryptography.X509Certificates.X509Certificate2;
 
-                ((AsyncSocket)m_sock).CertificateGui = (bool)m_listener[Options.CERTIFICATE_GUI];
-                break;
+                    ((AsyncSocket) m_sock).CertificateGui = (bool) m_listener[Options.CERTIFICATE_GUI];
+                    break;
 
-            default:
-                throw new ArgumentException("no handler for proxy type: " + pt, "ProxyType");
+                default:
+                    throw new ArgumentException("no handler for proxy type: " + pt, "ProxyType");
             }
 
             if (proxy != null)
             {
-                proxy.Socket = new AsyncSocket(null, proxy, (bool)m_listener[Options.SSL], false);
-                ((AsyncSocket)proxy.Socket).LocalCertificate = m_listener[Options.LOCAL_CERTIFICATE] as
+                proxy.Socket = new AsyncSocket(null, proxy, (bool) m_listener[Options.SSL], false);
+                ((AsyncSocket) proxy.Socket).LocalCertificate = m_listener[Options.LOCAL_CERTIFICATE] as
                     System.Security.Cryptography.X509Certificates.X509Certificate2;
 
                 proxy.Host = m_listener[Options.PROXY_HOST] as string;
-                proxy.Port = (int)m_listener[Options.PROXY_PORT];
+                proxy.Port = (int) m_listener[Options.PROXY_PORT];
                 proxy.Username = m_listener[Options.PROXY_USER] as string;
                 proxy.Password = m_listener[Options.PROXY_PW] as string;
                 m_sock = proxy;
             }
 
-            string to = (string)m_listener[Options.TO];
+            string to = (string) m_listener[Options.TO];
             Debug.Assert(to != null);
 
-            string host = (string)m_listener[Options.NETWORK_HOST];
+            string host = (string) m_listener[Options.NETWORK_HOST];
             if ((host == null) || (host == ""))
             {
 #if __MonoCS__
@@ -220,7 +222,7 @@ namespace jabber.connection
 #else
                 try
                 {
-                    Address.LookupSRV((string)m_listener[Options.SRV_PREFIX], to, ref host, ref port);
+                    Address.LookupSRV((string) m_listener[Options.SRV_PREFIX], to, ref host, ref port);
                 }
                 catch
                 {
@@ -231,7 +233,7 @@ namespace jabber.connection
             }
 
             Address addr = new Address(host, port);
-            m_sock.Connect(addr, (string)m_listener[Options.SERVER_ID]);
+            m_sock.Connect(addr, (string) m_listener[Options.SERVER_ID]);
         }
 
         /// <summary>
@@ -241,12 +243,12 @@ namespace jabber.connection
         {
             if (m_accept == null)
             {
-                m_accept = new AsyncSocket(null, this, (bool)m_listener[Options.SSL], false);
-                ((AsyncSocket)m_accept).LocalCertificate = m_listener[Options.LOCAL_CERTIFICATE] as
+                m_accept = new AsyncSocket(null, this, (bool) m_listener[Options.SSL], false);
+                ((AsyncSocket) m_accept).LocalCertificate = m_listener[Options.LOCAL_CERTIFICATE] as
                     System.Security.Cryptography.X509Certificates.X509Certificate2;
 
-                Address addr = new Address((string)m_listener[Options.NETWORK_HOST],
-                    (int)m_listener[Options.PORT]);
+                Address addr = new Address((string) m_listener[Options.NETWORK_HOST],
+                    (int) m_listener[Options.PORT]);
 
                 m_accept.Accept(addr);
             }
@@ -258,10 +260,7 @@ namespace jabber.connection
         /// </summary>
         public override bool Acceptable
         {
-            get
-            {
-                return (m_accept != null);
-            }
+            get { return (m_accept != null); }
         }
 
         /// <summary>
@@ -270,7 +269,7 @@ namespace jabber.connection
         /// <param name="str">String to write out.</param>
         public override void Write(string str)
         {
-            int keep = (int)m_listener[Options.CURRENT_KEEP_ALIVE];
+            int keep = (int) m_listener[Options.CURRENT_KEEP_ALIVE];
             if (keep > 0)
                 m_timer.Change(keep, keep);
             m_sock.Write(ENC.GetBytes(str));
@@ -292,7 +291,7 @@ namespace jabber.connection
         public override void Write(XmlElement elem)
         {
             if (m_sock is IElementSocket)
-                ((IElementSocket)m_sock).Write(elem);
+                ((IElementSocket) m_sock).Write(elem);
             else
                 Write(elem.OuterXml);
         }
@@ -311,8 +310,8 @@ namespace jabber.connection
 
         private void DoKeepAlive(object state)
         {
-            if ((m_sock != null) && this.Connected && ((int)m_listener[Options.CURRENT_KEEP_ALIVE] > 0))
-                m_sock.Write(new byte[] { 32 });
+            if ((m_sock != null) && this.Connected && ((int) m_listener[Options.CURRENT_KEEP_ALIVE] > 0))
+                m_sock.Write(new byte[] {32});
         }
 
 #if !NO_SSL
@@ -338,6 +337,7 @@ namespace jabber.connection
         }
 
         #region ElementStream handlers
+
         private void m_elements_OnDocumentStart(object sender, XmlElement rp)
         {
             m_listener.DocumentStarted(rp);
@@ -359,6 +359,7 @@ namespace jabber.connection
             m_timer.Change(Timeout.Infinite, Timeout.Infinite);
             m_listener.Errored(ex);
         }
+
         #endregion
 
         #region ISocketEventListener Members
@@ -387,7 +388,7 @@ namespace jabber.connection
         void ISocketEventListener.OnConnect(BaseSocket sock)
         {
 #if !NO_SSL
-            if ((bool)m_listener[Options.SSL])
+            if ((bool) m_listener[Options.SSL])
             {
                 AsyncSocket s = sock as AsyncSocket;
                 m_listener[Options.REMOTE_CERTIFICATE] = s.RemoteCertificate;
@@ -416,7 +417,7 @@ namespace jabber.connection
 
         bool ISocketEventListener.OnRead(BaseSocket sock, byte[] buf, int offset, int length)
         {
-            int tim = (int)m_listener[Options.KEEP_ALIVE];
+            int tim = (int) m_listener[Options.KEEP_ALIVE];
             if (tim > 0)
                 m_timer.Change(tim, tim);
 
@@ -427,7 +428,7 @@ namespace jabber.connection
             }
             catch (Exception e)
             {
-                ((ISocketEventListener)this).OnError(sock, e);
+                ((ISocketEventListener) this).OnError(sock, e);
                 sock.Close();
                 return false;
             }
@@ -436,7 +437,7 @@ namespace jabber.connection
 
         void ISocketEventListener.OnWrite(BaseSocket sock, byte[] buf, int offset, int length)
         {
-            int tim = (int)m_listener[Options.KEEP_ALIVE];
+            int tim = (int) m_listener[Options.KEEP_ALIVE];
             if (tim > 0)
                 m_timer.Change(tim, tim);
 
@@ -458,6 +459,7 @@ namespace jabber.connection
         {
             return m_listener.OnInvalidCertificate(sock, certificate, chain, sslPolicyErrors);
         }
+
         #endregion
     }
 }

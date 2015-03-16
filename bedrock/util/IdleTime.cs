@@ -11,6 +11,7 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.ComponentModel;
 using System.Text;
@@ -52,7 +53,7 @@ namespace bedrock.util
             lii.cbSize = Marshal.SizeOf(lii.GetType());
             if (!GetLastInputInfo(ref lii))
                 throw new ApplicationException("Error executing GetLastInputInfo");
-            return (Environment.TickCount - lii.dwTime) / 1000.0;
+            return (Environment.TickCount - lii.dwTime)/1000.0;
         }
 
         /// <summary>
@@ -65,8 +66,8 @@ namespace bedrock.util
         /// </summary>
         public event SpanEventHandler OnUnIdle;
 
-        private const double DEFAULT_POLL = 5;      // 5s in s.
-        private const double DEFAULT_IDLE = 5 * 60; // 5m in s.
+        private const double DEFAULT_POLL = 5; // 5s in s.
+        private const double DEFAULT_IDLE = 5*60; // 5m in s.
 
         private System.Timers.Timer m_timer = null;
         private double m_notifySecs = DEFAULT_IDLE;
@@ -79,7 +80,7 @@ namespace bedrock.util
         /// </summary>
         public IdleTime()
         {
-            m_timer = new System.Timers.Timer(DEFAULT_POLL * 1000.0);
+            m_timer = new System.Timers.Timer(DEFAULT_POLL*1000.0);
             m_timer.Elapsed += new System.Timers.ElapsedEventHandler(m_timer_Elapsed);
         }
 
@@ -114,8 +115,8 @@ namespace bedrock.util
         [DefaultValue(DEFAULT_POLL)]
         public double PollInterval
         {
-            get { return m_timer.Interval / 1000.0; }
-            set { m_timer.Interval = value * 1000.0; }
+            get { return m_timer.Interval/1000.0; }
+            set { m_timer.Interval = value*1000.0; }
         }
 
         /// <summary>
@@ -125,8 +126,8 @@ namespace bedrock.util
         [DefaultValue(DEFAULT_IDLE)]
         public double IdleLength
         {
-            get { return m_notifySecs;  }
-            set { m_notifySecs = value;  }
+            get { return m_notifySecs; }
+            set { m_notifySecs = value; }
         }
 
         /// <summary>
@@ -153,13 +154,13 @@ namespace bedrock.util
                 // programmers can't seem to follow directions.
                 if ((this.m_invoker == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
+                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
                     if (host != null)
                     {
                         object root = host.RootComponent;
                         if ((root != null) && (root is ISynchronizeInvoke))
                         {
-                            m_invoker = (ISynchronizeInvoke)root;
+                            m_invoker = (ISynchronizeInvoke) root;
                             // TODO: fire some sort of propertyChanged event,
                             // so that old code gets cleaned up correctly.
                         }
@@ -185,7 +186,7 @@ namespace bedrock.util
                         if ((m_invoker != null) &&
                             (m_invoker.InvokeRequired))
                         {
-                            m_invoker.Invoke(OnUnIdle, new object[] { this, span });
+                            m_invoker.Invoke(OnUnIdle, new object[] {this, span});
                         }
                         else
                             OnUnIdle(this, span);
@@ -201,11 +202,11 @@ namespace bedrock.util
                     m_idleStart = DateTime.Now;
                     if (OnIdle != null)
                     {
-                        TimeSpan span = new TimeSpan((long)(idle * 1000L));
+                        TimeSpan span = new TimeSpan((long) (idle*1000L));
                         if ((m_invoker != null) &&
                             (m_invoker.InvokeRequired))
                         {
-                            m_invoker.Invoke(OnIdle, new object[] { this, span });
+                            m_invoker.Invoke(OnIdle, new object[] {this, span});
                         }
                         else
                             OnIdle(this, span);

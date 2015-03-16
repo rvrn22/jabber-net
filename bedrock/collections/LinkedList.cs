@@ -11,10 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Collections;
 using bedrock.util;
+
 namespace bedrock.collections
 {
     /// <summary>
@@ -26,12 +27,13 @@ namespace bedrock.collections
     [SVN(@"$Id$")]
     public class LinkedList : IList
     {
-        private Node      m_header     = new Node(null, null, null);
-        private int       m_size       = 0;
-        private int       m_modCount   = 0;
+        private Node m_header = new Node(null, null, null);
+        private int m_size = 0;
+        private int m_modCount = 0;
         private IComparer m_comparator = null;
-        private bool      m_readOnly   = false;
-        private bool      m_synch      = false;
+        private bool m_readOnly = false;
+        private bool m_synch = false;
+
         /// <summary>
         /// Creates an empty list.
         /// </summary>
@@ -39,6 +41,7 @@ namespace bedrock.collections
         {
             m_header.next = m_header.previous = m_header;
         }
+
         /// <summary>
         /// Create a list with the targets of the given
         /// enumeration copied into it.
@@ -51,7 +54,9 @@ namespace bedrock.collections
                 Add(o);
             }
         }
+
         #region IEnumerable
+
         /// <summary>
         /// Iterate over the list.
         /// </summary>
@@ -60,17 +65,17 @@ namespace bedrock.collections
         {
             return new ListEnumerator(this);
         }
+
         #endregion
+
         #region ICollection
+
         /// <summary>
         /// How many elements in the list?
         /// </summary>
         public int Count
         {
-            get
-            {
-                return m_size;
-            }
+            get { return m_size; }
         }
 
         /// <summary>
@@ -78,14 +83,8 @@ namespace bedrock.collections
         /// </summary>
         public bool IsReadOnly
         {
-            get
-            {
-                return m_readOnly;
-            }
-            set
-            {
-                m_readOnly = value;
-            }
+            get { return m_readOnly; }
+            set { m_readOnly = value; }
         }
 
         /// <summary>
@@ -94,14 +93,8 @@ namespace bedrock.collections
         /// </summary>
         public bool IsSynchronized
         {
-            get
-            {
-                return m_synch;
-            }
-            set
-            {
-                m_synch = value;
-            }
+            get { return m_synch; }
+            set { m_synch = value; }
         }
 
         /// <summary>
@@ -110,10 +103,7 @@ namespace bedrock.collections
         /// </summary>
         public object SyncRoot
         {
-            get
-            {
-                return this;
-            }
+            get { return this; }
         }
 
         /// <summary>
@@ -129,21 +119,18 @@ namespace bedrock.collections
                 array.SetValue(o, i++);
             }
         }
+
         #endregion
+
         #region IList
+
         /// <summary>
         /// Gets the indexth element by walking the list.
         /// </summary>
         public object this[int index]
         {
-            get
-            {
-                return GetNode(index).element;
-            }
-            set
-            {
-                GetNode(index).element = value;
-            }
+            get { return GetNode(index).element; }
+            set { GetNode(index).element = value; }
         }
 
         /// <summary>
@@ -154,7 +141,7 @@ namespace bedrock.collections
         public int Add(object value)
         {
             AddBefore(value, m_header);
-            return m_size-1;
+            return m_size - 1;
         }
 
         /// <summary>
@@ -274,9 +261,11 @@ namespace bedrock.collections
             Node e = GetNode(index);
             Remove(e);
         }
+
         #endregion
 
         #region Queue
+
         /// <summary>
         /// Inserts an element at the end of the list.
         /// </summary>
@@ -305,8 +294,11 @@ namespace bedrock.collections
         {
             return m_header.next.element;
         }
+
         #endregion
+
         #region Stack
+
         /// <summary>
         /// Add an element to the front of the list.
         /// </summary>
@@ -324,14 +316,17 @@ namespace bedrock.collections
         {
             return Dequeue();
         }
+
         #endregion Stack
+
         #region private
+
         private Node GetNode(int index)
         {
             if ((index < 0) || (index >= m_size))
             {
                 throw new IndexOutOfRangeException("Must choose index between 0 and " +
-                                                   (m_size-1));
+                                                   (m_size - 1));
             }
 
             Node e = m_header;
@@ -408,8 +403,11 @@ namespace bedrock.collections
             m_size--;
             m_modCount++;
         }
+
         #endregion
+
         #region Object
+
         /// <summary>
         /// Comma-separated list of element.ToString()'s.
         /// </summary>
@@ -436,8 +434,11 @@ namespace bedrock.collections
             }
             return sb.ToString();
         }
+
         #endregion
+
         #region newstuff
+
         /// <summary>
         /// Insert in order.
         /// </summary>
@@ -457,7 +458,7 @@ namespace bedrock.collections
                 return 0;
             }
 
-            int index=0;
+            int index = 0;
             int c;
             for (Node n = m_header.next; n != m_header; n = n.next, index++)
             {
@@ -476,7 +477,7 @@ namespace bedrock.collections
 
             // got to the end without inserting.  Put it on the end.
             AddBefore(value, m_header);
-            return m_size-1;
+            return m_size - 1;
         }
 
         /// <summary>
@@ -484,15 +485,9 @@ namespace bedrock.collections
         /// </summary>
         public IComparer Comparator
         {
-            get
-            {
-                return m_comparator;
-            }
+            get { return m_comparator; }
 
-            set
-            {
-                m_comparator = value;
-            }
+            set { m_comparator = value; }
         }
 
         /// <summary>
@@ -506,19 +501,22 @@ namespace bedrock.collections
             ll.m_readOnly = true;
             return ll;
         }
+
         #endregion
+
         #region enumerator
+
         private class ListEnumerator : IEnumerator
         {
-            private LinkedList  list    = null;
-            private Node        current = null;
-            private int         mods    = -1;
+            private LinkedList list = null;
+            private Node current = null;
+            private int mods = -1;
 
             public ListEnumerator(LinkedList ll)
             {
-                list    = ll;
+                list = ll;
                 current = list.m_header;
-                mods    = list.m_modCount;
+                mods = list.m_modCount;
             }
 
             public object Current
@@ -545,13 +543,16 @@ namespace bedrock.collections
                 mods = list.m_modCount;
             }
         }
+
         #endregion
+
         #region Node
+
         private class Node
         {
             public object element;
-            public Node  next;
-            public Node  previous;
+            public Node next;
+            public Node previous;
 
             public Node(object element, Node next, Node previous)
             {
@@ -560,6 +561,7 @@ namespace bedrock.collections
                 this.previous = previous;
             }
         }
+
         #endregion
     }
 }

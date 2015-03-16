@@ -11,11 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Xml;
 using NUnit.Framework;
-
 using bedrock.util;
 using jabber.protocol;
 
@@ -28,9 +27,10 @@ namespace test.jabber.protocol
     [TestFixture]
     public class PacketTest
     {
-        XmlDocument doc = new XmlDocument();
+        private XmlDocument doc = new XmlDocument();
 
-        [Test] public void Test_Create()
+        [Test]
+        public void Test_Create()
         {
             Packet p = new Packet("foo", doc);
             Assert.AreEqual("<foo />", p.ToString());
@@ -42,7 +42,8 @@ namespace test.jabber.protocol
             Assert.AreEqual("<foo to=\"two\" from=\"one\" />", p.ToString());
         }
 
-        [Test] public void Test_JabberDate()
+        [Test]
+        public void Test_JabberDate()
         {
             string sdt = "20020504T20:39:42";
             DateTime dt = Element.JabberDate(sdt);
@@ -54,7 +55,9 @@ namespace test.jabber.protocol
             Assert.AreEqual(42, dt.Second);
             Assert.AreEqual(sdt, Element.JabberDate(dt));
         }
-        [Test] public void Test_DateTimeProfile()
+
+        [Test]
+        public void Test_DateTimeProfile()
         {
             string sdt = "2002-05-04T20:39:42.050Z";
             DateTime dt = Element.DateTimeProfile(sdt);

@@ -13,6 +13,7 @@
  *
  * xpnet is a deriviative of James Clark's XP.  See copying.txt for more info.
  * --------------------------------------------------------------------------*/
+
 namespace xpnet
 {
     using bedrock.util;
@@ -60,6 +61,7 @@ namespace xpnet
                  * Returns the index following the last character of the name of the
                  * attribute index <code>i</code>.
                  */
+
         public int getAttributeNameEnd(int i)
         {
             if (i >= attCount)
@@ -71,6 +73,7 @@ namespace xpnet
          * Returns the index of the character following the opening quote of
          * attribute index <code>i</code>.
          */
+
         public int getAttributeValueStart(int i)
         {
             if (i >= attCount)
@@ -81,6 +84,7 @@ namespace xpnet
         /**
          * Returns the index of the closing quote attribute index <code>i</code>.
          */
+
         public int getAttributeValueEnd(int i)
         {
             if (i >= attCount)
@@ -94,6 +98,7 @@ namespace xpnet
                  * of the attribute to be avoided when it is known that normalization
                  * cannot change the value of the attribute.
                  */
+
         public bool isAttributeNormalized(int i)
         {
             if (i >= attCount)
@@ -122,7 +127,6 @@ namespace xpnet
             int valueStart, int valueEnd,
             bool normalized)
         {
-
             if (attCount == attNameStart.Length)
             {
                 attNameStart = grow(attNameStart);
@@ -186,6 +190,5 @@ namespace xpnet
 
             return v;
         }
-
     }
 }

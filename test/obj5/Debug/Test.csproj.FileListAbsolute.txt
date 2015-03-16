@@ -1,0 +1,14 @@
+D:\Dev\Github\jabber-net\test\bin5\Debug\test.dll
+D:\Dev\Github\jabber-net\test\bin5\Debug\test.pdb
+D:\Dev\Github\jabber-net\test\bin5\Debug\jabber-net.dll
+D:\Dev\Github\jabber-net\test\bin5\Debug\nunit.framework.dll
+D:\Dev\Github\jabber-net\test\bin5\Debug\Rhino.Mocks.dll
+D:\Dev\Github\jabber-net\test\bin5\Debug\zlib.net.dll
+D:\Dev\Github\jabber-net\test\bin5\Debug\netlib.Dns.dll
+D:\Dev\Github\jabber-net\test\bin5\Debug\jabber-net.pdb
+D:\Dev\Github\jabber-net\test\bin5\Debug\Rhino.Mocks.xml
+D:\Dev\Github\jabber-net\test\bin5\Debug\netlib.Dns.pdb
+D:\Dev\Github\jabber-net\test\bin5\Debug\netlib.Dns.xml
+D:\Dev\Github\jabber-net\test\obj5\Debug\Test.csprojResolveAssemblyReference.cache
+D:\Dev\Github\jabber-net\test\obj5\Debug\test.dll
+D:\Dev\Github\jabber-net\test\obj5\Debug\test.pdb

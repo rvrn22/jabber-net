@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
@@ -37,6 +37,7 @@ namespace Example
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TextBox txtBody;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -60,26 +61,27 @@ namespace Example
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
+            if (disposing)
             {
-                if(components != null)
+                if (components != null)
                 {
                     components.Dispose();
                 }
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
-                #region Windows Form Designer generated code
+        #region Windows Form Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(SendMessage));
+            System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof (SendMessage));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
@@ -107,7 +109,7 @@ namespace Example
             //
             // btnCancel
             //
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(256, 40);
             this.btnCancel.Name = "btnCancel";
@@ -118,7 +120,7 @@ namespace Example
             //
             // btnSend
             //
-            this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSend.Location = new System.Drawing.Point(256, 8);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(48, 23);
@@ -128,8 +130,8 @@ namespace Example
             //
             // txtSubject
             //
-            this.txtSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSubject.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSubject.Location = new System.Drawing.Point(64, 41);
             this.txtSubject.Name = "txtSubject";
             this.txtSubject.Size = new System.Drawing.Size(184, 20);
@@ -138,8 +140,8 @@ namespace Example
             //
             // txtTo
             //
-            this.txtTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTo.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                       | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTo.Location = new System.Drawing.Point(64, 9);
             this.txtTo.Name = "txtTo";
             this.txtTo.Size = new System.Drawing.Size(184, 20);
@@ -181,14 +183,14 @@ namespace Example
             this.ClientSize = new System.Drawing.Size(312, 266);
             this.Controls.Add(this.txtBody);
             this.Controls.Add(this.panel1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Name = "SendMessage";
             this.Text = "SendMessage";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
-                #endregion
+
+        #endregion
 
         private void btnSend_Click(object sender, System.EventArgs e)
         {

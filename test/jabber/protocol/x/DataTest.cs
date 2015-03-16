@@ -11,12 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.IO;
 using System.Xml;
 using NUnit.Framework;
-
 using bedrock.util;
 using jabber.protocol;
 using jabber.protocol.x;
@@ -78,7 +77,8 @@ namespace test.jabber.protocol.x
       </field>
     </x></stream>";
 
-        [Test] public void Test_Parse()
+        [Test]
+        public void Test_Parse()
         {
             AsynchElementStream es = new AsynchElementStream();
             es.AddFactory(new global::jabber.protocol.x.Factory());
@@ -88,10 +88,10 @@ namespace test.jabber.protocol.x
             Assert.IsTrue(gotElement);
         }
 
-        void es_OnElement(object sender, XmlElement n)
+        private void es_OnElement(object sender, XmlElement n)
         {
-            Assert.IsInstanceOfType(typeof(global::jabber.protocol.x.Data), n);
-            Data d = (Data)n;
+            Assert.IsInstanceOfType(typeof (global::jabber.protocol.x.Data), n);
+            Data d = (Data) n;
             Assert.AreEqual(@"
         Welcome to the BloodBank-Service!  We thank you for registering with
         us and helping to save lives.  Please fill out the following form.

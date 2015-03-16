@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Diagnostics;
 
 namespace bedrock.net
@@ -58,10 +58,7 @@ namespace bedrock.net
         /// </summary>
         public virtual ISocketEventListener Listener
         {
-            get
-            {
-                return m_listener;
-            }
+            get { return m_listener; }
             set
             {
                 lock (this)
@@ -126,10 +123,7 @@ namespace bedrock.net
         ///<summary>
         /// Returns true if the socket is connected.
         ///</summary>
-        public abstract bool Connected
-        { 
-            get;
-        }
+        public abstract bool Connected { get; }
 
 #if !NO_SSL
         /// <summary>

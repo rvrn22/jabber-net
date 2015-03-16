@@ -11,9 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.stream
@@ -29,90 +29,112 @@ namespace jabber.protocol.stream
         ///
         /// </summary>
         NONE = 0,
+
         /// <summary>
         /// LIMITED  [RFC2222]   IESG &lt;iesg@ietf.org&gt;
         /// </summary>
         KERBEROS_V4 = (1 << 0),
+
         /// <summary>
         /// COMMON   [RFC2222]   IESG &lt;iesg@ietf.org&gt;
         /// </summary>
         GSSAPI = (1 << 1),
+
         /// <summary>
         /// OBSOLETE [RFC2444]   IESG &lt;iesg@ietf.org&gt;
         /// </summary>
-        SKEY  = (1 << 2),
+        SKEY = (1 << 2),
+
         /// <summary>
         /// COMMON   [RFC2222]   IESG &lt;iesg@ietf.org&gt;
         /// </summary>
         EXTERNAL = (1 << 3),
+
         /// <summary>
         /// LIMITED  [RFC2195]   IESG &lt;iesg@ietf.org&gt;
         /// </summary>
         CRAM_MD5 = (1 << 4),
+
         /// <summary>
         /// COMMON   [RFC2245]   IESG &lt;iesg@ietf.org&gt;
         /// </summary>
         ANONYMOUS = (1 << 5),
+
         /// <summary>
         /// COMMON   [RFC2444]   IESG &lt;iesg@ietf.org&gt;
         /// </summary>
         OTP = (1 << 6),
+
         /// <summary>
         /// LIMITED  [Leach]     Paul Leach &lt;paulle@microsoft.com&gt;
         /// </summary>
         GSS_SPNEGO = (1 << 7),
+
         /// <summary>
         /// COMMON   [RFC2595]   IESG &lt;iesg@ietf.org&gt;
         /// </summary>
         PLAIN = (1 << 8),
+
         /// <summary>
         /// COMMON   [RFC2808]   Magnus Nystrom &lt;magnus@rsasecurity.com&gt;
         /// </summary>
         SECURID = (1 << 9),
+
         /// <summary>
         /// LIMITED  [Leach]     Paul Leach &lt;paulle@microsoft.com&gt;
         /// </summary>
         NTLM = (1 << 10),
+
         /// <summary>
         /// LIMITED  [Gayman]    Mark G. Gayman &lt;mgayman@novell.com&gt;
         /// </summary>
         NMAS_LOGIN = (1 << 11),
+
         /// <summary>
         /// LIMITED  [Gayman]    Mark G. Gayman &lt;mgayman@novell.com&gt;
         /// </summary>
         NMAS_AUTHEN = (1 << 12),
+
         /// <summary>
         /// COMMON   [RFC2831]   IESG &lt;iesg@ietf.org&gt;
         /// </summary>
         DIGEST_MD5 = (1 << 13),
+
         /// <summary>
         /// [RFC3163]  robert.zuccherato@entrust.com
         /// </summary>
         ISO_9798_U_RSA_SHA1_ENC = (1 << 14),
+
         /// <summary>
         /// COMMON   [RFC3163]   robert.zuccherato@entrust.com
         /// </summary>
         ISO_9798_M_RSA_SHA1_ENC = (1 << 15),
+
         /// <summary>
         /// COMMON   [RFC3163]   robert.zuccherato@entrust.com
         /// </summary>
         ISO_9798_U_DSA_SHA1 = (1 << 16),
+
         /// <summary>
         /// COMMON   [RFC3163]   robert.zuccherato@entrust.com
         /// </summary>
         ISO_9798_M_DSA_SHA1 = (1 << 17),
+
         /// <summary>
         /// COMMON   [RFC3163]   robert.zuccherato@entrust.com
         /// </summary>
         ISO_9798_U_ECDSA_SHA1 = (1 << 18),
+
         /// <summary>
         /// COMMON   [RFC3163]   robert.zuccherato@entrust.com
         /// </summary>
         ISO_9798_M_ECDSA_SHA1 = (1 << 19),
+
         /// <summary>
         /// COMMON   [Josefsson] Simon Josefsson &lt;simon@josefsson.org&gt;
         /// </summary>
         KERBEROS_V5 = (1 << 20),
+
         /// <summary>
         /// LIMITED  [Brimhall]  Vince Brimhall &lt;vbrimhall@novell.com&gt;
         /// </summary>
@@ -153,7 +175,7 @@ namespace jabber.protocol.stream
         {
             XmlNodeList nl = GetElementsByTagName("mechanism", URI.SASL);
             Mechanism[] items = new Mechanism[nl.Count];
-            int i=0;
+            int i = 0;
             foreach (XmlNode n in nl)
             {
                 items[i] = (Mechanism) n;
@@ -422,6 +444,7 @@ namespace jabber.protocol.stream
             }
         }
     }
+
     /// <summary>
     /// Subsequent phases of SASL auth sent by server.
     /// </summary>

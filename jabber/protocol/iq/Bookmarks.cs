@@ -11,10 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Diagnostics;
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -24,7 +24,7 @@ namespace jabber.protocol.iq
     /// </summary>
     [SVN(@"$Id$")]
     public class BookmarksIQ : PrivateIQ
-	{
+    {
         /// <summary>
         /// Create for outbound.
         /// </summary>
@@ -41,7 +41,7 @@ namespace jabber.protocol.iq
         {
             get { return this.Instruction.GetChildElement<Bookmarks>(); }
         }
-	}
+    }
 
     /// <summary>
     /// The bookmarks to be stored.
@@ -224,12 +224,12 @@ namespace jabber.protocol.iq
         /// </summary>
         public bool AutoJoin
         {
-            get 
+            get
             {
                 string aj = GetAttr("autojoin");
                 return (aj == "true") || (aj == "1");
             }
-            set 
+            set
             {
                 if (value)
                     SetAttr("autojoin", "true");
@@ -243,7 +243,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public JID JID
         {
-            get { return (JID)GetAttr("jid"); }
+            get { return (JID) GetAttr("jid"); }
             set { SetAttr("jid", value); }
         }
 
@@ -261,8 +261,8 @@ namespace jabber.protocol.iq
         /// </summary>
         public string Nick
         {
-            get { return GetElem("nick");  }
-            set { SetElem("nick", value);  }
+            get { return GetElem("nick"); }
+            set { SetElem("nick", value); }
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace jabber.protocol.iq
         /// </summary>
         public JID JID
         {
-            get { return (JID)GetAttr("jid"); }
+            get { return (JID) GetAttr("jid"); }
             set { SetAttr("jid", value); }
         }
 

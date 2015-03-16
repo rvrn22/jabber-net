@@ -11,12 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml;
-
 using jabber.protocol;
 using bedrock.util;
 
@@ -29,7 +29,7 @@ namespace jabber.connection
     [SVN(@"$Id$")]
     public class FileMap<T>
         where T : Element
-	{
+    {
         private const string NS = "http://cursive.net/xml/FileMap";
 
         private string m_fileName = null;
@@ -59,7 +59,7 @@ namespace jabber.connection
             {
                 if (value == null)
                 {
-                    if (!typeof(T).Equals(typeof(Element)))
+                    if (!typeof (T).Equals(typeof (Element)))
                         throw new ArgumentException("Factory must not be null if type is not XmlElement", "factory");
                     m_factory = new ElementFactory();
                 }
@@ -74,7 +74,7 @@ namespace jabber.connection
         public string FileName
         {
             get { return m_fileName; }
-            set 
+            set
             {
                 if (value == null)
                     throw new ArgumentNullException("fileName");
@@ -137,7 +137,7 @@ namespace jabber.connection
                         {
                             if (child is XmlElement)
                             {
-                                m_cache[name] = (T)Element.AddTypes((XmlElement)child, m_factory);
+                                m_cache[name] = (T) Element.AddTypes((XmlElement) child, m_factory);
                                 break;
                             }
                         }

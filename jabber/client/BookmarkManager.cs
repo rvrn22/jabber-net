@@ -11,11 +11,11 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-
 using bedrock.util;
 using jabber.connection;
 using jabber.protocol.client;
@@ -35,9 +35,9 @@ namespace jabber.client
     /// Manager bookmarks on the server, with the old-style iq:private.
     /// TODO: add support for new-style PEP.
     /// </summary>
-    [SVN(@"$Id$")]    
+    [SVN(@"$Id$")]
     public class BookmarkManager : jabber.connection.StreamComponent
-	{
+    {
         private bool m_autoPrivate = true;
         private ConferenceManager m_confManager;
         private Dictionary<JID, BookmarkConference> m_conferences = new Dictionary<JID, BookmarkConference>();
@@ -45,20 +45,20 @@ namespace jabber.client
         /// <summary>
         /// Create
         /// </summary>
-		public BookmarkManager()
-		{
-			InitializeComponent();
+        public BookmarkManager()
+        {
+            InitializeComponent();
             this.OnStreamChanged += new bedrock.ObjectHandler(BookmarkManager_OnStreamChanged);
-		}
+        }
 
         /// <summary>
         /// Create
         /// </summary>
         /// <param name="container"></param>
-		public BookmarkManager(IContainer container) : this()
-		{
-			container.Add(this);
-		}
+        public BookmarkManager(IContainer container) : this()
+        {
+            container.Add(this);
+        }
 
         /// <summary>
         /// Automatically request bookmarks using iq:private on login.
@@ -97,14 +97,14 @@ namespace jabber.client
                 // If we are running in the designer, let's try to auto-hook a ConferenceManager
                 if ((m_confManager == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
-                    this.ConferenceManager = (ConferenceManager)jabber.connection.StreamComponent.GetComponentFromHost(host, typeof(ConferenceManager));
+                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
+                    this.ConferenceManager = (ConferenceManager) jabber.connection.StreamComponent.GetComponentFromHost(host, typeof (ConferenceManager));
                 }
                 return m_confManager;
             }
             set
             {
-                if ((object)m_confManager == (object)value)
+                if ((object) m_confManager == (object) value)
                     return;
                 m_confManager = value;
             }
@@ -206,7 +206,7 @@ namespace jabber.client
                 Bookmarks bm = biq.Bookmarks;
                 foreach (BookmarkConference conf in m_conferences.Values)
                 {
-                    bm.AddChild((XmlElement)conf.CloneNode(true, m_stream.Document));
+                    bm.AddChild((XmlElement) conf.CloneNode(true, m_stream.Document));
                 }
                 m_stream.Tracker.BeginIQ(biq, BookmarksSet, prev);
             }
@@ -289,5 +289,5 @@ namespace jabber.client
         }
 
         #endregion
-	}
+    }
 }

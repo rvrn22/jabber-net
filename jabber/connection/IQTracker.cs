@@ -11,14 +11,13 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Xml;
-
 using bedrock.util;
 using jabber.protocol.client;
 
@@ -72,10 +71,10 @@ namespace jabber.connection
     /// Tracks outstanding IQ requests.
     /// </summary>
     [SVN(@"$Id$")]
-    public class IQTracker: IIQTracker
+    public class IQTracker : IIQTracker
     {
         private Dictionary<string, TrackerData> m_pending = new Dictionary<string, TrackerData>();
-        private XmppStream m_cli     = null;
+        private XmppStream m_cli = null;
 
         /// <summary>
         /// Creates a new IQ tracker.
@@ -165,7 +164,7 @@ namespace jabber.connection
 
         private void SignalEvent(object sender, IQ iq, object data)
         {
-            ((AutoResetEvent)data).Set();
+            ((AutoResetEvent) data).Set();
         }
 
         /// <summary>
@@ -174,7 +173,7 @@ namespace jabber.connection
         [SVN(@"$Id$")]
         public class TrackerData
         {
-            private IqCB  cb;
+            private IqCB cb;
             private object data;
             private JID jid;
             private string id;

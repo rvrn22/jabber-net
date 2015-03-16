@@ -11,11 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Xml;
 using NUnit.Framework;
-
 using bedrock.util;
 using jabber;
 using jabber.client;
@@ -31,13 +30,15 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
     [TestFixture]
     public class RosterManagerTest
     {
-        XmlDocument doc = new XmlDocument();
+        private XmlDocument doc = new XmlDocument();
 
-        [Test] public void Test_Create()
+        [Test]
+        public void Test_Create()
         {
             RosterManager rm = new RosterManager();
             Assert.AreEqual("jabber.client.RosterManager", rm.GetType().FullName);
         }
+
         public void TestAdd()
         {
             RosterManager rm = new RosterManager();
@@ -65,6 +66,7 @@ namespace test.jabber.client1 // TODO: Client1 due to a bug in NUnit.
             Assert.AreEqual(Subscription.to, rm["foo@bar"].Subscription);
             Assert.AreEqual("BAR", rm["foo@bar"].Nickname);
         }
+
         public void TestNumeric()
         {
             RosterManager rm = new RosterManager();

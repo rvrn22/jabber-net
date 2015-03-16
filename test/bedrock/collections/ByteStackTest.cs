@@ -11,9 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
-
 using NUnit.Framework;
 using bedrock.collections;
 using bedrock.util;
@@ -29,23 +28,28 @@ namespace test.bedrock.collections
     {
         private System.Text.Encoding ENC = System.Text.Encoding.Default;
 
-        [Test] public void Test_Main()
+        [Test]
+        public void Test_Main()
         {
             ByteStack bs = new ByteStack();
             Assert.AreEqual(0, bs.Count);
             bs.Push((byte) 'a');
             Assert.AreEqual(1, bs.Count);
             byte b = bs.Pop();
-            Assert.AreEqual(b, (byte)'a');
+            Assert.AreEqual(b, (byte) 'a');
             Assert.AreEqual(0, bs.Count);
         }
-        [Test] public void Test_Empty()
+
+        [Test]
+        public void Test_Empty()
         {
             ByteStack bs = new ByteStack();
             byte[] buf = bs;
             Assert.AreEqual(0, buf.Length);
         }
-        [Test] public void Test_Init()
+
+        [Test]
+        public void Test_Init()
         {
             ByteStack bs = new ByteStack(ENC.GetBytes("foo"));
             Assert.AreEqual("foo", bs.ToString());
@@ -55,7 +59,9 @@ namespace test.bedrock.collections
             bs.Push((byte) 't');
             Assert.AreEqual("ft", bs.ToString());
         }
-        [Test] public void Test_Growth()
+
+        [Test]
+        public void Test_Growth()
         {
             ByteStack bs = new ByteStack(4);
 

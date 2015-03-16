@@ -11,17 +11,15 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Collections;
 using gen = System.Collections.Generic;
 using System.Diagnostics;
-
 using bedrock.util;
 using bedrock.collections;
-
 using jabber.protocol.client;
 using jabber.protocol.x;
 using jabber.protocol.iq;
@@ -29,7 +27,6 @@ using jabber.connection;
 
 namespace jabber.client
 {
-
     /// <summary>
     /// Informs the client of a change of derived primary session for a user.
     /// </summary>
@@ -49,7 +46,7 @@ namespace jabber.client
 #pragma warning disable 0414
         private System.ComponentModel.Container components = null;
 #pragma warning restore 0414
- 
+
         private Tree m_items = new Tree();
         private CapsManager m_caps = null;
 
@@ -92,7 +89,7 @@ namespace jabber.client
         [ReadOnly(true)]
         public JabberClient Client
         {
-            get { return (JabberClient)this.Stream; }
+            get { return (JabberClient) this.Stream; }
             set { this.Stream = value; }
         }
 
@@ -107,14 +104,14 @@ namespace jabber.client
                 // If we are running in the designer, let's try to auto-hook a CapsManager
                 if ((m_caps == null) && DesignMode)
                 {
-                    IDesignerHost host = (IDesignerHost)base.GetService(typeof(IDesignerHost));
-                    this.CapsManager = (CapsManager)jabber.connection.StreamComponent.GetComponentFromHost(host, typeof(CapsManager));
+                    IDesignerHost host = (IDesignerHost) base.GetService(typeof (IDesignerHost));
+                    this.CapsManager = (CapsManager) jabber.connection.StreamComponent.GetComponentFromHost(host, typeof (CapsManager));
                 }
                 return m_caps;
             }
             set
             {
-                if ((object)m_caps == (object)value)
+                if ((object) m_caps == (object) value)
                     return;
                 m_caps = value;
             }
@@ -136,7 +133,7 @@ namespace jabber.client
 
         private void GotDisconnect(object sender)
         {
-            lock(this)
+            lock (this)
                 m_items.Clear();
         }
 
@@ -162,7 +159,7 @@ namespace jabber.client
             JID f = p.From;
             lock (this)
             {
-                UserPresenceManager upm = (UserPresenceManager)m_items[f.Bare];
+                UserPresenceManager upm = (UserPresenceManager) m_items[f.Bare];
 
                 if (t == PresenceType.available)
                 {
@@ -218,7 +215,7 @@ namespace jabber.client
             {
                 lock (this)
                 {
-                    UserPresenceManager upm = (UserPresenceManager)m_items[jid.Bare];
+                    UserPresenceManager upm = (UserPresenceManager) m_items[jid.Bare];
                     if (upm == null)
                         return null;
                     return upm[jid.Resource];
@@ -242,7 +239,7 @@ namespace jabber.client
 
             lock (this)
             {
-                UserPresenceManager upm = (UserPresenceManager)m_items[jid.Bare];
+                UserPresenceManager upm = (UserPresenceManager) m_items[jid.Bare];
                 if (upm == null)
                     return null;
                 return upm.GetFeatures(m_caps, jid.Resource);
@@ -288,7 +285,7 @@ namespace jabber.client
 
             lock (this)
             {
-                UserPresenceManager upm = (UserPresenceManager)m_items[jid.Bare];
+                UserPresenceManager upm = (UserPresenceManager) m_items[jid.Bare];
                 if (upm == null)
                     return null;
                 return upm.GetFeatureJID(m_caps, featureURI);
@@ -302,14 +299,14 @@ namespace jabber.client
         /// <returns>Array of presence stanzas for the given user.</returns>
         public Presence[] GetAll(JID jid)
         {
-            UserPresenceManager upm = (UserPresenceManager)m_items[jid.Bare];
+            UserPresenceManager upm = (UserPresenceManager) m_items[jid.Bare];
             if (upm == null)
                 return new Presence[0];
             return upm.GetAll();
         }
 
-
         #region Component Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -318,6 +315,7 @@ namespace jabber.client
         {
             components = new System.ComponentModel.Container();
         }
+
         #endregion
 
         /// <summary>
@@ -339,11 +337,12 @@ namespace jabber.client
             }
 
             #region IEnumerator Members
+
             public object Current
             {
                 get
                 {
-                    UserPresenceManager m = (UserPresenceManager)m_enum.Current;
+                    UserPresenceManager m = (UserPresenceManager) m_enum.Current;
                     if (m == null)
                         return null;
                     return m.JID;

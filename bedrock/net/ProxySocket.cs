@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Diagnostics;
 using System.Text;
 using bedrock.util;
@@ -25,13 +25,13 @@ namespace bedrock.net
     [SVN(@"$Id$")]
     public class ProxySocket : BaseSocket, ISocketEventListener
     {
-        private BaseSocket     m_sock = null;
-        private string         m_host = null;
-        private int            m_port = 0;
-        private string         m_username = null;
-        private string         m_password = null;
-        private Address        m_remote_addr = null;
-        private bool           m_ssl = false;
+        private BaseSocket m_sock = null;
+        private string m_host = null;
+        private int m_port = 0;
+        private string m_username = null;
+        private string m_password = null;
+        private Address m_remote_addr = null;
+        private bool m_ssl = false;
 
         /// <summary>
         /// Wrap an existing socket event listener with a proxy.  Make SURE to set Socket after this.
@@ -303,6 +303,7 @@ namespace bedrock.net
         {
             return m_listener.OnInvalidCertificate(sock, certificate, chain, sslPolicyErrors);
         }
+
         #endregion
 
         /// <summary>
@@ -313,6 +314,5 @@ namespace bedrock.net
         {
             return "Proxy connection to: " + RemoteAddress.ToString();
         }
-
     }
 }

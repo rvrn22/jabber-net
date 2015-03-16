@@ -11,10 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using bedrock.util;
 
 namespace bedrock.collections
@@ -25,12 +25,12 @@ namespace bedrock.collections
     /// </summary>
     [SVN(@"$Id$")]
     public class StringSet : IEnumerable, IEnumerable<string>, ICloneable
-	{
+    {
         private BitArray m_bits = null;
 
         // List<T>.Add doesn't return an int.
         private static ArrayList s_strings = new ArrayList();
-        private static Dictionary<string, int> s_bits = new Dictionary<string,int>();
+        private static Dictionary<string, int> s_bits = new Dictionary<string, int>();
 
         /// <summary>
         /// Create a new StringSet, which is empty, but sized for all strings seen so far.
@@ -47,7 +47,7 @@ namespace bedrock.collections
         public StringSet(StringSet other)
         {
             if (other != null)
-                m_bits = (BitArray)other.m_bits.Clone();
+                m_bits = (BitArray) other.m_bits.Clone();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace bedrock.collections
         private static int GetStringValue(string s)
         {
             int val = -1;
-            
+
             lock (s_bits)
             {
                 if (!s_bits.TryGetValue(s, out val))
@@ -137,7 +137,7 @@ namespace bedrock.collections
         {
             m_bits.Length = set.m_bits.Length = Math.Max(m_bits.Length, set.m_bits.Length);
             // Not is destructive.  Stupid.
-            BitArray os = (BitArray)set.m_bits.Clone();
+            BitArray os = (BitArray) set.m_bits.Clone();
             os.Not();
             m_bits.And(os);
         }
@@ -160,7 +160,7 @@ namespace bedrock.collections
             int val = GetStringValue(s);
             if (val >= m_bits.Length)
                 return false;
-            return m_bits[val];            
+            return m_bits[val];
         }
 
         /// <summary>
@@ -199,6 +199,7 @@ namespace bedrock.collections
         }
 
         #region operators
+
         /// <summary>
         /// Add two StringSets together, returning a new set.
         /// </summary>
@@ -262,7 +263,7 @@ namespace bedrock.collections
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            if ((object)this == obj)
+            if ((object) this == obj)
                 return true;
             StringSet set = obj as StringSet;
             if (set == null)
@@ -284,7 +285,7 @@ namespace bedrock.collections
                 if (this.m_bits[i] != set.m_bits[i])
                     return false;
             }
-            
+
             return true;
         }
 
@@ -304,6 +305,7 @@ namespace bedrock.collections
             }
             return hash;
         }
+
         #endregion
 
         /// <summary>
@@ -378,8 +380,8 @@ namespace bedrock.collections
 
         private class StringSetEnumerator : IEnumerator<string>
         {
-            StringSet m_set;
-            int m_cur = -1;
+            private StringSet m_set;
+            private int m_cur = -1;
 
             public StringSetEnumerator(StringSet set)
             {
@@ -390,11 +392,11 @@ namespace bedrock.collections
 
             public string Current
             {
-                get 
+                get
                 {
                     if ((m_cur < 0) || (m_cur >= m_set.m_bits.Length))
                         throw new InvalidOperationException("Call to current outside of MoveNext");
-                    return (string)StringSet.s_strings[m_cur];
+                    return (string) StringSet.s_strings[m_cur];
                 }
             }
 
@@ -413,10 +415,7 @@ namespace bedrock.collections
 
             object IEnumerator.Current
             {
-                get 
-                {
-                    return this.Current;
-                }
+                get { return this.Current; }
             }
 
             public bool MoveNext()
